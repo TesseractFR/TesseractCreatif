@@ -1,0 +1,4 @@
+name: TesseractCreative
+version: '1.0-SNAPSHOT'
+main: onl.tesseract.tesseractCreative.TesseractCreative
+api-version: '1.21'
