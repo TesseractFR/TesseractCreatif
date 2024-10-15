@@ -1,0 +1,5 @@
+name: TesseractCreative
+version: '1.0-SNAPSHOT'
+main: onl.tesseract.Creatif
+api-version: '1.21'
+depend: [ Vault,LuckPerms, TesseractLib ]
