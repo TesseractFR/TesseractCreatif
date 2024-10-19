@@ -19,10 +19,12 @@ public class CreativePlayerInfo {
     @JdbcTypeCode(java.sql.Types.VARCHAR)
     UUID uuid;
 
-    @OneToOne(mappedBy = "creativePlayerInfo")
-    PlayerPlot playerPlot;
+    @OneToOne()
+    @PrimaryKeyJoinColumn
+    PlayerPlotInfo playerPlotInfo;
 
-    @OneToOne(mappedBy = "creativePlayerInfo")
+    @OneToOne()
+    @PrimaryKeyJoinColumn
     PlayerRankInfo playerRankInfo;
 
     Duration timePlayed;

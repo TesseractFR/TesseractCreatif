@@ -21,14 +21,16 @@ public class PlayerRankInfo {
     private UUID uuid;
 
     @OneToOne
-    @MapsId
-    @JoinColumn(name = "uuid")
+    @PrimaryKeyJoinColumn
     private CreativePlayerInfo creativePlayerInfo;
 
     private boolean isVirtuose;
 
+    @Enumerated(EnumType.STRING)
     private PlayerRank playerRank;
 
-    private StaffRank staffRank;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "staffRank",nullable = true)
+    private StaffRank staffRank = StaffRank.ADMINISTRATEUR;
 
 }

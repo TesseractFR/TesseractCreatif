@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "t_player_plot")
-public class PlayerPlot {
+public class PlayerPlotInfo {
     @Id
     @Column(updatable = false, nullable = false, columnDefinition = "VARCHAR(36)", unique = true)
     @JdbcTypeCode(java.sql.Types.VARCHAR)

@@ -3,7 +3,7 @@ package onl.tesseract;
 import lombok.Getter;
 import onl.tesseract.entity.player.CreativePlayerInfo;
 import onl.tesseract.entity.player.rank.Rank;
-import onl.tesseract.service.CreativePlayerInfoService;
+import onl.tesseract.service.CreativePlayerService;
 import onl.tesseract.tesseractlib.player.TPlayer;
 import org.bukkit.OfflinePlayer;
 
@@ -18,7 +18,7 @@ public class CreativePlayer extends TPlayer {
     public CreativePlayer(OfflinePlayer player) {
         super(player);
         uuid = player.getUniqueId();
-        creativePlayerInfo = CreativePlayerInfoService.getInstance().get(uuid);
+        creativePlayerInfo = CreativePlayerService.getInstance().get(uuid);
     }
 
     public Rank getRank() {

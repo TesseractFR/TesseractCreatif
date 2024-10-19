@@ -26,8 +26,9 @@ public class CreativePlayerInfoDAO {
     public void create(CreativePlayerInfo creativePlayerInfo) {
         try {
             HibernateUtil.executeInsideTransaction(session -> session.persist(creativePlayerInfo));
+            log.info("Created new creativePlayerInfo {}", creativePlayerInfo.getUuid().toString());
         } catch (Exception e) {
-            log.error("Erreur lors du save du tPlayerFreebuildInfo {}", creativePlayerInfo.getUuid(), e);
+            log.error("Erreur lors du save du creativePlayerInfo {}", creativePlayerInfo.getUuid(), e);
         }
     }
 
@@ -35,10 +36,18 @@ public class CreativePlayerInfoDAO {
         try {
             HibernateUtil.executeInsideTransaction( session -> session.refresh(creativePlayerInfo));
         } catch (Exception e) {
-            log.error("Erreur lors du refresh du tPlayerFreebuildInfo {}", creativePlayerInfo.getUuid(), e);
+            log.error("Erreur lors du refresh du creativePlayerInfo {}", creativePlayerInfo.getUuid(), e);
         }
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             session.refresh(creativePlayerInfo);
+        }
+    }
+
+    public void save(CreativePlayerInfo creativePlayerInfo) {
+        try {
+            HibernateUtil.executeInsideTransaction( session -> session.merge(creativePlayerInfo));
+        }catch (Exception e) {
+            log.error("Erreur lors du save", e);
         }
     }
 
