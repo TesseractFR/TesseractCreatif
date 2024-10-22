@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 public interface Rank {
     static boolean checkPerm(Player p, String perm)
     {
-        if (!Creatif.getPermissions().playerHas(p, perm))
+        if (!Creatif.getInstance().getPermissions().playerHas(p, perm))
         {
             p.sendMessage(Component.text("Vous n'avez pas la permission de faire cela.", NamedTextColor.RED));
             return false;

@@ -19,10 +19,10 @@ public final class Creatif extends JavaPlugin implements Listener {
     @Getter
     private static Creatif instance;
     @Getter
-    private static Permission permissions = null;
+    private Permission permissions = null;
     @Override
     public void onEnable() {
-        instance = this;
+        Creatif.instance = this;
         TesseractLib.setPlayerContainer(new CreativePlayerContainer());
         // Plugin startup logic
         if (!setupPermissions())
@@ -62,7 +62,7 @@ public final class Creatif extends JavaPlugin implements Listener {
         }
         else{
             creativePlayer = getPlayerContainer().get(event.getPlayer());
-            TextColor color = creativePlayer.getRank().getColor();
+            TextColor color = creativePlayer.getPlayerRank().getColor();
             creativePlayer.onJoin(event.getPlayer());
             event.joinMessage(Component.text("+ ",NamedTextColor.GREEN)
                     .append(Component.text(event.getPlayer().getName(),color))

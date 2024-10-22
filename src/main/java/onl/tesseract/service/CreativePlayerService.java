@@ -6,8 +6,10 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import onl.tesseract.dao.CreativePlayerInfoDAO;
+import onl.tesseract.dao.PlayerPlotInfoDAO;
 import onl.tesseract.dao.PlayerRankInfoDAO;
 import onl.tesseract.entity.player.CreativePlayerInfo;
+import onl.tesseract.entity.player.PlayerPlotInfo;
 import onl.tesseract.entity.player.rank.PlayerRank;
 import onl.tesseract.entity.player.rank.PlayerRankInfo;
 
@@ -23,6 +25,7 @@ public class CreativePlayerService {
 
     CreativePlayerInfoDAO creativePlayerInfoDAO = CreativePlayerInfoDAO.getInstance();
     PlayerRankInfoDAO playerRankInfoDAO = PlayerRankInfoDAO.getInstance();
+    PlayerPlotInfoDAO playerPlotInfoDAO = PlayerPlotInfoDAO.getInstance();
 
     public CreativePlayerInfo get(UUID uniqueId) {
 
@@ -36,9 +39,19 @@ public class CreativePlayerService {
             playerRankInfoDAO.create(playerRankInfo);
             creativePlayerInfo.setPlayerRankInfo(playerRankInfo);
         }
-
+        if(creativePlayerInfo.getPlayerPlotInfo() == null) {
+            PlayerPlotInfo playerPlotInfo = createPlayerPlotInfo(uniqueId);
+            playerPlotInfoDAO.create(playerPlotInfo);
+            creativePlayerInfo.setPlayerPlotInfo(playerPlotInfo);
+        }
 
         return creativePlayerInfo;
+    }
+
+    private PlayerPlotInfo createPlayerPlotInfo(UUID uniqueId) {
+        PlayerPlotInfo playerPlotInfo = new PlayerPlotInfo();
+        playerPlotInfo.setUuid(uniqueId);
+        return playerPlotInfo;
     }
 
     private PlayerRankInfo createPlayerRankInfo(UUID uniqueId) {
