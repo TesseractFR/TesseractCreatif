@@ -5,6 +5,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import net.milkbowl.vault.permission.Permission;
+import onl.tesseract.command.MenuCommand;
 import onl.tesseract.player.CreativePlayerContainer;
 import onl.tesseract.tesseractlib.TesseractLib;
 import org.bukkit.Bukkit;
@@ -14,6 +15,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Objects;
 
 public final class Creatif extends JavaPlugin implements Listener {
     @Getter
@@ -33,11 +36,16 @@ public final class Creatif extends JavaPlugin implements Listener {
         }
         Config config = Config.getInstance();
         registerEvents();
+        registerCommands();
     }
 
     private void registerEvents() {
         PluginManager pluginManager = this.getServer().getPluginManager();
         pluginManager.registerEvents(this,this);
+    }
+
+    private void registerCommands() {
+        Objects.requireNonNull(this.getCommand("menu")).setExecutor(new MenuCommand());
     }
 
     @Override

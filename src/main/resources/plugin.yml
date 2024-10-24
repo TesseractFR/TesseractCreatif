@@ -3,3 +3,11 @@ version: '1.0-SNAPSHOT'
 main: onl.tesseract.Creatif
 api-version: '1.21'
 depend: [ Vault,LuckPerms, TesseractLib ]
+
+
+commands:
+  menu:
+    aliases: menu
+    usage: "/menu"
+    description: Ouvre le menu
+    permission: tesseract.creatif.menu

@@ -16,7 +16,7 @@ public class MenuMenu extends InventoryMenu {
         //TODO bouton menu boutique
         //TODO bouton menu grade
         //TODO bouton menu tp Monde
-        //TODO bouton menu cmd
+        //TODO bouton menu cmd build
         super.open(viewer);
     }
 }
