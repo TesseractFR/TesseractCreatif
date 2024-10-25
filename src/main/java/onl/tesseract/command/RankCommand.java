@@ -1,10 +1,12 @@
 package onl.tesseract.command;
 
+import onl.tesseract.CreativePlayer;
 import onl.tesseract.commandBuilder.CommandContext;
 import onl.tesseract.commandBuilder.annotation.Command;
 import onl.tesseract.commandBuilder.annotation.CommandBody;
 import onl.tesseract.menu.MenuMenu;
 import onl.tesseract.menu.RankMenu;
+import onl.tesseract.menu.SocialsMenu;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -15,7 +17,9 @@ public class RankCommand extends CommandContext {
     {
         if (sender instanceof Player player )
         {
-            new RankMenu(new MenuMenu()).open(player);
+            CreativePlayer creativePlayer = (CreativePlayer) CreativePlayer.get(player);
+            MenuMenu previousMenu = new MenuMenu(creativePlayer);
+            new RankMenu(previousMenu).open(player);
         }
 
         return true;

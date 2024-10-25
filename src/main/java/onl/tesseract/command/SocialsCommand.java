@@ -1,5 +1,6 @@
 package onl.tesseract.command;
 
+import onl.tesseract.CreativePlayer;
 import onl.tesseract.commandBuilder.CommandContext;
 import onl.tesseract.commandBuilder.annotation.Command;
 import onl.tesseract.commandBuilder.annotation.CommandBody;
@@ -15,7 +16,9 @@ public class SocialsCommand extends CommandContext {
     {
         if (sender instanceof Player player )
         {
-            new SocialsMenu(new MenuMenu()).open(player);
+            CreativePlayer creativePlayer = (CreativePlayer) CreativePlayer.get(player);
+            MenuMenu previousMenu = new MenuMenu(creativePlayer);
+            new SocialsMenu(previousMenu).open(player);
         }
 
         return true;

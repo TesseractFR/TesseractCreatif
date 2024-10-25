@@ -15,7 +15,7 @@ import org.bukkit.inventory.ItemStack;
 public class MenuMenu extends InventoryMenu {
     CreativePlayer player;
 
-    public MenuMenu() {
+    public MenuMenu(CreativePlayer player) {
         super(27, Component.text("Menu du Créatif").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, true));
         this.player = player;
     }
@@ -42,23 +42,19 @@ public class MenuMenu extends InventoryMenu {
                 ChatColor.GRAY + "Cliquez pour afficher les différents réseaux sociaux.",
                 event -> new SocialsMenu(this).open(viewer));
 
-        addButton(13, teteGrades, ChatColor.GREEN + "Grades",
+        addButton(13, teteGrades, ChatColor.DARK_GREEN + "Grades",
                 ChatColor.GRAY + "Cliquez pour afficher les différents grades du serveur.",
                 event -> new RankMenu(this).open(viewer));
 
-        ItemStack enchantedStick = new ItemStack(Material.STICK);
-        enchantedStick.addUnsafeEnchantment(Enchantment.KNOCKBACK, 1);
-
-        addButton(14, enchantedStick, ChatColor.GOLD + "Blocs spéciaux",
+        addButton(14, Material.COMMAND_BLOCK, ChatColor.DARK_AQUA + "Blocs spéciaux",
                 ChatColor.GRAY + "Cliquez pour afficher les différents grades du serveur.",
-                event -> new SpecialBlockMenu(this).open(viewer));
+                event -> new SpecialBlockMenu(player, this).open(viewer));
 
-        //TODO bouton menu de block spéciaux
         //TODO bouton affichage Info perso (plot/temps de jeu ...)
         //TODO bouton menu boutique
-        //TODO bouton menu grade
         //TODO bouton menu cmd build
 
+        addQuitButton();
         super.open(viewer);
     }
 }

@@ -42,8 +42,7 @@ public class SocialsMenu extends InventoryMenu {
     public void open(Player viewer) {
         fill(Material.GRAY_STAINED_GLASS_PANE, " ");
 
-        // Bouton Instagram
-        addButton(2, teteInstagram, ChatColor.LIGHT_PURPLE + "Instagram",
+        addButton(3, teteInstagram, ChatColor.LIGHT_PURPLE + "Instagram",
                 ChatColor.GRAY + "Cliquez pour obtenir le lien vers notre Instagram.",
                 event -> {
                     viewer.closeInventory();
@@ -55,8 +54,7 @@ public class SocialsMenu extends InventoryMenu {
                     );
                 });
 
-        // Bouton TikTok
-        addButton(6, teteTiktok, ChatColor.GOLD + "TikTok",
+        addButton(5, teteTiktok, ChatColor.GOLD + "TikTok",
                 ChatColor.GRAY + "Cliquez pour obtenir le lien vers notre compte TikTok.",
                 event -> {
                     viewer.closeInventory();
@@ -68,8 +66,7 @@ public class SocialsMenu extends InventoryMenu {
                     );
                 });
 
-        // Bouton Facebook
-        addButton(10, teteFacebook, ChatColor.BLUE + "Facebook",
+        addButton(11, teteFacebook, ChatColor.BLUE + "Facebook",
                 ChatColor.GRAY + "Cliquez pour obtenir le lien vers notre page Facebook.",
                 event -> {
                     viewer.closeInventory();
@@ -81,7 +78,6 @@ public class SocialsMenu extends InventoryMenu {
                     );
                 });
 
-        // Bouton Discord
         addButton(13, teteDiscord, ChatColor.DARK_BLUE + "Discord",
                 ChatColor.GRAY + "Cliquez pour obtenir le lien vers notre Discord.",
                 event -> {
@@ -94,8 +90,7 @@ public class SocialsMenu extends InventoryMenu {
                     );
                 });
 
-        // Bouton YouTube
-        addButton(16, teteYoutube, ChatColor.RED + "YouTube",
+        addButton(15, teteYoutube, ChatColor.RED + "YouTube",
                 ChatColor.GRAY + "Cliquez pour obtenir le lien vers notre chaîne YouTube.",
                 event -> {
                     viewer.closeInventory();
@@ -107,8 +102,7 @@ public class SocialsMenu extends InventoryMenu {
                     );
                 });
 
-        // Bouton Twitter (X)
-        addButton(20, teteTwitter, ChatColor.AQUA + "X (Twitter)",
+        addButton(21, teteTwitter, ChatColor.AQUA + "X (Twitter)",
                 ChatColor.GRAY + "Cliquez pour obtenir le lien vers notre page X (Twitter).",
                 event -> {
                     viewer.closeInventory();
@@ -120,8 +114,7 @@ public class SocialsMenu extends InventoryMenu {
                     );
                 });
 
-        // Bouton Site Internet
-        addButton(24, teteSiteWeb, ChatColor.YELLOW + "Site Internet",
+        addButton(23, teteSiteWeb, ChatColor.YELLOW + "Site Internet",
                 ChatColor.GRAY + "Cliquez pour obtenir le lien vers notre site internet.",
                 event -> {
                     viewer.closeInventory();

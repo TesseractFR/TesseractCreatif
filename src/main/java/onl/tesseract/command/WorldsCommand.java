@@ -1,9 +1,11 @@
 package onl.tesseract.command;
 
+import onl.tesseract.CreativePlayer;
 import onl.tesseract.commandBuilder.CommandContext;
 import onl.tesseract.commandBuilder.annotation.Command;
 import onl.tesseract.commandBuilder.annotation.CommandBody;
 import onl.tesseract.menu.MenuMenu;
+import onl.tesseract.menu.SocialsMenu;
 import onl.tesseract.menu.TPWorldMenu;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -15,7 +17,9 @@ public class WorldsCommand extends CommandContext {
     {
         if (sender instanceof Player player )
         {
-            new TPWorldMenu(new MenuMenu()).open(player);
+            CreativePlayer creativePlayer = (CreativePlayer) CreativePlayer.get(player);
+            MenuMenu previousMenu = new MenuMenu(creativePlayer);
+            new TPWorldMenu(previousMenu).open(player);
         }
 
         return true;

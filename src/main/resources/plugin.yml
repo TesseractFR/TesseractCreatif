@@ -26,3 +26,8 @@ commands:
     usage: "/grades"
     description: Ouvre le menu des grades
     permission: tesseract.creatif.menu
+  blocks:
+    aliases: blocks
+    usage: "/blocks"
+    description: Ouvre le menu des blocs spéciaux
+    permission: tesseract.creatif.menu
