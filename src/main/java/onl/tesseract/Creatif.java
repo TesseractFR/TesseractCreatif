@@ -6,6 +6,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import net.milkbowl.vault.permission.Permission;
 import onl.tesseract.command.MenuCommand;
+import onl.tesseract.command.RankCommand;
 import onl.tesseract.command.SocialsCommand;
 import onl.tesseract.command.WorldsCommand;
 import onl.tesseract.player.CreativePlayerContainer;
@@ -50,6 +51,7 @@ public final class Creatif extends JavaPlugin implements Listener {
         Objects.requireNonNull(this.getCommand("menu")).setExecutor(new MenuCommand());
         Objects.requireNonNull(this.getCommand("mondes")).setExecutor(new WorldsCommand());
         Objects.requireNonNull(this.getCommand("reseaux")).setExecutor(new SocialsCommand());
+        Objects.requireNonNull(this.getCommand("grades")).setExecutor(new RankCommand());
     }
 
     @Override

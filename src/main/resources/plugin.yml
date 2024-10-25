@@ -21,3 +21,8 @@ commands:
     usage: "/reseaux"
     description: Ouvre le menu des réseaux sociaux
     permission: tesseract.creatif.menu
+  grades:
+    aliases: grades
+    usage: "/grades"
+    description: Ouvre le menu des grades
+    permission: tesseract.creatif.menu

@@ -8,6 +8,7 @@ import onl.tesseract.tesseractlib.menu.boutique.global.GlobalBoutiqueMenu;
 import onl.tesseract.tesseractlib.util.menu.InventoryMenu;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -25,6 +26,9 @@ public class MenuMenu extends InventoryMenu {
     static final ItemStack teteSocialsMenu = InventoryMenu.getCustomHead("",
             "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2I5NDg0M2QzNDBhYmFkYmQ2NDAxZWY0ZWM3NGRjZWM0YjY2OTY2MTA2NWJkMWEwMWY5YTU5MDVhODkxOWM3MiJ9fX0=",
             "3b94843d340abadbd6401ef4ec74dcec4b669661065bd1a01f9a5905a8919c72");
+    static final ItemStack teteGrades = InventoryMenu.getCustomHead("",
+            "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTdlNzgyYjQwOGY1NDU2Y2ZhZDBjNDNlOGM1MDFlZjllZmQwMTI4NjI5NzM2MGJlM2I4M2ZiMTZkYzljZDJhNSJ9fX0=",
+            "97e782b408f5456cfad0c43e8c501ef9efd01286297360be3b83fb16dc9cd2a5");
 
     @Override
     public void open(Player viewer){
@@ -38,12 +42,21 @@ public class MenuMenu extends InventoryMenu {
                 ChatColor.GRAY + "Cliquez pour afficher les différents réseaux sociaux.",
                 event -> new SocialsMenu(this).open(viewer));
 
+        addButton(13, teteGrades, ChatColor.GREEN + "Grades",
+                ChatColor.GRAY + "Cliquez pour afficher les différents grades du serveur.",
+                event -> new RankMenu(this).open(viewer));
+
+        ItemStack enchantedStick = new ItemStack(Material.STICK);
+        enchantedStick.addUnsafeEnchantment(Enchantment.KNOCKBACK, 1);
+
+        addButton(14, enchantedStick, ChatColor.GOLD + "Blocs spéciaux",
+                ChatColor.GRAY + "Cliquez pour afficher les différents grades du serveur.",
+                event -> new SpecialBlockMenu(this).open(viewer));
+
         //TODO bouton menu de block spéciaux
-        //TODO bouton affichage réseaux sociaux
         //TODO bouton affichage Info perso (plot/temps de jeu ...)
         //TODO bouton menu boutique
         //TODO bouton menu grade
-        //TODO bouton menu tp Monde
         //TODO bouton menu cmd build
 
         super.open(viewer);
