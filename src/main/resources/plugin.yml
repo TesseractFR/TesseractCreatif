@@ -11,3 +11,13 @@ commands:
     usage: "/menu"
     description: Ouvre le menu
     permission: tesseract.creatif.menu
+  mondes:
+    aliases: mondes
+    usage: "/mondes"
+    description: Ouvre le menu des mondes créa
+    permission: tesseract.creatif.menu
+  reseaux:
+    aliases: reseaux
+    usage: "/reseaux"
+    description: Ouvre le menu des réseaux sociaux
+    permission: tesseract.creatif.menu
