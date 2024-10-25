@@ -34,81 +34,102 @@ public class SocialsMenu extends InventoryMenu {
     static final ItemStack teteTiktok = InventoryMenu.getCustomHead("",
             "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNThkMDI5ODRhNDNlNmM2OTEwZDBkOTA4YTU3ZTA0MWMzY2ZiMWRkODgxYjViNzIwYzU1NTYzZTY4MWY1OWUwZSJ9fX0=",
             "58d02984a43e6c6910d0d908a57e041c3cfb1dd881b5b720c55563e681f59e0e");
+    static final ItemStack teteDiscord = InventoryMenu.getCustomHead("",
+            "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2I5NDg0M2QzNDBhYmFkYmQ2NDAxZWY0ZWM3NGRjZWM0YjY2OTY2MTA2NWJkMWEwMWY5YTU5MDVhODkxOWM3MiJ9fX0=",
+            "3b94843d340abadbd6401ef4ec74dcec4b669661065bd1a01f9a5905a8919c72");
 
     @Override
-    public void open(Player viewer){
-        // Remplir la base avec des vitres grises pour un fond uniforme
+    public void open(Player viewer) {
         fill(Material.GRAY_STAINED_GLASS_PANE, " ");
 
-        addButton(0, teteInstagram, ChatColor.LIGHT_PURPLE + "Instagram",
+        // Bouton Instagram
+        addButton(2, teteInstagram, ChatColor.LIGHT_PURPLE + "Instagram",
                 ChatColor.GRAY + "Cliquez pour obtenir le lien vers notre Instagram.",
                 event -> {
                     viewer.closeInventory();
-                    viewer.sendMessage(Component.text("Instagram")
-                                    .color(NamedTextColor.LIGHT_PURPLE)
-                                    .decorate(TextDecoration.BOLD)
-                                    .clickEvent(ClickEvent.openUrl("https://www.instagram.com/tesseractfr/")
-                            )
+                    viewer.sendMessage(
+                            Component.text("----------\n").color(NamedTextColor.LIGHT_PURPLE)
+                                    .append(Component.text("Instagram").color(NamedTextColor.LIGHT_PURPLE).decorate(TextDecoration.BOLD))
+                                    .append(Component.text("\n----------").color(NamedTextColor.LIGHT_PURPLE))
+                                    .clickEvent(ClickEvent.openUrl("https://www.instagram.com/tesseractfr/"))
                     );
-        });
+                });
 
-        addButton(4, teteTiktok, ChatColor.GOLD + "TikTok",
+        // Bouton TikTok
+        addButton(6, teteTiktok, ChatColor.GOLD + "TikTok",
                 ChatColor.GRAY + "Cliquez pour obtenir le lien vers notre compte TikTok.",
                 event -> {
                     viewer.closeInventory();
-                    viewer.sendMessage(Component.text("TikTok")
-                            .color(NamedTextColor.GOLD)
-                            .decorate(TextDecoration.BOLD)
-                            .clickEvent(ClickEvent.openUrl("https://www.tiktok.com/@tesseractfr?lang=fr")
-                            )
+                    viewer.sendMessage(
+                            Component.text("------\n").color(NamedTextColor.GOLD)
+                                    .append(Component.text("TikTok").color(NamedTextColor.GOLD).decorate(TextDecoration.BOLD))
+                                    .append(Component.text("\n------").color(NamedTextColor.GOLD))
+                                    .clickEvent(ClickEvent.openUrl("https://www.tiktok.com/@tesseractfr?lang=fr"))
                     );
                 });
 
-        addButton(8, teteFacebook, ChatColor.BLUE + "Facebook",
+        // Bouton Facebook
+        addButton(10, teteFacebook, ChatColor.BLUE + "Facebook",
                 ChatColor.GRAY + "Cliquez pour obtenir le lien vers notre page Facebook.",
                 event -> {
                     viewer.closeInventory();
-                    viewer.sendMessage(Component.text("Facebook")
-                            .color(NamedTextColor.BLUE)
-                            .decorate(TextDecoration.BOLD)
-                            .clickEvent(ClickEvent.openUrl("https://www.facebook.com/TesseractFR?locale=fr_FR")
-                            )
+                    viewer.sendMessage(
+                            Component.text("---------\n").color(NamedTextColor.BLUE)
+                                    .append(Component.text("Facebook").color(NamedTextColor.BLUE).decorate(TextDecoration.BOLD))
+                                    .append(Component.text("\n---------").color(NamedTextColor.BLUE))
+                                    .clickEvent(ClickEvent.openUrl("https://www.facebook.com/TesseractFR?locale=fr_FR"))
                     );
                 });
 
-        addButton(11, teteYoutube, ChatColor.RED + "YouTube",
+        // Bouton Discord
+        addButton(13, teteDiscord, ChatColor.DARK_BLUE + "Discord",
+                ChatColor.GRAY + "Cliquez pour obtenir le lien vers notre Discord.",
+                event -> {
+                    viewer.closeInventory();
+                    viewer.sendMessage(
+                            Component.text("--------\n").color(NamedTextColor.DARK_BLUE)
+                                    .append(Component.text("Discord").color(NamedTextColor.DARK_BLUE).decorate(TextDecoration.BOLD))
+                                    .append(Component.text("\n--------").color(NamedTextColor.DARK_BLUE))
+                                    .clickEvent(ClickEvent.openUrl("https://discord.gg/4ajRytDJWK"))
+                    );
+                });
+
+        // Bouton YouTube
+        addButton(16, teteYoutube, ChatColor.RED + "YouTube",
                 ChatColor.GRAY + "Cliquez pour obtenir le lien vers notre chaîne YouTube.",
                 event -> {
                     viewer.closeInventory();
-                    viewer.sendMessage(Component.text("Youtube")
-                            .color(NamedTextColor.RED)
-                            .decorate(TextDecoration.BOLD)
-                            .clickEvent(ClickEvent.openUrl("https://www.youtube.com/@tesseract7852")
-                            )
+                    viewer.sendMessage(
+                            Component.text("--------\n").color(NamedTextColor.RED)
+                                    .append(Component.text("YouTube").color(NamedTextColor.RED).decorate(TextDecoration.BOLD))
+                                    .append(Component.text("\n--------").color(NamedTextColor.RED))
+                                    .clickEvent(ClickEvent.openUrl("https://www.youtube.com/@tesseract7852"))
                     );
                 });
 
-        addButton(15, teteTwitter, ChatColor.AQUA + "X (Twitter)",
+        // Bouton Twitter (X)
+        addButton(20, teteTwitter, ChatColor.AQUA + "X (Twitter)",
                 ChatColor.GRAY + "Cliquez pour obtenir le lien vers notre page X (Twitter).",
                 event -> {
                     viewer.closeInventory();
-                    viewer.sendMessage(Component.text("X (Twitter)")
-                            .color(NamedTextColor.AQUA)
-                            .decorate(TextDecoration.BOLD)
-                            .clickEvent(ClickEvent.openUrl("https://x.com/TesseractFR")
-                            )
+                    viewer.sendMessage(
+                            Component.text("-----------\n").color(NamedTextColor.AQUA)
+                                    .append(Component.text("X (Twitter)").color(NamedTextColor.AQUA).decorate(TextDecoration.BOLD))
+                                    .append(Component.text("\n-----------").color(NamedTextColor.AQUA))
+                                    .clickEvent(ClickEvent.openUrl("https://x.com/TesseractFR"))
                     );
                 });
 
-        addButton(22, teteSiteWeb, ChatColor.YELLOW + "Site Internet",
+        // Bouton Site Internet
+        addButton(24, teteSiteWeb, ChatColor.YELLOW + "Site Internet",
                 ChatColor.GRAY + "Cliquez pour obtenir le lien vers notre site internet.",
                 event -> {
                     viewer.closeInventory();
-                    viewer.sendMessage(Component.text("Site Internet")
-                            .color(NamedTextColor.YELLOW)
-                            .decorate(TextDecoration.BOLD)
-                            .clickEvent(ClickEvent.openUrl("https://www.tesseract.onl/")
-                            )
+                    viewer.sendMessage(
+                            Component.text("-------------\n").color(NamedTextColor.YELLOW)
+                                    .append(Component.text("Site Internet").color(NamedTextColor.YELLOW).decorate(TextDecoration.BOLD))
+                                    .append(Component.text("\n-------------").color(NamedTextColor.YELLOW))
+                                    .clickEvent(ClickEvent.openUrl("https://www.tesseract.onl/"))
                     );
                 });
 
@@ -117,4 +138,5 @@ public class SocialsMenu extends InventoryMenu {
 
         super.open(viewer);
     }
+
 }
