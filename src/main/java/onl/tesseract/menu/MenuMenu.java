@@ -3,12 +3,11 @@ package onl.tesseract.menu;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import onl.tesseract.CommandsBook;
 import onl.tesseract.CreativePlayer;
-import onl.tesseract.tesseractlib.menu.boutique.global.GlobalBoutiqueMenu;
 import onl.tesseract.tesseractlib.util.menu.InventoryMenu;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -47,8 +46,16 @@ public class MenuMenu extends InventoryMenu {
                 event -> new RankMenu(this).open(viewer));
 
         addButton(14, Material.COMMAND_BLOCK, ChatColor.DARK_AQUA + "Blocs spéciaux",
-                ChatColor.GRAY + "Cliquez pour afficher les différents grades du serveur.",
+                ChatColor.GRAY + "Cliquez pour afficher les différents blocs spéciaux du serveur (hors inventaire).",
                 event -> new SpecialBlockMenu(player, this).open(viewer));
+
+        addButton(15, Material.BOOKSHELF, ChatColor.DARK_PURPLE + "Outils de Construction du serveur",
+                ChatColor.GRAY + "Cliquez pour afficher les différents outils disponibles du serveur pour construire.",
+                event -> new BuildToolsMenu(this).open(viewer));
+
+        addButton(16, Material.BOOK, ChatColor.RED + "Guide des commandes de build",
+                ChatColor.GRAY + "Cliquez pour recevoir le guide des commandes essentielles pour bien démarrer votre construction !",
+                event -> {player.getBukkitPlayer().getInventory().addItem(CommandsBook.createGuideBook(player));});
 
         //TODO bouton affichage Info perso (plot/temps de jeu ...)
         //TODO bouton menu boutique

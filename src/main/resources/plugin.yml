@@ -31,3 +31,12 @@ commands:
     usage: "/blocks"
     description: Ouvre le menu des blocs spéciaux
     permission: tesseract.creatif.menu
+  outils:
+    aliases: outils
+    usage: "/outils"
+    description: Ouvre le menu des outils de build
+    permission: tesseract.creatif.menu
+  commandes:
+    aliases: commandes
+    usage: "/commandes"
+    description: Reçois un livre guide des commandes de build basiques
