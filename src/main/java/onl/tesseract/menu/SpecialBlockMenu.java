@@ -3,6 +3,7 @@ package onl.tesseract.menu;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import onl.tesseract.Creatif;
 import onl.tesseract.CreativePlayer;
 import onl.tesseract.entity.PlotWorld;
 import onl.tesseract.tesseractlib.menu.boutique.global.GlobalBoutiqueMenu;
