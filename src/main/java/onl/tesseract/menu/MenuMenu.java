@@ -55,7 +55,10 @@ public class MenuMenu extends InventoryMenu {
 
         addButton(16, Material.BOOK, ChatColor.RED + "Guide des commandes de build",
                 ChatColor.GRAY + "Cliquez pour recevoir le guide des commandes essentielles pour bien démarrer votre construction !",
-                event -> {player.getBukkitPlayer().getInventory().addItem(CommandsBook.createGuideBook(player));});
+                event -> {
+                    close();
+                    player.getBukkitPlayer().getInventory().addItem(CommandsBook.createGuideBook(player));
+                });
 
         //TODO bouton affichage Info perso (plot/temps de jeu ...)
         //TODO bouton menu boutique
