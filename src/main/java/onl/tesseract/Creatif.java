@@ -25,7 +25,7 @@ public final class Creatif extends JavaPlugin implements Listener {
     @Getter
     private static Creatif instance;
     @Getter
-    public static Permission permissions = null;
+    private Permission permissions = null;
     @Override
     public void onEnable() {
         Creatif.instance = this;
