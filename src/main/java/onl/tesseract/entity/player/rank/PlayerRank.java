@@ -12,7 +12,7 @@ public enum PlayerRank implements Rank{
     CREATEUR("createur",Title.CREATEUR, NamedTextColor.DARK_PURPLE,RankPlot.CREATEUR_PLOT),
     INGENIEUR("ingenieur",Title.INGENIEUR, NamedTextColor.DARK_BLUE,RankPlot.INGENIEUR_PLOT),
     BATISSEUR("batisseur",Title.BATISSEUR, NamedTextColor.BLUE,RankPlot.BATISSEUR_PLOT),
-
+    VIRTUOSE("virtuose",Title.VIRTUOSE,NamedTextColor.AQUA,RankPlot.VIRTUOSEUR_PLOT)
 
     ;
     private final String permGroup;
