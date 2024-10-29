@@ -15,10 +15,6 @@ import org.bukkit.inventory.ItemStack;
 
 public class RankMenu extends InventoryMenu {
 
-    public RankMenu(InventoryMenu previous) {
-        super(27, Component.text("Grades").color(NamedTextColor.DARK_GREEN).decoration(TextDecoration.BOLD, true), previous);
-    }
-
     static final ItemStack teteApprenti = InventoryMenu.getCustomHead("",
             "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWQwMzgyYjY1ZjQ0NmI3NDkxNTg2ZGE2MGE2MThlMTU3NTU2NWI5M2Q1NmIwZjAzZWVjNWQ3NjlkMmY1NmFjYSJ9fX0=",
             "ad0382b65f446b7491586da60a618e1575565b93d56b0f03eec5d769d2f56aca");
@@ -38,27 +34,42 @@ public class RankMenu extends InventoryMenu {
             "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjQ3OTgwYzZkODZlYzA2ZDcyNDZhMmUxMzMzODE5MjQzNDAyNDk2YjRlYmRhZDJkNTRkMzUzNzAzNDJjNWFlYSJ9fX0=",
             "b47980c6d86ec06d7246a2e1333819243402496b4ebdad2d54d35370342c5aea");
 
+    public RankMenu(InventoryMenu previous) {
+        super(27, Component.text("Grades", NamedTextColor.DARK_GREEN, TextDecoration.BOLD), previous);
+    }
+
     @Override
     public void open(Player viewer){
         fill(Material.GRAY_STAINED_GLASS_PANE, " ");
 
-        addButton(0, teteApprenti, Component.text("Apprenti").color(NamedTextColor.GREEN),
-                Component.text("AJOUTER DESCRIPTION").color(NamedTextColor.GRAY),
+        addButton(0, teteApprenti,
+                Component.text("Apprenti", NamedTextColor.GREEN, TextDecoration.BOLD),
+                Component.text("AJOUTER DESCRIPTION", NamedTextColor.GRAY, TextDecoration.ITALIC),
                 event -> {});
-        addButton(11, teteConcepteur, Component.text("Concepteur").color(NamedTextColor.LIGHT_PURPLE),
-                Component.text("AJOUTER DESCRIPTION.").color(NamedTextColor.GRAY),
+
+        addButton(11, teteConcepteur,
+                Component.text("Concepteur", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD),
+                Component.text("AJOUTER DESCRIPTION.", NamedTextColor.GRAY, TextDecoration.ITALIC),
                 event -> {});
-        addButton(4, teteCreateur, Component.text("Créateur").color(NamedTextColor.YELLOW),
-                Component.text("AJOUTER DESCRIPTION").color(NamedTextColor.GRAY),
+
+        addButton(4, teteCreateur,
+                Component.text("Créateur", NamedTextColor.YELLOW, TextDecoration.BOLD),
+                Component.text("AJOUTER DESCRIPTION", NamedTextColor.GRAY, TextDecoration.ITALIC),
                 event -> {});
-        addButton(15, teteIngenieur, Component.text("Ingénieur").color(NamedTextColor.BLUE),
-                Component.text("AJOUTER DESCRIPTION").color(NamedTextColor.GRAY),
+
+        addButton(15, teteIngenieur,
+                Component.text("Ingénieur", NamedTextColor.BLUE, TextDecoration.BOLD),
+                Component.text("AJOUTER DESCRIPTION", NamedTextColor.GRAY, TextDecoration.ITALIC),
                 event -> {});
-        addButton(8, teteBatisseur, Component.text("Bâtisseur").color(NamedTextColor.AQUA),
-                Component.text("AJOUTER DESCRIPTION").color(NamedTextColor.GRAY),
+
+        addButton(8, teteBatisseur,
+                Component.text("Bâtisseur", NamedTextColor.AQUA, TextDecoration.BOLD),
+                Component.text("AJOUTER DESCRIPTION", NamedTextColor.GRAY, TextDecoration.ITALIC),
                 event -> {});
-        addButton(22, teteVirtuose, Component.text("Virtuose").color(NamedTextColor.RED),
-                Component.text("AJOUTER DESCRIPTION").color(NamedTextColor.GRAY),
+
+        addButton(22, teteVirtuose,
+                Component.text("Virtuose", NamedTextColor.RED, TextDecoration.BOLD),
+                Component.text("AJOUTER DESCRIPTION", NamedTextColor.GRAY, TextDecoration.ITALIC),
                 event -> {});
 
         addBackButton();

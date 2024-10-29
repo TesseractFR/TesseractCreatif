@@ -11,12 +11,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class MenuMenu extends InventoryMenu {
-    CreativePlayer player;
 
-    public MenuMenu(CreativePlayer player) {
-        super(54, Component.text("Menu du Créatif").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, true));
-        this.player = player;
-    }
+    CreativePlayer player;
 
     static final ItemStack teteTPWorldMenu = InventoryMenu.getCustomHead("",
             "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjFkZDRmZTRhNDI5YWJkNjY1ZGZkYjNlMjEzMjFkNmVmYTZhNmI1ZTdiOTU2ZGI5YzVkNTljOWVmYWIyNSJ9fX0=",
@@ -28,44 +24,48 @@ public class MenuMenu extends InventoryMenu {
             "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTdlNzgyYjQwOGY1NDU2Y2ZhZDBjNDNlOGM1MDFlZjllZmQwMTI4NjI5NzM2MGJlM2I4M2ZiMTZkYzljZDJhNSJ9fX0=",
             "97e782b408f5456cfad0c43e8c501ef9efd01286297360be3b83fb16dc9cd2a5");
 
+    public MenuMenu(CreativePlayer player) {
+        super(54, Component.text("Menu du Créatif", NamedTextColor.RED, TextDecoration.BOLD));
+        this.player = player;
+    }
+
     @Override
     public void open(Player viewer){
         fill(Material.GRAY_STAINED_GLASS_PANE, " ");
 
         addButton(11, teteTPWorldMenu,
-                Component.text("Téléportations dans les mondes").color(NamedTextColor.BLUE),
-                Component.text("Cliquez pour afficher les différents mondes disponibles et vous y téléporter.").color(NamedTextColor.GRAY),
+                Component.text("Téléportations dans les mondes", NamedTextColor.BLUE),
+                Component.text("Cliquez pour afficher les différents mondes disponibles et vous y téléporter.", NamedTextColor.GRAY),
                 event -> new TPWorldMenu(this).open(viewer));
 
         addButton(12, teteSocialsMenu,
-                Component.text("Réseaux sociaux").color(NamedTextColor.LIGHT_PURPLE),
-                Component.text("Cliquez pour afficher les différents réseaux sociaux.").color(NamedTextColor.GRAY),
+                Component.text("Réseaux sociaux", NamedTextColor.LIGHT_PURPLE),
+                Component.text("Cliquez pour afficher les différents réseaux sociaux.", NamedTextColor.GRAY),
                 event -> new SocialsMenu(this).open(viewer));
 
         addButton(13, teteGrades,
-                Component.text("Grades").color(NamedTextColor.DARK_GREEN),
-                Component.text("Cliquez pour afficher les différents grades du serveur.").color(NamedTextColor.GRAY),
+                Component.text("Grades", NamedTextColor.DARK_GREEN),
+                Component.text("Cliquez pour afficher les différents grades du serveur.", NamedTextColor.GRAY),
                 event -> new RankMenu(this).open(viewer));
 
         addButton(14, Material.LIGHT,
-                Component.text("Blocs spéciaux").color(NamedTextColor.DARK_AQUA),
-                Component.text("Cliquez pour afficher les différents blocs spéciaux du serveur (hors inventaire).").color(NamedTextColor.GRAY),
+                Component.text("Blocs spéciaux", NamedTextColor.DARK_AQUA),
+                Component.text("Cliquez pour afficher les différents blocs spéciaux du serveur (hors inventaire).", NamedTextColor.GRAY),
                 event -> new SpecialBlockMenu(player, this).open(viewer));
 
         addButton(15, Material.WOODEN_AXE,
-                Component.text("Outils/Plugins du serveur").color(NamedTextColor.DARK_PURPLE),
-                Component.text("Cliquez pour afficher les différents outils et plugins utilisés sur le serveur pour construire.").color(NamedTextColor.GRAY),
+                Component.text("Outils/Plugins du serveur", NamedTextColor.DARK_PURPLE),
+                Component.text("Cliquez pour afficher les différents outils et plugins utilisés sur le serveur pour construire.", NamedTextColor.GRAY),
                 event -> new PluginsToolsMenu(this).open(viewer));
 
         addButton(16, Material.BOOK,
-                Component.text("Le Build pour les Nuls").color(NamedTextColor.RED),
-                Component.text("Cliquez pour recevoir le guide des commandes de build essentielles pour bien démarrer votre construction !").color(NamedTextColor.GRAY),
+                Component.text("Le Build pour les Nuls", NamedTextColor.RED),
+                Component.text("Cliquez pour recevoir le guide des commandes de build essentielles pour bien démarrer votre construction !", NamedTextColor.GRAY),
                 event -> {
                     close();
                     player.getBukkitPlayer().getInventory().addItem(CommandsBook.createGuideBook(player));
                 });
 
-        // TODO boutons supplémentaires
         addQuitButton();
         super.open(viewer);
     }

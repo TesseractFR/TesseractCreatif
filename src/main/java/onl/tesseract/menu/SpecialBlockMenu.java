@@ -19,7 +19,7 @@ public class SpecialBlockMenu extends InventoryMenu {
     CreativePlayer player;
 
     public SpecialBlockMenu(CreativePlayer player, InventoryMenu previous) {
-        super(27, Component.text("Blocs spéciaux").color(NamedTextColor.DARK_AQUA).decoration(TextDecoration.BOLD, true), previous);
+        super(27, Component.text("Blocs spéciaux", NamedTextColor.DARK_AQUA, TextDecoration.BOLD), previous);
         this.player = player;
     }
 
@@ -27,41 +27,50 @@ public class SpecialBlockMenu extends InventoryMenu {
     public void open(Player viewer){
         fill(Material.GRAY_STAINED_GLASS_PANE, " ");
 
-        addButton(0, Material.COMMAND_BLOCK, Component.text("Bloc de commande").color(NamedTextColor.GOLD).decorate(TextDecoration.BOLD),
-                Component.text("AJOUTER DESCRIPTION").color(NamedTextColor.GRAY),
-                event -> {player.getBukkitPlayer().getInventory().addItem(new ItemStack(Material.COMMAND_BLOCK));});
+        addButton(0, Material.COMMAND_BLOCK,
+                Component.text("Bloc de commande", NamedTextColor.GOLD, TextDecoration.BOLD),
+                Component.text("AJOUTER DESCRIPTION", NamedTextColor.GRAY),
+                event -> { player.getBukkitPlayer().getInventory().addItem(new ItemStack(Material.COMMAND_BLOCK)); });
 
-        addButton(10, Material.CHAIN_COMMAND_BLOCK, Component.text("Bloc de commande en chaîne").color(NamedTextColor.GREEN).decorate(TextDecoration.BOLD),
-                Component.text("AJOUTER DESCRIPTION").color(NamedTextColor.GRAY),
-                event -> {player.getBukkitPlayer().getInventory().addItem(new ItemStack(Material.CHAIN_COMMAND_BLOCK));});
+        addButton(10, Material.CHAIN_COMMAND_BLOCK,
+                Component.text("Bloc de commande en chaîne", NamedTextColor.GREEN, TextDecoration.BOLD),
+                Component.text("AJOUTER DESCRIPTION", NamedTextColor.GRAY),
+                event -> { player.getBukkitPlayer().getInventory().addItem(new ItemStack(Material.CHAIN_COMMAND_BLOCK)); });
 
-        addButton(2, Material.REPEATING_COMMAND_BLOCK, Component.text("Bloc de commande à répétition").color(NamedTextColor.AQUA).decorate(TextDecoration.BOLD),
-                Component.text("AJOUTER DESCRIPTION").color(NamedTextColor.GRAY),
-                event -> {player.getBukkitPlayer().getInventory().addItem(new ItemStack(Material.REPEATING_COMMAND_BLOCK));});
+        addButton(2, Material.REPEATING_COMMAND_BLOCK,
+                Component.text("Bloc de commande à répétition", NamedTextColor.AQUA, TextDecoration.BOLD),
+                Component.text("AJOUTER DESCRIPTION", NamedTextColor.GRAY),
+                event -> { player.getBukkitPlayer().getInventory().addItem(new ItemStack(Material.REPEATING_COMMAND_BLOCK)); });
 
-        addButton(12, Material.COMMAND_BLOCK_MINECART, Component.text("Wagonnet à bloc de commande").color(NamedTextColor.DARK_RED).decorate(TextDecoration.BOLD),
-                Component.text("AJOUTER DESCRIPTION").color(NamedTextColor.GRAY),
-                event -> {player.getBukkitPlayer().getInventory().addItem(new ItemStack(Material.COMMAND_BLOCK_MINECART));});
+        addButton(12, Material.COMMAND_BLOCK_MINECART,
+                Component.text("Wagonnet à bloc de commande", NamedTextColor.DARK_RED, TextDecoration.BOLD),
+                Component.text("AJOUTER DESCRIPTION", NamedTextColor.GRAY),
+                event -> { player.getBukkitPlayer().getInventory().addItem(new ItemStack(Material.COMMAND_BLOCK_MINECART)); });
 
-        addButton(4, Material.STRUCTURE_BLOCK, Component.text("Bloc de structure").color(NamedTextColor.DARK_PURPLE).decorate(TextDecoration.BOLD),
-                Component.text("AJOUTER DESCRIPTION").color(NamedTextColor.GRAY),
-                event -> {player.getBukkitPlayer().getInventory().addItem(new ItemStack(Material.STRUCTURE_BLOCK));});
+        addButton(4, Material.STRUCTURE_BLOCK,
+                Component.text("Bloc de structure", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD),
+                Component.text("AJOUTER DESCRIPTION", NamedTextColor.GRAY),
+                event -> { player.getBukkitPlayer().getInventory().addItem(new ItemStack(Material.STRUCTURE_BLOCK)); });
 
-        addButton(14, Material.JIGSAW, Component.text("Bloc de puzzle").color(NamedTextColor.DARK_PURPLE).decorate(TextDecoration.BOLD),
-                Component.text("AJOUTER DESCRIPTION").color(NamedTextColor.GRAY),
-                event -> {player.getBukkitPlayer().getInventory().addItem(new ItemStack(Material.JIGSAW));});
+        addButton(14, Material.JIGSAW,
+                Component.text("Bloc de puzzle", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD),
+                Component.text("AJOUTER DESCRIPTION", NamedTextColor.GRAY),
+                event -> { player.getBukkitPlayer().getInventory().addItem(new ItemStack(Material.JIGSAW)); });
 
-        addButton(6, Material.STRUCTURE_VOID, Component.text("Vide de structure").color(NamedTextColor.BLUE).decorate(TextDecoration.BOLD),
-                Component.text("AJOUTER DESCRIPTION").color(NamedTextColor.GRAY),
-                event -> {player.getBukkitPlayer().getInventory().addItem(new ItemStack(Material.STRUCTURE_VOID));});
+        addButton(6, Material.STRUCTURE_VOID,
+                Component.text("Vide de structure", NamedTextColor.BLUE, TextDecoration.BOLD),
+                Component.text("AJOUTER DESCRIPTION", NamedTextColor.GRAY),
+                event -> { player.getBukkitPlayer().getInventory().addItem(new ItemStack(Material.STRUCTURE_VOID)); });
 
-        addButton(16, Material.BARRIER, Component.text("Barrière invisible").color(NamedTextColor.RED).decorate(TextDecoration.BOLD),
-                Component.text("AJOUTER DESCRIPTION").color(NamedTextColor.GRAY),
-                event -> {player.getBukkitPlayer().getInventory().addItem(new ItemStack(Material.BARRIER));});
+        addButton(16, Material.BARRIER,
+                Component.text("Barrière invisible", NamedTextColor.RED, TextDecoration.BOLD),
+                Component.text("AJOUTER DESCRIPTION", NamedTextColor.GRAY),
+                event -> { player.getBukkitPlayer().getInventory().addItem(new ItemStack(Material.BARRIER)); });
 
-        addButton(8, Material.LIGHT, Component.text("Lumière").color(NamedTextColor.YELLOW).decorate(TextDecoration.BOLD),
-                Component.text("AJOUTER DESCRIPTION").color(NamedTextColor.GRAY),
-                event -> {player.getBukkitPlayer().getInventory().addItem(new ItemStack(Material.LIGHT));});
+        addButton(8, Material.LIGHT,
+                Component.text("Lumière", NamedTextColor.YELLOW, TextDecoration.BOLD),
+                Component.text("AJOUTER DESCRIPTION", NamedTextColor.GRAY),
+                event -> { player.getBukkitPlayer().getInventory().addItem(new ItemStack(Material.LIGHT)); });
 
         addBackButton();
         addQuitButton();
