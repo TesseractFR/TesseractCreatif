@@ -57,7 +57,6 @@ public class SpecialBlockMenu extends InventoryMenu {
 
         addBackButton();
         addQuitButton();
-
         super.open(viewer);
     }
 }
