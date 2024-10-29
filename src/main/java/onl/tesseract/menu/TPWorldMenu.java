@@ -39,21 +39,26 @@ public class TPWorldMenu extends InventoryMenu {
     public void open(Player viewer){
         fill(Material.GRAY_STAINED_GLASS_PANE, " ");
 
-        addButton(0, tete100, ChatColor.AQUA + "Monde 100x100",
-                ChatColor.GRAY + "Cliquez pour vous téléporter dans le monde 100x100.",
+        addButton(0, tete100, Component.text("Monde 100x100").color(NamedTextColor.AQUA).decorate(TextDecoration.BOLD),
+                Component.text("Cliquez pour vous téléporter dans le monde 100x100.").color(NamedTextColor.GRAY),
                 event -> viewer.teleport(WorldManager.getInstance().getWorldSpawn(PlotWorld.WORLD_100)));
-        addButton(11, tete250, ChatColor.YELLOW + "Monde 250x250",
-                ChatColor.GRAY + "Cliquez pour vous téléporter dans le monde 250x250.",
+
+        addButton(11, tete250, Component.text("Monde 250x250").color(NamedTextColor.YELLOW).decorate(TextDecoration.BOLD),
+                Component.text("Cliquez pour vous téléporter dans le monde 250x250.").color(NamedTextColor.GRAY),
                 event -> viewer.teleport(WorldManager.getInstance().getWorldSpawn(PlotWorld.WORLD_250)));
-        addButton(4, tete500, ChatColor.GOLD + "Monde 500x500",
-                ChatColor.GRAY + "Cliquez pour vous téléporter dans le monde 500x500.",
+
+        addButton(4, tete500, Component.text("Monde 500x500").color(NamedTextColor.GOLD).decorate(TextDecoration.BOLD),
+                Component.text("Cliquez pour vous téléporter dans le monde 500x500.").color(NamedTextColor.GRAY),
                 event -> viewer.teleport(WorldManager.getInstance().getWorldSpawn(PlotWorld.WORLD_500)));
-        addButton(15, tete1000, ChatColor.LIGHT_PURPLE + "Monde 1000x1000",
-                ChatColor.GRAY + "Cliquez pour vous téléporter dans le monde 1000x1000.",
+
+        addButton(15, tete1000, Component.text("Monde 1000x1000").color(NamedTextColor.LIGHT_PURPLE).decorate(TextDecoration.BOLD),
+                Component.text("Cliquez pour vous téléporter dans le monde 1000x1000.").color(NamedTextColor.GRAY),
                 event -> viewer.teleport(WorldManager.getInstance().getWorldSpawn(PlotWorld.WORLD_1000)));
-        addButton(8, teteEvent, ChatColor.RED + "Monde Event",
-                ChatColor.GRAY + "Cliquez pour vous téléporter dans le monde Event.",
+
+        addButton(8, teteEvent, Component.text("Monde Event").color(NamedTextColor.RED).decorate(TextDecoration.BOLD),
+                Component.text("Cliquez pour vous téléporter dans le monde Event.").color(NamedTextColor.GRAY),
                 event -> viewer.teleport(WorldManager.getInstance().getWorldSpawn(PlotWorld.WORLD_EVENT)));
+
 
         addBackButton();
         addQuitButton();

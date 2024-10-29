@@ -6,7 +6,6 @@ import net.kyori.adventure.text.format.TextDecoration;
 import onl.tesseract.CommandsBook;
 import onl.tesseract.CreativePlayer;
 import onl.tesseract.tesseractlib.util.menu.InventoryMenu;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -33,38 +32,45 @@ public class MenuMenu extends InventoryMenu {
     public void open(Player viewer){
         fill(Material.GRAY_STAINED_GLASS_PANE, " ");
 
-        addButton(11, teteTPWorldMenu, ChatColor.BLUE + "Téléportations dans les mondes",
-                ChatColor.GRAY + "Cliquez pour afficher les différents mondes disponible et vous y téléporter.",
+        addButton(11, teteTPWorldMenu,
+                Component.text("Téléportations dans les mondes").color(NamedTextColor.BLUE),
+                Component.text("Cliquez pour afficher les différents mondes disponibles et vous y téléporter.").color(NamedTextColor.GRAY),
                 event -> new TPWorldMenu(this).open(viewer));
 
-        addButton(12, teteSocialsMenu, ChatColor.LIGHT_PURPLE + "Réseaux sociaux",
-                ChatColor.GRAY + "Cliquez pour afficher les différents réseaux sociaux.",
+        addButton(12, teteSocialsMenu,
+                Component.text("Réseaux sociaux").color(NamedTextColor.LIGHT_PURPLE),
+                Component.text("Cliquez pour afficher les différents réseaux sociaux.").color(NamedTextColor.GRAY),
                 event -> new SocialsMenu(this).open(viewer));
 
-        addButton(13, teteGrades, ChatColor.DARK_GREEN + "Grades",
-                ChatColor.GRAY + "Cliquez pour afficher les différents grades du serveur.",
+        addButton(13, teteGrades,
+                Component.text("Grades").color(NamedTextColor.DARK_GREEN),
+                Component.text("Cliquez pour afficher les différents grades du serveur.").color(NamedTextColor.GRAY),
                 event -> new RankMenu(this).open(viewer));
 
-        addButton(14, Material.LIGHT, ChatColor.DARK_AQUA + "Blocs spéciaux",
-                ChatColor.GRAY + "Cliquez pour afficher les différents blocs spéciaux du serveur (hors inventaire).",
+        addButton(14, Material.LIGHT,
+                Component.text("Blocs spéciaux").color(NamedTextColor.DARK_AQUA),
+                Component.text("Cliquez pour afficher les différents blocs spéciaux du serveur (hors inventaire).").color(NamedTextColor.GRAY),
                 event -> new SpecialBlockMenu(player, this).open(viewer));
 
-        addButton(15, Material.WOODEN_AXE, ChatColor.DARK_PURPLE + "Outils/Plugins du serveur",
-                ChatColor.GRAY + "Cliquez pour afficher les différents outils et plugins utilisés sur le serveur pour construire.",
+        addButton(15, Material.WOODEN_AXE,
+                Component.text("Outils/Plugins du serveur").color(NamedTextColor.DARK_PURPLE),
+                Component.text("Cliquez pour afficher les différents outils et plugins utilisés sur le serveur pour construire.").color(NamedTextColor.GRAY),
                 event -> new PluginsToolsMenu(this).open(viewer));
 
-        addButton(16, Material.BOOK, ChatColor.RED + "Le Build pour les Nuls",
-                ChatColor.GRAY + "Cliquez pour recevoir le guide des commandes de build essentielles pour bien démarrer votre construction !",
+        addButton(16, Material.BOOK,
+                Component.text("Le Build pour les Nuls").color(NamedTextColor.RED),
+                Component.text("Cliquez pour recevoir le guide des commandes de build essentielles pour bien démarrer votre construction !").color(NamedTextColor.GRAY),
                 event -> {
                     close();
                     player.getBukkitPlayer().getInventory().addItem(CommandsBook.createGuideBook(player));
                 });
 
-        //TODO bouton affichage Info perso (plot/temps de jeu ...)
-        //TODO bouton menu boutique
-        //TODO bouton menu cmd build
-
+        // TODO boutons supplémentaires
         addQuitButton();
         super.open(viewer);
     }
 }
+
+
+//TODO bouton affichage Info perso (plot/temps de jeu ...)
+//TODO bouton menu boutique

@@ -42,23 +42,23 @@ public class RankMenu extends InventoryMenu {
     public void open(Player viewer){
         fill(Material.GRAY_STAINED_GLASS_PANE, " ");
 
-        addButton(0, teteApprenti, ChatColor.GREEN + "Apprenti",
-                ChatColor.GRAY + "AJOUTER DESCRIPTION",
+        addButton(0, teteApprenti, Component.text("Apprenti").color(NamedTextColor.GREEN),
+                Component.text("AJOUTER DESCRIPTION").color(NamedTextColor.GRAY),
                 event -> {});
-        addButton(11, teteConcepteur, ChatColor.LIGHT_PURPLE + "Concepteur",
-                ChatColor.GRAY + "AJOUTER DESCRIPTION.",
+        addButton(11, teteConcepteur, Component.text("Concepteur").color(NamedTextColor.LIGHT_PURPLE),
+                Component.text("AJOUTER DESCRIPTION.").color(NamedTextColor.GRAY),
                 event -> {});
-        addButton(4, teteCreateur, ChatColor.YELLOW + "Créateur",
-                ChatColor.GRAY + "AJOUTER DESCRIPTION",
+        addButton(4, teteCreateur, Component.text("Créateur").color(NamedTextColor.YELLOW),
+                Component.text("AJOUTER DESCRIPTION").color(NamedTextColor.GRAY),
                 event -> {});
-        addButton(15, teteIngenieur, ChatColor.BLUE + "Ingénieur",
-                ChatColor.GRAY + "AJOUTER DESCRIPTION",
+        addButton(15, teteIngenieur, Component.text("Ingénieur").color(NamedTextColor.BLUE),
+                Component.text("AJOUTER DESCRIPTION").color(NamedTextColor.GRAY),
                 event -> {});
-        addButton(8, teteBatisseur, ChatColor.AQUA + "Bâtisseur",
-                ChatColor.GRAY + "AJOUTER DESCRIPTION",
+        addButton(8, teteBatisseur, Component.text("Bâtisseur").color(NamedTextColor.AQUA),
+                Component.text("AJOUTER DESCRIPTION").color(NamedTextColor.GRAY),
                 event -> {});
-        addButton(22, teteVirtuose, ChatColor.RED + "Virtuose",
-                ChatColor.GRAY + "AJOUTER DESCRIPTION",
+        addButton(22, teteVirtuose, Component.text("Virtuose").color(NamedTextColor.RED),
+                Component.text("AJOUTER DESCRIPTION").color(NamedTextColor.GRAY),
                 event -> {});
 
         addBackButton();

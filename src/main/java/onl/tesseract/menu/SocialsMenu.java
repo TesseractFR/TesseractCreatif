@@ -42,8 +42,8 @@ public class SocialsMenu extends InventoryMenu {
     public void open(Player viewer) {
         fill(Material.GRAY_STAINED_GLASS_PANE, " ");
 
-        addButton(3, teteInstagram, ChatColor.LIGHT_PURPLE + "Instagram",
-                ChatColor.GRAY + "Cliquez pour obtenir le lien vers notre Instagram.",
+        addButton(3, teteInstagram, Component.text("Instagram").color(NamedTextColor.LIGHT_PURPLE).decorate(TextDecoration.BOLD),
+                Component.text("Cliquez pour obtenir le lien vers notre Instagram.").color(NamedTextColor.GRAY),
                 event -> {
                     viewer.closeInventory();
                     viewer.sendMessage(
@@ -54,8 +54,8 @@ public class SocialsMenu extends InventoryMenu {
                     );
                 });
 
-        addButton(5, teteTiktok, ChatColor.GOLD + "TikTok",
-                ChatColor.GRAY + "Cliquez pour obtenir le lien vers notre compte TikTok.",
+        addButton(5, teteTiktok, Component.text("TikTok").color(NamedTextColor.GOLD).decorate(TextDecoration.BOLD),
+                Component.text("Cliquez pour obtenir le lien vers notre compte TikTok.").color(NamedTextColor.GRAY),
                 event -> {
                     viewer.closeInventory();
                     viewer.sendMessage(
@@ -66,8 +66,8 @@ public class SocialsMenu extends InventoryMenu {
                     );
                 });
 
-        addButton(11, teteFacebook, ChatColor.BLUE + "Facebook",
-                ChatColor.GRAY + "Cliquez pour obtenir le lien vers notre page Facebook.",
+        addButton(11, teteFacebook, Component.text("Facebook").color(NamedTextColor.BLUE).decorate(TextDecoration.BOLD),
+                Component.text("Cliquez pour obtenir le lien vers notre page Facebook.").color(NamedTextColor.GRAY),
                 event -> {
                     viewer.closeInventory();
                     viewer.sendMessage(
@@ -78,20 +78,20 @@ public class SocialsMenu extends InventoryMenu {
                     );
                 });
 
-        addButton(13, teteDiscord, ChatColor.DARK_AQUA + "Discord",
-                ChatColor.GRAY + "Cliquez pour obtenir le lien vers notre Discord.",
+        addButton(13, teteDiscord, Component.text("Discord").color(NamedTextColor.DARK_AQUA).decorate(TextDecoration.BOLD),
+                Component.text("Cliquez pour obtenir le lien vers notre Discord.").color(NamedTextColor.GRAY),
                 event -> {
                     viewer.closeInventory();
                     viewer.sendMessage(
-                            Component.text("--------\n").color(NamedTextColor.DARK_BLUE)
-                                    .append(Component.text("Discord").color(NamedTextColor.DARK_BLUE).decorate(TextDecoration.BOLD))
-                                    .append(Component.text("\n--------").color(NamedTextColor.DARK_BLUE))
+                            Component.text("--------\n").color(NamedTextColor.DARK_AQUA)
+                                    .append(Component.text("Discord").color(NamedTextColor.DARK_AQUA).decorate(TextDecoration.BOLD))
+                                    .append(Component.text("\n--------").color(NamedTextColor.DARK_AQUA))
                                     .clickEvent(ClickEvent.openUrl("https://discord.gg/4ajRytDJWK"))
                     );
                 });
 
-        addButton(15, teteYoutube, ChatColor.RED + "YouTube",
-                ChatColor.GRAY + "Cliquez pour obtenir le lien vers notre chaîne YouTube.",
+        addButton(15, teteYoutube, Component.text("YouTube").color(NamedTextColor.RED).decorate(TextDecoration.BOLD),
+                Component.text("Cliquez pour obtenir le lien vers notre chaîne YouTube.").color(NamedTextColor.GRAY),
                 event -> {
                     viewer.closeInventory();
                     viewer.sendMessage(
@@ -102,8 +102,8 @@ public class SocialsMenu extends InventoryMenu {
                     );
                 });
 
-        addButton(21, teteTwitter, ChatColor.AQUA + "X (Twitter)",
-                ChatColor.GRAY + "Cliquez pour obtenir le lien vers notre page X (Twitter).",
+        addButton(21, teteTwitter, Component.text("X (Twitter)").color(NamedTextColor.AQUA).decorate(TextDecoration.BOLD),
+                Component.text("Cliquez pour obtenir le lien vers notre page X (Twitter).").color(NamedTextColor.GRAY),
                 event -> {
                     viewer.closeInventory();
                     viewer.sendMessage(
@@ -114,8 +114,8 @@ public class SocialsMenu extends InventoryMenu {
                     );
                 });
 
-        addButton(23, teteSiteWeb, ChatColor.YELLOW + "Site Internet",
-                ChatColor.GRAY + "Cliquez pour obtenir le lien vers notre site internet.",
+        addButton(23, teteSiteWeb, Component.text("Site Internet").color(NamedTextColor.YELLOW).decorate(TextDecoration.BOLD),
+                Component.text("Cliquez pour obtenir le lien vers notre site internet.").color(NamedTextColor.GRAY),
                 event -> {
                     viewer.closeInventory();
                     viewer.sendMessage(
