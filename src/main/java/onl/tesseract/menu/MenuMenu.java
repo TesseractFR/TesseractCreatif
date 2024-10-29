@@ -15,7 +15,7 @@ public class MenuMenu extends InventoryMenu {
     CreativePlayer player;
 
     public MenuMenu(CreativePlayer player) {
-        super(27, Component.text("Menu du Créatif").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, true));
+        super(54, Component.text("Menu du Créatif").color(NamedTextColor.RED).decoration(TextDecoration.BOLD, true));
         this.player = player;
     }
 
@@ -45,16 +45,16 @@ public class MenuMenu extends InventoryMenu {
                 ChatColor.GRAY + "Cliquez pour afficher les différents grades du serveur.",
                 event -> new RankMenu(this).open(viewer));
 
-        addButton(14, Material.COMMAND_BLOCK, ChatColor.DARK_AQUA + "Blocs spéciaux",
+        addButton(14, Material.LIGHT, ChatColor.DARK_AQUA + "Blocs spéciaux",
                 ChatColor.GRAY + "Cliquez pour afficher les différents blocs spéciaux du serveur (hors inventaire).",
                 event -> new SpecialBlockMenu(player, this).open(viewer));
 
-        addButton(15, Material.BOOKSHELF, ChatColor.DARK_PURPLE + "Outils de Construction du serveur",
-                ChatColor.GRAY + "Cliquez pour afficher les différents outils disponibles du serveur pour construire.",
-                event -> new BuildToolsMenu(this).open(viewer));
+        addButton(15, Material.WOODEN_AXE, ChatColor.DARK_PURPLE + "Outils/Plugins du serveur",
+                ChatColor.GRAY + "Cliquez pour afficher les différents outils et plugins utilisés sur le serveur pour construire.",
+                event -> new PluginsToolsMenu(this).open(viewer));
 
-        addButton(16, Material.BOOK, ChatColor.RED + "Guide des commandes de build",
-                ChatColor.GRAY + "Cliquez pour recevoir le guide des commandes essentielles pour bien démarrer votre construction !",
+        addButton(16, Material.BOOK, ChatColor.RED + "Le Build pour les Nuls",
+                ChatColor.GRAY + "Cliquez pour recevoir le guide des commandes de build essentielles pour bien démarrer votre construction !",
                 event -> {
                     close();
                     player.getBukkitPlayer().getInventory().addItem(CommandsBook.createGuideBook(player));

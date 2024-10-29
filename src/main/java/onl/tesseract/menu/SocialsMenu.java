@@ -78,7 +78,7 @@ public class SocialsMenu extends InventoryMenu {
                     );
                 });
 
-        addButton(13, teteDiscord, ChatColor.DARK_BLUE + "Discord",
+        addButton(13, teteDiscord, ChatColor.DARK_AQUA + "Discord",
                 ChatColor.GRAY + "Cliquez pour obtenir le lien vers notre Discord.",
                 event -> {
                     viewer.closeInventory();

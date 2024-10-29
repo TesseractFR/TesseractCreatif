@@ -135,8 +135,11 @@ public class CommandsBook {
                         .append(Component.newline())
                         .append(Component.text("-------------------").color(NamedTextColor.DARK_AQUA)),
 
-                Component.text("- //pos1 et //pos2 (ou hache en bois) : ").color(NamedTextColor.BLACK).decoration(TextDecoration.BOLD, true)
+                Component.text("- //pos1 et //pos2 : ").color(NamedTextColor.BLACK).decoration(TextDecoration.BOLD, true)
                         .append(Component.text("Sélection d'un pavé avec 2 extrémités diagonales.").color(NamedTextColor.BLACK).decoration(TextDecoration.BOLD, false))
+                        .append(Component.newline())
+                        .append(Component.text("- //wand : ").color(NamedTextColor.BLACK).decoration(TextDecoration.BOLD, true))
+                .append(Component.text("(Alternative) Reçois la hache de sélection, suivre les indications.").color(NamedTextColor.BLACK).decoration(TextDecoration.BOLD, false))
                         .append(Component.newline())
                         .append(Component.text("- //copy : ").color(NamedTextColor.BLACK).decoration(TextDecoration.BOLD, true))
                         .append(Component.text("Copie la structure là où le joueur se trouve.").color(NamedTextColor.BLACK).decoration(TextDecoration.BOLD, false))

@@ -4,7 +4,7 @@ import onl.tesseract.CreativePlayer;
 import onl.tesseract.commandBuilder.CommandContext;
 import onl.tesseract.commandBuilder.annotation.Command;
 import onl.tesseract.commandBuilder.annotation.CommandBody;
-import onl.tesseract.menu.BuildToolsMenu;
+import onl.tesseract.menu.PluginsToolsMenu;
 import onl.tesseract.menu.MenuMenu;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -18,7 +18,7 @@ public class BuildToolsCommand extends CommandContext {
         {
             CreativePlayer creativePlayer = (CreativePlayer) CreativePlayer.get(player);
             MenuMenu previousMenu = new MenuMenu(creativePlayer);
-            new BuildToolsMenu(previousMenu).open(player);
+            new PluginsToolsMenu(previousMenu).open(player);
         }
 
         return true;

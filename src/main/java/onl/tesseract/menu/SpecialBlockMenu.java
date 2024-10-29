@@ -27,7 +27,7 @@ public class SpecialBlockMenu extends InventoryMenu {
     public void open(Player viewer){
         fill(Material.GRAY_STAINED_GLASS_PANE, " ");
 
-        addButton(0, Material.COMMAND_BLOCK, ChatColor.YELLOW + "Bloc de commande",
+        addButton(0, Material.COMMAND_BLOCK, ChatColor.GOLD + "Bloc de commande",
                 ChatColor.GRAY + "AJOUTER DESCRIPTION",
                 event -> {player.getBukkitPlayer().getInventory().addItem(new ItemStack(Material.COMMAND_BLOCK));});
         addButton(10, Material.CHAIN_COMMAND_BLOCK, ChatColor.GREEN  + "Bloc de commande en chaîne",
@@ -51,7 +51,7 @@ public class SpecialBlockMenu extends InventoryMenu {
         addButton(16, Material.BARRIER, ChatColor.RED + "Barrière invisible",
                 ChatColor.GRAY + "AJOUTER DESCRIPTION",
                 event -> {player.getBukkitPlayer().getInventory().addItem(new ItemStack(Material.BARRIER));});
-        addButton(8, Material.LIGHT, ChatColor.GOLD + "Lumière",
+        addButton(8, Material.LIGHT, ChatColor.YELLOW + "Lumière",
                 ChatColor.GRAY + "AJOUTER DESCRIPTION",
                 event -> {player.getBukkitPlayer().getInventory().addItem(new ItemStack(Material.LIGHT));});
 
