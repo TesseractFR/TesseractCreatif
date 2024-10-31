@@ -3,13 +3,8 @@ package onl.tesseract.menu;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
-import onl.tesseract.Creatif;
 import onl.tesseract.CreativePlayer;
-import onl.tesseract.entity.PlotWorld;
-import onl.tesseract.tesseractlib.menu.boutique.global.GlobalBoutiqueMenu;
 import onl.tesseract.tesseractlib.util.menu.InventoryMenu;
-import onl.tesseract.world.WorldManager;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -30,7 +25,7 @@ public class SpecialBlockMenu extends InventoryMenu {
         addButton(0, Material.COMMAND_BLOCK,
                 Component.text("Bloc de commande", NamedTextColor.GOLD, TextDecoration.BOLD),
                 Component.text("AJOUTER DESCRIPTION", NamedTextColor.GRAY),
-                event -> { player.getBukkitPlayer().getInventory().addItem(new ItemStack(Material.COMMAND_BLOCK)); });
+                event -> player.getBukkitPlayer().getInventory().addItem(new ItemStack(Material.COMMAND_BLOCK)));
 
         addButton(10, Material.CHAIN_COMMAND_BLOCK,
                 Component.text("Bloc de commande en chaîne", NamedTextColor.GREEN, TextDecoration.BOLD),
