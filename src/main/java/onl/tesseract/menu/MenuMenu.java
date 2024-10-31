@@ -3,7 +3,7 @@ package onl.tesseract.menu;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
-import onl.tesseract.CommandsBook;
+import onl.tesseract.CommandsBookFactory;
 import onl.tesseract.CreativePlayer;
 import onl.tesseract.tesseractlib.util.menu.InventoryMenu;
 import org.bukkit.Material;
@@ -63,7 +63,7 @@ public class MenuMenu extends InventoryMenu {
                 Component.text("Cliquez pour recevoir le guide des commandes de build essentielles pour bien démarrer votre construction !", NamedTextColor.GRAY),
                 event -> {
                     close();
-                    player.getBukkitPlayer().getInventory().addItem(CommandsBook.createGuideBook(player));
+                    CommandsBookFactory.getInstance().giveGuideBook(player.getBukkitPlayer());
                 });
 
         addQuitButton();
