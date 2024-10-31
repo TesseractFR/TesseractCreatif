@@ -13,9 +13,12 @@ public class SpecialBlockMenu extends InventoryMenu {
 
     CreativePlayer player;
 
+    public SpecialBlockMenu(CreativePlayer player) {
+        super(27, Component.text("Blocs spéciaux", NamedTextColor.DARK_AQUA, TextDecoration.BOLD));
+    }
+
     public SpecialBlockMenu(CreativePlayer player, InventoryMenu previous) {
         super(27, Component.text("Blocs spéciaux", NamedTextColor.DARK_AQUA, TextDecoration.BOLD), previous);
-        this.player = player;
     }
 
     @Override

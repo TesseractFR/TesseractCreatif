@@ -9,6 +9,10 @@ import org.bukkit.entity.Player;
 
 public class PluginsToolsMenu extends InventoryMenu {
 
+    public PluginsToolsMenu() {
+        super(27, Component.text("Outils/Plugins du serveur", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD));
+    }
+
     public PluginsToolsMenu(InventoryMenu previous) {
         super(27, Component.text("Outils/Plugins du serveur", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD), previous);
     }

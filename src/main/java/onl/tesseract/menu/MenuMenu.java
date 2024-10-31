@@ -8,6 +8,7 @@ import onl.tesseract.CreativePlayer;
 import onl.tesseract.tesseractlib.util.menu.InventoryMenu;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public class MenuMenu extends InventoryMenu {

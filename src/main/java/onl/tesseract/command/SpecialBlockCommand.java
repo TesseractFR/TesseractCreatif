@@ -17,8 +17,7 @@ public class SpecialBlockCommand extends CommandContext {
         if (sender instanceof Player player )
         {
             CreativePlayer creativePlayer = (CreativePlayer) CreativePlayer.get(player);
-            MenuMenu previousMenu = new MenuMenu(creativePlayer);
-            new SpecialBlockMenu(creativePlayer, previousMenu).open(player);
+            new SpecialBlockMenu(creativePlayer).open(player);
         }
 
         return true;

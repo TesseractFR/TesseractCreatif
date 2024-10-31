@@ -29,6 +29,10 @@ public class RankMenu extends InventoryMenu {
             "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjQ3OTgwYzZkODZlYzA2ZDcyNDZhMmUxMzMzODE5MjQzNDAyNDk2YjRlYmRhZDJkNTRkMzUzNzAzNDJjNWFlYSJ9fX0=",
             "b47980c6d86ec06d7246a2e1333819243402496b4ebdad2d54d35370342c5aea");
 
+    public RankMenu() {
+        super(27, Component.text("Grades", NamedTextColor.DARK_GREEN, TextDecoration.BOLD));
+    }
+
     public RankMenu(InventoryMenu previous) {
         super(27, Component.text("Grades", NamedTextColor.DARK_GREEN, TextDecoration.BOLD), previous);
     }

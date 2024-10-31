@@ -33,6 +33,10 @@ public class SocialsMenu extends InventoryMenu {
             "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2I5NDg0M2QzNDBhYmFkYmQ2NDAxZWY0ZWM3NGRjZWM0YjY2OTY2MTA2NWJkMWEwMWY5YTU5MDVhODkxOWM3MiJ9fX0=",
             "3b94843d340abadbd6401ef4ec74dcec4b669661065bd1a01f9a5905a8919c72");
 
+    public SocialsMenu() {
+        super(27, Component.text("Réseaux sociaux", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD));
+    }
+
     public SocialsMenu(InventoryMenu previous) {
         super(27, Component.text("Réseaux sociaux", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD), previous);
     }

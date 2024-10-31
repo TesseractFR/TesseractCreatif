@@ -16,9 +16,7 @@ public class BuildToolsCommand extends CommandContext {
     {
         if (sender instanceof Player player )
         {
-            CreativePlayer creativePlayer = (CreativePlayer) CreativePlayer.get(player);
-            MenuMenu previousMenu = new MenuMenu(creativePlayer);
-            new PluginsToolsMenu(previousMenu).open(player);
+            new PluginsToolsMenu().open(player);
         }
 
         return true;
