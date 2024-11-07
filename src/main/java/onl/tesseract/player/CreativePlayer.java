@@ -1,11 +1,12 @@
-package onl.tesseract;
+package onl.tesseract.player;
 
 import lombok.Getter;
 import net.milkbowl.vault.permission.Permission;
+import onl.tesseract.Creatif;
 import onl.tesseract.entity.player.CreativePlayerInfo;
-import onl.tesseract.entity.player.rank.PlayerRank;
-import onl.tesseract.entity.player.rank.Rank;
-import onl.tesseract.entity.player.rank.StaffRank;
+import onl.tesseract.rank.entity.PlayerRank;
+import onl.tesseract.rank.entity.Rank;
+import onl.tesseract.rank.entity.StaffRank;
 import onl.tesseract.plot.PlotManager;
 import onl.tesseract.service.CreativePlayerService;
 import onl.tesseract.tesseractlib.player.TPlayer;
@@ -56,5 +57,6 @@ public class CreativePlayer extends TPlayer {
     public int getBonusPlot1000() {
         return creativePlayerInfo.getPlayerPlotInfo().getNbPlot1000();
     }
+
 
 }

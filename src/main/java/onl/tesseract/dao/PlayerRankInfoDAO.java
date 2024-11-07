@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import onl.tesseract.HibernateUtil;
-import onl.tesseract.entity.player.rank.PlayerRankInfo;
+import onl.tesseract.rank.entity.PlayerRankInfo;
 import org.hibernate.Session;
 
 import java.util.UUID;

@@ -3,7 +3,7 @@ package onl.tesseract;
 import lombok.extern.slf4j.Slf4j;
 import onl.tesseract.entity.player.CreativePlayerInfo;
 import onl.tesseract.entity.player.PlayerPlotInfo;
-import onl.tesseract.entity.player.rank.PlayerRankInfo;
+import onl.tesseract.rank.entity.PlayerRankInfo;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;

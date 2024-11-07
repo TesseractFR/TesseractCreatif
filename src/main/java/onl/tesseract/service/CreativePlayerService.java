@@ -10,8 +10,8 @@ import onl.tesseract.dao.PlayerPlotInfoDAO;
 import onl.tesseract.dao.PlayerRankInfoDAO;
 import onl.tesseract.entity.player.CreativePlayerInfo;
 import onl.tesseract.entity.player.PlayerPlotInfo;
-import onl.tesseract.entity.player.rank.PlayerRank;
-import onl.tesseract.entity.player.rank.PlayerRankInfo;
+import onl.tesseract.rank.entity.PlayerRank;
+import onl.tesseract.rank.entity.PlayerRankInfo;
 
 import java.time.Duration;
 import java.util.UUID;
@@ -55,8 +55,7 @@ public class CreativePlayerService {
     }
 
     private PlayerRankInfo createPlayerRankInfo(UUID uniqueId) {
-        PlayerRankInfo playerRankInfo = new PlayerRankInfo();
-        playerRankInfo.setUuid(uniqueId);
+        PlayerRankInfo playerRankInfo = new PlayerRankInfo(uniqueId,false,PlayerRank.APPRENTI,null);
         playerRankInfo.setPlayerRank(PlayerRank.APPRENTI);
         playerRankInfo.setStaffRank(null);
         playerRankInfo.setVirtuose(false);

@@ -6,7 +6,10 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import net.milkbowl.vault.permission.Permission;
 import onl.tesseract.command.MenuCommand;
+import onl.tesseract.player.CreativePlayer;
 import onl.tesseract.player.CreativePlayerContainer;
+import onl.tesseract.rank.RankService;
+import onl.tesseract.service.CreativeServices;
 import onl.tesseract.tesseractlib.TesseractLib;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -26,6 +29,7 @@ public final class Creatif extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         Creatif.instance = this;
+        CreativeServices.Companion.getInstance().registerDefaultServices();
         TesseractLib.setPlayerContainer(new CreativePlayerContainer());
         // Plugin startup logic
         if (!setupPermissions())
@@ -61,7 +65,6 @@ public final class Creatif extends JavaPlugin implements Listener {
         CreativePlayer creativePlayer;
         if (!event.getPlayer().hasPlayedBefore() || !getPlayerContainer().exists(event.getPlayer().getUniqueId()))
         {
-            creativePlayer = getPlayerContainer().newPlayer(event.getPlayer());
             event.getPlayer().teleport(onl.tesseract.tesseractlib.Config.getInstance().getFirstSpawnLocation());
             event.joinMessage(Component.text("Bienvenue ", NamedTextColor.GOLD)
                     .append(Component.text(event.getPlayer().getName(), NamedTextColor.GREEN))
@@ -70,7 +73,7 @@ public final class Creatif extends JavaPlugin implements Listener {
         }
         else{
             creativePlayer = getPlayerContainer().get(event.getPlayer());
-            TextColor color = creativePlayer.getPlayerRank().getColor();
+            TextColor color = CreativeServices.get(RankService.class).getPlayerRank(event.getPlayer().getUniqueId()).getColor();
             creativePlayer.onJoin(event.getPlayer());
             event.joinMessage(Component.text("+ ",NamedTextColor.GREEN)
                     .append(Component.text(event.getPlayer().getName(),color))

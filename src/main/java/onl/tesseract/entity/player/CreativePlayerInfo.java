@@ -3,7 +3,7 @@ package onl.tesseract.entity.player;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import onl.tesseract.entity.player.rank.PlayerRankInfo;
+import onl.tesseract.rank.entity.PlayerRankInfo;
 import org.hibernate.annotations.JdbcTypeCode;
 
 import java.time.Duration;

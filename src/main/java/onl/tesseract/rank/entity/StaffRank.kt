@@ -6,7 +6,7 @@ import net.kyori.adventure.text.format.TextColor
 import onl.tesseract.tesseractlib.entity.Title
 
 @Getter
-enum class StaffRank(val permGroup: String, val title: Title, val color: TextColor)
+enum class StaffRank(override val permGroup: String, override val title: Title, override val color: TextColor) : Rank
     {
     GUIDE("Guide", Title.GUIDE, NamedTextColor.YELLOW),
     ANIMATEUR(

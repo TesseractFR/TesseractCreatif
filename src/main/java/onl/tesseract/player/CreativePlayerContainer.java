@@ -1,7 +1,6 @@
 package onl.tesseract.player;
 
 import onl.tesseract.Creatif;
-import onl.tesseract.CreativePlayer;
 import onl.tesseract.dao.CreativePlayerInfoDAO;
 import onl.tesseract.tesseractlib.equipment.Equipment;
 import onl.tesseract.tesseractlib.player.PlayerContainer;

@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import net.milkbowl.vault.permission.Permission;
-import onl.tesseract.CreativePlayer;
+import onl.tesseract.player.CreativePlayer;
 import onl.tesseract.entity.PlotWorld;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
