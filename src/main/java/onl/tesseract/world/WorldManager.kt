@@ -11,8 +11,8 @@ import org.bukkit.Location
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class WorldManager {
     fun getWorldSpawn(plotWorld: PlotWorld): Location {
-        val world = Bukkit.getWorld(plotWorld.getWorld())
-            ?: throw IllegalArgumentException("Le monde " + plotWorld.getWorld() + " n'existe pas")
+        val world = Bukkit.getWorld(plotWorld.world)
+            ?: throw IllegalArgumentException("Le monde " + plotWorld.world + " n'existe pas")
         return world.spawnLocation
     }
 
