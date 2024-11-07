@@ -11,7 +11,7 @@ import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.ItemStack
 
-class MenuMenu(var player: CreativePlayer) :
+class MenuMenu(val player: Player) :
     InventoryMenu(54, Component.text("Menu du Créatif", NamedTextColor.RED, TextDecoration.BOLD)) {
     override fun open(viewer: Player) {
         fill(Material.GRAY_STAINED_GLASS_PANE, " ")
@@ -68,7 +68,7 @@ class MenuMenu(var player: CreativePlayer) :
             )
         ) { event: InventoryClickEvent? ->
             close()
-            CommandsBookFactory.getInstance().giveGuideBook(player.bukkitPlayer)
+            CommandsBookFactory.getInstance().giveGuideBook(player)
         }
 
         addQuitButton()
