@@ -1,23 +1,31 @@
-package onl.tesseract.world;
+package onl.tesseract.world
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import onl.tesseract.entity.PlotWorld;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.World;
+import lombok.AccessLevel
+import lombok.Getter
+import lombok.NoArgsConstructor
+import onl.tesseract.CommandsBookFactory
+import onl.tesseract.entity.PlotWorld
+import org.bukkit.Bukkit
+import org.bukkit.Location
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class WorldManager {
-    @Getter
-    private static WorldManager instance = new WorldManager();
+class WorldManager {
+    fun getWorldSpawn(plotWorld: PlotWorld): Location {
+        val world = Bukkit.getWorld(plotWorld.getWorld())
+            ?: throw IllegalArgumentException("Le monde " + plotWorld.getWorld() + " n'existe pas")
+        return world.spawnLocation
+    }
 
-    public Location getWorldSpawn(PlotWorld plotWorld) {
-        World world = Bukkit.getWorld(plotWorld.getWorld());
-        if (world == null) {
-            throw new IllegalArgumentException("Le monde "+plotWorld.getWorld()+" n'existe pas");
+    companion object {
+        @Getter
+        private var INSTANCE: WorldManager? = null
+
+        @JvmStatic
+        fun getInstance(): WorldManager {
+            if (INSTANCE == null) {
+                INSTANCE = WorldManager()
+            }
+            return INSTANCE!!
         }
-        return world.getSpawnLocation();
     }
 }

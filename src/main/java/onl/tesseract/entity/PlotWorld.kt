@@ -1,19 +1,13 @@
-package onl.tesseract.entity;
+package onl.tesseract.entity
 
-import lombok.Getter;
-
-public enum PlotWorld {
+enum class PlotWorld(private val world: String) {
     WORLD_100("100"),
     WORLD_250("250"),
     WORLD_500("500"),
     WORLD_1000("1000"),
-    WORLD_EVENT("Event")
-    ;
-    @Getter
-    private final String world;
+    WORLD_EVENT("Event");
 
-    PlotWorld(String world) {
-        this.world = world;
+    fun getWorld(): String {
+        return world
     }
-
 }
