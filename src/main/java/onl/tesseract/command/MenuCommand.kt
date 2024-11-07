@@ -1,6 +1,5 @@
 package onl.tesseract.command
 
-import onl.tesseract.CreativePlayer
 import onl.tesseract.commandBuilder.CommandContext
 import onl.tesseract.commandBuilder.annotation.Command
 import onl.tesseract.commandBuilder.annotation.CommandBody
@@ -13,10 +12,7 @@ class MenuCommand : CommandContext() {
     @CommandBody
     fun onCommand(sender: CommandSender?): Boolean {
         if (sender is Player) {
-            val creativePlayer = CreativePlayer.get(sender)
-            if (creativePlayer is CreativePlayer) {
-                MenuMenu(creativePlayer).open(sender)
-            }
+            MenuMenu(sender).open(sender)
         }
         return true
     }

@@ -12,8 +12,7 @@ class SpecialBlockCommand : CommandContext() {
     @CommandBody
     fun onCommand(sender: CommandSender?): Boolean {
         if (sender is Player) {
-            val creativePlayer = CreativePlayer.get(sender) as CreativePlayer
-            SpecialBlockMenu(creativePlayer).open(sender)
+            SpecialBlockMenu(sender).open(sender)
         }
 
         return true
