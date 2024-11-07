@@ -4,9 +4,9 @@ import lombok.AccessLevel
 import lombok.Getter
 import lombok.NoArgsConstructor
 import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.TextComponent
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
+import onl.tesseract.tesseractlib.util.append
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack

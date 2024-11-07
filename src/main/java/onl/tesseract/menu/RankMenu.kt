@@ -6,7 +6,6 @@ import net.kyori.adventure.text.format.TextDecoration
 import onl.tesseract.tesseractlib.util.menu.InventoryMenu
 import org.bukkit.Material
 import org.bukkit.entity.Player
-import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.ItemStack
 
 class RankMenu : InventoryMenu {
@@ -25,37 +24,37 @@ class RankMenu : InventoryMenu {
             0, teteApprenti,
             Component.text("Apprenti", NamedTextColor.GREEN, TextDecoration.BOLD),
             Component.text("AJOUTER DESCRIPTION", NamedTextColor.GRAY, TextDecoration.ITALIC)
-        ) { event: InventoryClickEvent? -> }
+        ) { }
 
         addButton(
             11, teteConcepteur,
             Component.text("Concepteur", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD),
             Component.text("AJOUTER DESCRIPTION.", NamedTextColor.GRAY, TextDecoration.ITALIC)
-        ) { event: InventoryClickEvent? -> }
+        ) { }
 
         addButton(
             4, teteCreateur,
             Component.text("Créateur", NamedTextColor.YELLOW, TextDecoration.BOLD),
             Component.text("AJOUTER DESCRIPTION", NamedTextColor.GRAY, TextDecoration.ITALIC)
-        ) { event: InventoryClickEvent? -> }
+        ) { }
 
         addButton(
             15, teteIngenieur,
             Component.text("Ingénieur", NamedTextColor.BLUE, TextDecoration.BOLD),
             Component.text("AJOUTER DESCRIPTION", NamedTextColor.GRAY, TextDecoration.ITALIC)
-        ) { event: InventoryClickEvent? -> }
+        ) { }
 
         addButton(
             8, teteBatisseur,
             Component.text("Bâtisseur", NamedTextColor.AQUA, TextDecoration.BOLD),
             Component.text("AJOUTER DESCRIPTION", NamedTextColor.GRAY, TextDecoration.ITALIC)
-        ) { event: InventoryClickEvent? -> }
+        ) { }
 
         addButton(
             22, teteVirtuose,
             Component.text("Virtuose", NamedTextColor.RED, TextDecoration.BOLD),
             Component.text("AJOUTER DESCRIPTION", NamedTextColor.GRAY, TextDecoration.ITALIC)
-        ) { event: InventoryClickEvent? -> }
+        ) { }
 
         addBackButton()
         addQuitButton()

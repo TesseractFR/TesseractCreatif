@@ -3,10 +3,10 @@ package onl.tesseract.menu
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
+import onl.tesseract.tesseractlib.util.append
 import onl.tesseract.tesseractlib.util.menu.InventoryMenu
 import org.bukkit.Material
 import org.bukkit.entity.Player
-import org.bukkit.event.inventory.InventoryClickEvent
 
 class PluginsToolsMenu : InventoryMenu {
     constructor() : super(
@@ -37,6 +37,7 @@ class PluginsToolsMenu : InventoryMenu {
                     )
                 )
         ) { event: InventoryClickEvent? -> }
+        ) { }
 
         addButton(
             10, Material.WOODEN_AXE,
@@ -51,6 +52,7 @@ class PluginsToolsMenu : InventoryMenu {
                 .append(Component.text("/commandes ", NamedTextColor.RED))
                 .append(Component.text("pour le recevoir.", NamedTextColor.GRAY))
         ) { event: InventoryClickEvent? -> }
+        ) { }
 
         addButton(
             2, Material.DIAMOND_BOOTS,
@@ -66,6 +68,7 @@ class PluginsToolsMenu : InventoryMenu {
                     )
                 )
         ) { event: InventoryClickEvent? -> }
+        ) { }
 
         addButton(
             12, Material.ARMOR_STAND,
@@ -80,6 +83,7 @@ class PluginsToolsMenu : InventoryMenu {
                 .append(Component.text("/ast", NamedTextColor.RED))
                 .append(Component.text(".", NamedTextColor.GRAY))
         ) { event: InventoryClickEvent? -> }
+        ) { }
 
         addButton(
             4, Material.PLAYER_HEAD,
@@ -91,6 +95,7 @@ class PluginsToolsMenu : InventoryMenu {
                 .append(Component.text("/hdb ", NamedTextColor.RED))
                 .append(Component.text("pour ouvrir le menu. ", NamedTextColor.GRAY))
         ) { event: InventoryClickEvent? -> }
+        ) { }
 
         addButton(
             14, Material.ARROW,
@@ -106,6 +111,7 @@ class PluginsToolsMenu : InventoryMenu {
                     )
                 )
         ) { event: InventoryClickEvent? -> }
+        ) { }
 
         addButton(
             6, Material.PAPER,
@@ -118,6 +124,7 @@ class PluginsToolsMenu : InventoryMenu {
                     )
                 )
         ) { event: InventoryClickEvent? -> }
+        ) { }
 
         addButton(
             16, Material.FLINT,
@@ -131,6 +138,7 @@ class PluginsToolsMenu : InventoryMenu {
                     )
                 )
         ) { event: InventoryClickEvent? -> }
+        ) { }
 
         addButton(
             8, Material.FEATHER,
@@ -144,6 +152,7 @@ class PluginsToolsMenu : InventoryMenu {
                     )
                 )
         ) { event: InventoryClickEvent? -> }
+        ) { }
 
         addBackButton()
         addQuitButton()

@@ -4,10 +4,10 @@ import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.event.ClickEvent
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
+import onl.tesseract.tesseractlib.util.append
 import onl.tesseract.tesseractlib.util.menu.InventoryMenu
 import org.bukkit.Material
 import org.bukkit.entity.Player
-import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.ItemStack
 
 class SocialsMenu : InventoryMenu {
@@ -26,7 +26,7 @@ class SocialsMenu : InventoryMenu {
             3, teteInstagram,
             Component.text("Instagram", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD),
             Component.text("Cliquez pour obtenir le lien vers notre Instagram.", NamedTextColor.GRAY)
-        ) { event: InventoryClickEvent? ->
+        ) {
             viewer.closeInventory()
             viewer.sendMessage(
                 Component.text("----------\n", NamedTextColor.LIGHT_PURPLE)
@@ -40,7 +40,7 @@ class SocialsMenu : InventoryMenu {
             5, teteTiktok,
             Component.text("TikTok", NamedTextColor.GOLD, TextDecoration.BOLD),
             Component.text("Cliquez pour obtenir le lien vers notre compte TikTok.", NamedTextColor.GRAY)
-        ) { event: InventoryClickEvent? ->
+        ) {
             viewer.closeInventory()
             viewer.sendMessage(
                 Component.text("------\n", NamedTextColor.GOLD)
@@ -54,7 +54,7 @@ class SocialsMenu : InventoryMenu {
             11, teteFacebook,
             Component.text("Facebook", NamedTextColor.BLUE, TextDecoration.BOLD),
             Component.text("Cliquez pour obtenir le lien vers notre page Facebook.", NamedTextColor.GRAY)
-        ) { event: InventoryClickEvent? ->
+        ) {
             viewer.closeInventory()
             viewer.sendMessage(
                 Component.text("---------\n", NamedTextColor.BLUE)
@@ -68,7 +68,7 @@ class SocialsMenu : InventoryMenu {
             13, teteDiscord,
             Component.text("Discord", NamedTextColor.DARK_AQUA, TextDecoration.BOLD),
             Component.text("Cliquez pour obtenir le lien vers notre Discord.", NamedTextColor.GRAY)
-        ) { event: InventoryClickEvent? ->
+        ) {
             viewer.closeInventory()
             viewer.sendMessage(
                 Component.text("--------\n", NamedTextColor.DARK_AQUA)
@@ -82,7 +82,7 @@ class SocialsMenu : InventoryMenu {
             15, teteYoutube,
             Component.text("YouTube", NamedTextColor.RED, TextDecoration.BOLD),
             Component.text("Cliquez pour obtenir le lien vers notre chaîne YouTube.", NamedTextColor.GRAY)
-        ) { event: InventoryClickEvent? ->
+        ) {
             viewer.closeInventory()
             viewer.sendMessage(
                 Component.text("--------\n", NamedTextColor.RED)
@@ -96,7 +96,7 @@ class SocialsMenu : InventoryMenu {
             21, teteTwitter,
             Component.text("X (Twitter)", NamedTextColor.AQUA, TextDecoration.BOLD),
             Component.text("Cliquez pour obtenir le lien vers notre page X (Twitter).", NamedTextColor.GRAY)
-        ) { event: InventoryClickEvent? ->
+        ) {
             viewer.closeInventory()
             viewer.sendMessage(
                 Component.text("-----------\n", NamedTextColor.AQUA)
@@ -110,7 +110,7 @@ class SocialsMenu : InventoryMenu {
             23, teteSiteWeb,
             Component.text("Site Internet", NamedTextColor.YELLOW, TextDecoration.BOLD),
             Component.text("Cliquez pour obtenir le lien vers notre site internet.", NamedTextColor.GRAY)
-        ) { event: InventoryClickEvent? ->
+        ) {
             viewer.closeInventory()
             viewer.sendMessage(
                 Component.text("-------------\n", NamedTextColor.YELLOW)
@@ -120,10 +120,8 @@ class SocialsMenu : InventoryMenu {
             )
         }
 
-
         addBackButton()
         addQuitButton()
-
         super.open(viewer)
     }
 

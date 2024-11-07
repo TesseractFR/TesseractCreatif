@@ -12,6 +12,7 @@ import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.ItemStack
 
 class MenuMenu(val player: Player) :
+
     InventoryMenu(54, Component.text("Menu du Créatif", NamedTextColor.RED, TextDecoration.BOLD)) {
     override fun open(viewer: Player) {
         fill(Material.GRAY_STAINED_GLASS_PANE, " ")
@@ -19,54 +20,46 @@ class MenuMenu(val player: Player) :
         addButton(
             11, teteTPWorldMenu,
             Component.text("Téléportations dans les mondes", NamedTextColor.BLUE),
-            Component.text(
-                "Cliquez pour afficher les différents mondes disponibles et vous y téléporter.",
-                NamedTextColor.GRAY
-            )
-        ) { event: InventoryClickEvent? -> TPWorldMenu(this).open(viewer) }
+            Component.text("Cliquez pour afficher les différents mondes disponibles et vous y téléporter.", NamedTextColor.GRAY)
+        ) {
+            TPWorldMenu(this).open(viewer)
+        }
 
         addButton(
             12, teteSocialsMenu,
             Component.text("Réseaux sociaux", NamedTextColor.LIGHT_PURPLE),
             Component.text("Cliquez pour afficher les différents réseaux sociaux.", NamedTextColor.GRAY)
-        ) { event: InventoryClickEvent? -> SocialsMenu(this).open(viewer) }
+        ) {
+            SocialsMenu(this).open(viewer)
+        }
 
         addButton(
             13, teteGrades,
             Component.text("Grades", NamedTextColor.DARK_GREEN),
             Component.text("Cliquez pour afficher les différents grades du serveur.", NamedTextColor.GRAY)
-        ) { event: InventoryClickEvent? -> RankMenu(this).open(viewer) }
+        ) {
+            RankMenu(this).open(viewer)
+        }
 
         addButton(
             14, Material.LIGHT,
             Component.text("Blocs spéciaux", NamedTextColor.DARK_AQUA),
-            Component.text(
-                "Cliquez pour afficher les différents blocs spéciaux du serveur (hors inventaire).",
-                NamedTextColor.GRAY
-            )
-        ) { event: InventoryClickEvent? ->
-            SpecialBlockMenu(
-                player, this
-            ).open(viewer)
+            Component.text("Cliquez pour afficher les différents blocs spéciaux du serveur (hors inventaire).", NamedTextColor.GRAY)
+        ) {
+            SpecialBlockMenu(player, this).open(viewer)
         }
 
-        addButton(
-            15, Material.WOODEN_AXE,
+        addButton(15, Material.WOODEN_AXE,
             Component.text("Outils/Plugins du serveur", NamedTextColor.DARK_PURPLE),
-            Component.text(
-                "Cliquez pour afficher les différents outils et plugins utilisés sur le serveur pour construire.",
-                NamedTextColor.GRAY
-            )
-        ) { event: InventoryClickEvent? -> PluginsToolsMenu(this).open(viewer) }
+            Component.text("Cliquez pour afficher les différents outils et plugins utilisés sur le serveur pour construire.", NamedTextColor.GRAY)
+        ) {
+            PluginsToolsMenu(this).open(viewer)
+        }
 
-        addButton(
-            16, Material.BOOK,
+        addButton(16, Material.BOOK,
             Component.text("Le Build pour les Nuls", NamedTextColor.RED),
-            Component.text(
-                "Cliquez pour recevoir le guide des commandes de build essentielles pour bien démarrer votre construction !",
-                NamedTextColor.GRAY
-            )
-        ) { event: InventoryClickEvent? ->
+            Component.text("Cliquez pour recevoir le guide des commandes de build essentielles pour bien démarrer votre construction !", NamedTextColor.GRAY)
+        ) {
             close()
             CommandsBookFactory.getInstance().giveGuideBook(player)
         }

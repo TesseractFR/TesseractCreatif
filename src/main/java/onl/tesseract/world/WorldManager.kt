@@ -3,7 +3,6 @@ package onl.tesseract.world
 import lombok.AccessLevel
 import lombok.Getter
 import lombok.NoArgsConstructor
-import onl.tesseract.CommandsBookFactory
 import onl.tesseract.entity.PlotWorld
 import org.bukkit.Bukkit
 import org.bukkit.Location

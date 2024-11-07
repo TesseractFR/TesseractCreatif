@@ -8,7 +8,6 @@ import onl.tesseract.tesseractlib.util.menu.InventoryMenu
 import onl.tesseract.world.WorldManager
 import org.bukkit.Material
 import org.bukkit.entity.Player
-import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.ItemStack
 
 class TPWorldMenu : InventoryMenu {
@@ -26,27 +25,27 @@ class TPWorldMenu : InventoryMenu {
         addButton(
             0, tete100, Component.text("Monde 100x100", NamedTextColor.AQUA, TextDecoration.BOLD),
             Component.text("Cliquez pour vous téléporter dans le monde 100x100.", NamedTextColor.GRAY)
-        ) { event: InventoryClickEvent? -> teleport(viewer, PlotWorld.WORLD_100) }
+        ) { teleport(viewer, PlotWorld.WORLD_100) }
 
         addButton(
             11, tete250, Component.text("Monde 250x250", NamedTextColor.YELLOW, TextDecoration.BOLD),
             Component.text("Cliquez pour vous téléporter dans le monde 250x250.", NamedTextColor.GRAY)
-        ) { event: InventoryClickEvent? -> teleport(viewer, PlotWorld.WORLD_250) }
+        ) { teleport(viewer, PlotWorld.WORLD_250) }
 
         addButton(
             4, tete500, Component.text("Monde 500x500", NamedTextColor.GOLD, TextDecoration.BOLD),
             Component.text("Cliquez pour vous téléporter dans le monde 500x500.", NamedTextColor.GRAY)
-        ) { event: InventoryClickEvent? -> teleport(viewer, PlotWorld.WORLD_500) }
+        ) { teleport(viewer, PlotWorld.WORLD_500) }
 
         addButton(
             15, tete1000, Component.text("Monde 1000x1000", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD),
             Component.text("Cliquez pour vous téléporter dans le monde 1000x1000.", NamedTextColor.GRAY)
-        ) { event: InventoryClickEvent? -> teleport(viewer, PlotWorld.WORLD_1000) }
+        ) { teleport(viewer, PlotWorld.WORLD_1000) }
 
         addButton(
             8, teteEvent, Component.text("Monde Event", NamedTextColor.RED, TextDecoration.BOLD),
             Component.text("Cliquez pour vous téléporter dans le monde Event.", NamedTextColor.GRAY)
-        ) { event: InventoryClickEvent? -> teleport(viewer, PlotWorld.WORLD_EVENT) }
+        ) { teleport(viewer, PlotWorld.WORLD_EVENT) }
 
 
         addBackButton()
