@@ -7,6 +7,7 @@ import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
 import onl.tesseract.tesseractlib.util.append
+import onl.tesseract.tesseractlib.util.appendNewLine
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
@@ -21,18 +22,11 @@ class CommandsBookFactory {
         val bookMeta = book.itemMeta as BookMeta
         player.sendMessage(
             Component.text("Vous avez reçu le livre : ", NamedTextColor.DARK_GREEN)
-                .append(
-                    Component.text(
-                        Objects.requireNonNull(bookMeta.title!!),
-                        NamedTextColor.GOLD,
-                        TextDecoration.ITALIC
-                    )
-                )
+                .append(Objects.requireNonNull(bookMeta.title!!), NamedTextColor.GOLD, TextDecoration.ITALIC)
         )
     }
 
-
-    fun createGuideBook(): ItemStack {
+    private fun createGuideBook(): ItemStack {
         val book = ItemStack(Material.WRITTEN_BOOK)
         val meta = book.itemMeta as BookMeta
 
@@ -61,9 +55,7 @@ class CommandsBookFactory {
             createFAWEBrushTitlePage(),
             createFAWEBrushFirstPage(),
             createFAWEBrushSecondePage(),
-
             createLastPage()
-
         )
 
         meta.displayName(Component.text("Le Build pour les Nuls !", NamedTextColor.GOLD))
@@ -71,415 +63,337 @@ class CommandsBookFactory {
         return book
     }
 
-    private fun createLastPage(): TextComponent {
+    private fun createLastPage(): Component {
         return Component.newline()
-            .append(Component.newline())
-            .append(Component.text(RED_TIRET_LINE, NamedTextColor.RED))
-            .append(Component.newline())
-            .append(
-                Component.text(
-                    "Voilà, tu as maintenant toutes les bases pour faire la plus belle construction, alors à toi de jouer ! ;)",
-                    NamedTextColor.RED,
-                    TextDecoration.BOLD,
-                    TextDecoration.ITALIC
-                )
-            )
-            .append(Component.newline())
-            .append(Component.text(RED_TIRET_LINE, NamedTextColor.RED))
-            .append(Component.newline())
-            .append(Component.newline())
+            .appendNewLine()
+            .append(RED_TIRET_LINE, NamedTextColor.RED)
+            .appendNewLine()
+            .append("Voilà, tu as maintenant toutes les bases pour faire la plus belle construction, alors à toi de jouer ! ;)", NamedTextColor.RED, TextDecoration.BOLD, TextDecoration.ITALIC)
+            .appendNewLine()
+            .append(RED_TIRET_LINE, NamedTextColor.RED)
+            .appendNewLine()
+            .appendNewLine()
     }
 
-    private fun createFAWEBrushSecondePage(): TextComponent {
+    private fun createFAWEBrushSecondePage(): Component {
         return Component.text("", NamedTextColor.BLACK)
-            .append(Component.text("- //mask <bloc> : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(Component.text("Crée un masque et affecte le brush avec seulement le bloc.", NamedTextColor.BLACK))
-            .append(Component.newline())
-            .append(Component.text("- //gmask <bloc> : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(Component.text("Crée le masque pour tous les brushs.", NamedTextColor.BLACK))
-            .append(Component.newline())
-            .append(Component.newline())
-            .append(Component.newline())
-            .append(
-                Component.text(
-                    "D'autres brushs sont disponibles, voir sur internet.",
-                    NamedTextColor.GRAY,
-                    TextDecoration.ITALIC
-                )
-            )
+            .append("- //mask <bloc> : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Crée un masque et affecte le brush avec seulement le bloc.", NamedTextColor.BLACK)
+            .appendNewLine()
+            .append("- //gmask <bloc> : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Crée le masque pour tous les brushs.", NamedTextColor.BLACK)
+            .appendNewLine()
+            .appendNewLine()
+            .appendNewLine()
+            .append("D'autres brushs sont disponibles, voir sur internet.", NamedTextColor.GRAY, TextDecoration.ITALIC)
     }
 
-    private fun createFAWEBrushFirstPage(): TextComponent {
+    private fun createFAWEBrushFirstPage(): Component {
         return Component.text("", NamedTextColor.BLACK)
-            .append(Component.text("- //brush sphere <bloc> [rayon] : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(Component.text("Dessiner une sphère.", NamedTextColor.BLACK))
-            .append(Component.newline())
-            .append(Component.text("- //brush cylinder <bloc> [rayon] : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(Component.text("Dessiner un cylindre.", NamedTextColor.BLACK))
-            .append(Component.newline())
-            .append(Component.text("- //brush clipboard : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(Component.text("Dessiner la sélection.", NamedTextColor.BLACK))
-            .append(Component.newline())
-            .append(Component.text("- //brush smooth : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(Component.text("Lisser la structure.", NamedTextColor.BLACK))
+            .append("- //brush sphere <bloc> [rayon] : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Dessiner une sphère.", NamedTextColor.BLACK)
+            .appendNewLine()
+            .append("- //brush cylinder <bloc> [rayon] : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Dessiner un cylindre.", NamedTextColor.BLACK)
+            .appendNewLine()
+            .append("- //brush clipboard : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Dessiner la sélection.", NamedTextColor.BLACK)
+            .appendNewLine()
+            .append("- //brush smooth : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Lisser la structure.", NamedTextColor.BLACK)
     }
 
-    private fun createFAWEBrushTitlePage(): TextComponent {
+    private fun createFAWEBrushTitlePage(): Component {
         return Component.newline()
-            .append(Component.text(RED_TIRET_LINE, NamedTextColor.RED))
-            .append(Component.newline())
-            .append(Component.text("   II - WorldEdit", NamedTextColor.RED, TextDecoration.BOLD))
-            .append(Component.newline())
-            .append(Component.text(RED_TIRET_LINE, NamedTextColor.RED))
-            .append(Component.newline())
-            .append(Component.newline())
-            .append(Component.text(RED_TIRET_LINE, NamedTextColor.DARK_PURPLE))
-            .append(Component.newline())
-            .append(Component.text("    4 - Brush", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD))
-            .append(Component.newline())
-            .append(Component.text(RED_TIRET_LINE, NamedTextColor.DARK_PURPLE))
-            .append(Component.newline())
-            .append(Component.text("/!\\ SE MUNIR D'UN PINCEAU ! ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(
-                Component.text(
-                    "Une fois les commandes exécutées, cliquer avec le pinceau pour dessiner la figure.",
-                    NamedTextColor.BLACK
-                )
-            )
+            .append(RED_TIRET_LINE, NamedTextColor.RED)
+            .appendNewLine()
+            .append("   II - WorldEdit", NamedTextColor.RED, TextDecoration.BOLD)
+            .appendNewLine()
+            .append(RED_TIRET_LINE, NamedTextColor.RED)
+            .appendNewLine()
+            .appendNewLine()
+            .append(RED_TIRET_LINE, NamedTextColor.DARK_PURPLE)
+            .appendNewLine()
+            .append("    4 - Brush", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD)
+            .appendNewLine()
+            .append(RED_TIRET_LINE, NamedTextColor.DARK_PURPLE)
+            .appendNewLine()
+            .append("/!\\ SE MUNIR D'UN PINCEAU ! ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Une fois les commandes exécutées, cliquer avec le pinceau pour dessiner la figure.", NamedTextColor.BLACK)
     }
 
-    private fun createFAWEGenerationSecondPage(): TextComponent {
+    private fun createFAWEGenerationSecondPage(): Component {
         return Component.text("", NamedTextColor.BLACK)
-            .append(Component.text("- //hsphere <bloc> <rayon> : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(Component.text("Crée une sphère creuse.", NamedTextColor.BLACK))
-            .append(Component.newline())
-            .append(Component.text("- //pyramid <bloc> <hauteur> : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(Component.text("Crée une pyramide pleine.", NamedTextColor.BLACK))
-            .append(Component.newline())
-            .append(Component.text("- //hpyramid <bloc> <hauteur> : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(Component.text("Crée une pyramide creuse.", NamedTextColor.BLACK))
+            .append("- //hsphere <bloc> <rayon> : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Crée une sphère creuse.", NamedTextColor.BLACK)
+            .appendNewLine()
+            .append("- //pyramid <bloc> <hauteur> : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Crée une pyramide pleine.", NamedTextColor.BLACK)
+            .appendNewLine()
+            .append("- //hpyramid <bloc> <hauteur> : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Crée une pyramide creuse.", NamedTextColor.BLACK)
     }
 
-    private fun createFAWEGenerationFirstPage(): TextComponent {
+    private fun createFAWEGenerationFirstPage(): Component {
         return Component.text("", NamedTextColor.BLACK)
-            .append(Component.text("- //cyl <bloc> <rayon> [hauteur] : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(Component.text("Crée un cylindre rempli (hauteur 1 par défaut).", NamedTextColor.BLACK))
-            .append(Component.newline())
-            .append(Component.text("- //hcyl <bloc> <rayon> [hauteur] : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(Component.text("Crée un cylindre creux (hauteur 1 par défaut).", NamedTextColor.BLACK))
-            .append(Component.newline())
-            .append(Component.text("- //sphere <bloc> <rayon> : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(Component.text("Crée une sphère pleine.", NamedTextColor.BLACK))
-            .append(Component.newline())
+            .append("- //cyl <bloc> <rayon> [hauteur] : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Crée un cylindre rempli (hauteur 1 par défaut).", NamedTextColor.BLACK)
+            .appendNewLine()
+            .append("- //hcyl <bloc> <rayon> [hauteur] : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Crée un cylindre creux (hauteur 1 par défaut).", NamedTextColor.BLACK)
+            .appendNewLine()
+            .append("- //sphere <bloc> <rayon> : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Crée une sphère pleine.", NamedTextColor.BLACK)
+            .appendNewLine()
     }
 
-    private fun createFAWEGenerationTitlePage(): TextComponent {
+    private fun createFAWEGenerationTitlePage(): Component {
         return Component.newline()
-            .append(Component.newline())
-            .append(Component.text(RED_TIRET_LINE, NamedTextColor.RED))
-            .append(Component.newline())
-            .append(Component.text("   II - WorldEdit", NamedTextColor.RED, TextDecoration.BOLD))
-            .append(Component.newline())
-            .append(Component.text(RED_TIRET_LINE, NamedTextColor.RED))
-            .append(Component.newline())
-            .append(Component.newline())
-            .append(Component.text(RED_TIRET_LINE, NamedTextColor.GOLD))
-            .append(Component.newline())
-            .append(Component.text(" 3 - Générations", NamedTextColor.GOLD, TextDecoration.BOLD))
-            .append(Component.newline())
-            .append(Component.text(RED_TIRET_LINE, NamedTextColor.GOLD))
+            .appendNewLine()
+            .append(RED_TIRET_LINE, NamedTextColor.RED)
+            .appendNewLine()
+            .append("   II - WorldEdit", NamedTextColor.RED, TextDecoration.BOLD)
+            .appendNewLine()
+            .append(RED_TIRET_LINE, NamedTextColor.RED)
+            .appendNewLine()
+            .appendNewLine()
+            .append(RED_TIRET_LINE, NamedTextColor.GOLD)
+            .appendNewLine()
+            .append(" 3 - Générations", NamedTextColor.GOLD, TextDecoration.BOLD)
+            .appendNewLine()
+            .append(RED_TIRET_LINE, NamedTextColor.GOLD)
     }
 
-    private fun createFAWEModifFourthPage(): TextComponent {
+    private fun createFAWEModifFourthPage(): Component {
         return Component.text("", NamedTextColor.BLACK)
-            .append(Component.text("- //overlay <bloc> : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(Component.text("Recouvre la sélection de <bloc>.", NamedTextColor.BLACK))
+            .append("- //overlay <bloc> : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Recouvre la sélection de <bloc>.", NamedTextColor.BLACK)
     }
 
-    private fun createFAWEModifThirdPage(): TextComponent {
+    private fun createFAWEModifThirdPage(): Component {
         return Component.text("", NamedTextColor.BLACK)
-            .append(Component.text("- //hollow [[épaisseur] [bloc]] : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(
-                Component.text(
-                    "Change l'intérieur de la sélection en [bloc] avec une épaisseur de couche externe restante.",
-                    NamedTextColor.BLACK
-                )
-            )
-            .append(Component.newline())
-            .append(Component.text("- //move [dist] [direction] : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(
-                Component.text(
-                    "Bouge la sélection d'une certaine distance, dans une direction (N/E/S/W).",
-                    NamedTextColor.BLACK
-                )
-            )
-            .append(Component.newline())
-            .append(Component.text("- //stack [nombre] : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(Component.text("Duplique la sélection [nombre] fois.", NamedTextColor.BLACK))
-            .append(Component.newline())
+            .append("- //hollow [[épaisseur] [bloc]] : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Change l'intérieur de la sélection en [bloc] avec une épaisseur de couche externe restante.", NamedTextColor.BLACK)
+            .appendNewLine()
+            .append("- //move [dist] [direction] : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Bouge la sélection d'une certaine distance, dans une direction (N/E/S/W).", NamedTextColor.BLACK)
+            .appendNewLine()
+            .append("- //stack [nombre] : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Duplique la sélection [nombre] fois.", NamedTextColor.BLACK)
+            .appendNewLine()
     }
 
-    private fun createFAWEModifSecondPage(): TextComponent {
+    private fun createFAWEModifSecondPage(): Component {
         return Component.text("", NamedTextColor.BLACK)
-            .append(Component.text("- //walls <bloc> : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(
-                Component.text(
-                    "Crée des murs en <bloc> sur toute la bordure de la sélection.",
-                    NamedTextColor.BLACK
-                )
-            )
-            .append(Component.newline())
-            .append(Component.text("- //faces <bloc> : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(
-                Component.text(
-                    "Délimite toute la sélection par un remplissage des bordures par <bloc>.",
-                    NamedTextColor.BLACK
-                )
-            )
-            .append(Component.newline())
+            .append("- //walls <bloc> : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Crée des murs en <bloc> sur toute la bordure de la sélection.", NamedTextColor.BLACK)
+            .appendNewLine()
+            .append("- //faces <bloc> : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Délimite toute la sélection par un remplissage des bordures par <bloc>.", NamedTextColor.BLACK)
+            .appendNewLine()
     }
 
-    private fun createFAWEModifFirstPage(): TextComponent {
+    private fun createFAWEModifFirstPage(): Component {
         return Component.text("", NamedTextColor.BLACK)
-            .append(Component.text("- //set <bloc> : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(Component.text("Remplit la sélection de <bloc>.", NamedTextColor.BLACK))
-            .append(Component.newline())
-            .append(Component.text("- //replace [bloc1] <bloc2> : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(Component.text("Remplace [bloc1] par <bloc2> dans la sélection.", NamedTextColor.BLACK))
-            .append(Component.newline())
-            .append(
-                Component.text(
-                    "- //center <bloc> ou //middle <bloc> : ",
-                    NamedTextColor.BLACK,
-                    TextDecoration.BOLD
-                )
-            )
-            .append(Component.text("Remplit le milieu de la sélection par <bloc>.", NamedTextColor.BLACK))
-            .append(Component.newline())
+            .append("- //set <bloc> : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Remplit la sélection de <bloc>.", NamedTextColor.BLACK)
+            .appendNewLine()
+            .append("- //replace [bloc1] <bloc2> : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Remplace [bloc1] par <bloc2> dans la sélection.", NamedTextColor.BLACK)
+            .appendNewLine()
+            .append("- //center <bloc> ou //middle <bloc> : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Remplit le milieu de la sélection par <bloc>.", NamedTextColor.BLACK)
+            .appendNewLine()
     }
 
-    private fun createFAWEModifTitlePage(): TextComponent {
+    private fun createFAWEModifTitlePage(): Component {
         return Component.newline()
-            .append(Component.newline())
-            .append(Component.text(RED_TIRET_LINE, NamedTextColor.RED))
-            .append(Component.newline())
-            .append(Component.text("   II - WorldEdit", NamedTextColor.RED, TextDecoration.BOLD))
-            .append(Component.newline())
-            .append(Component.text(RED_TIRET_LINE, NamedTextColor.RED))
-            .append(Component.newline())
-            .append(Component.newline())
-            .append(Component.text(RED_TIRET_LINE, NamedTextColor.DARK_RED))
-            .append(Component.newline())
-            .append(Component.text("2 - Modifications de la sélection", NamedTextColor.DARK_RED, TextDecoration.BOLD))
-            .append(Component.newline())
-            .append(Component.text(RED_TIRET_LINE, NamedTextColor.DARK_RED))
+            .appendNewLine()
+            .append(RED_TIRET_LINE, NamedTextColor.RED)
+            .appendNewLine()
+            .append("   II - WorldEdit", NamedTextColor.RED, TextDecoration.BOLD)
+            .appendNewLine()
+            .append(RED_TIRET_LINE, NamedTextColor.RED)
+            .appendNewLine()
+            .appendNewLine()
+            .append(RED_TIRET_LINE, NamedTextColor.DARK_RED)
+            .appendNewLine()
+            .append("2 - Modifications de la sélection", NamedTextColor.DARK_RED, TextDecoration.BOLD)
+            .appendNewLine()
+            .append(RED_TIRET_LINE, NamedTextColor.DARK_RED)
     }
 
-    private fun createFAWESelectionFourthPage(): TextComponent {
+    private fun createFAWESelectionFourthPage(): Component {
         return Component.text("", NamedTextColor.BLACK)
-            .append(Component.text("- //schematic save <nom> : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(
-                Component.text("Sauvegarde la sélection comme schematic, disponible dans votre dossier de jeu (penser à //copy avant).")
-                    .color(
-                        NamedTextColor.BLACK
-                    )
-            )
+            .append("- //schematic save <nom> : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Sauvegarde la sélection comme schematic, disponible sur le serveur (penser à //copy avant).", NamedTextColor.BLACK)
+            .appendNewLine()
+            .append("- //download : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Télécharge le schématic, cliquer sur le lien dans le tchat (penser à //copy avant).", NamedTextColor.BLACK)
     }
 
-    private fun createFAWESelectionThirdPage(): TextComponent {
+    private fun createFAWESelectionThirdPage(): Component {
         return Component.text("", NamedTextColor.BLACK)
-            .append(Component.text("- //undo : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(Component.text("Annule la dernière opération.", NamedTextColor.BLACK))
-            .append(Component.newline())
-            .append(Component.text("- //rotate <angle en °> : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(Component.text("Tourne la sélection d'un angle (penser à //copy avant).", NamedTextColor.BLACK))
-            .append(Component.newline())
-            .append(Component.text("- //flip [direction] : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(
-                Component.text(
-                    "Retourne la sélection selon une direction (N/E/S/O), ou vers le point de vue du joueur.",
-                    NamedTextColor.BLACK
-                )
-            )
+            .append("- //undo : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Annule la dernière opération.", NamedTextColor.BLACK)
+            .appendNewLine()
+            .append("- //rotate <angle en °> : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Tourne la sélection d'un angle (penser à //copy avant).", NamedTextColor.BLACK)
+            .appendNewLine()
+            .append("- //flip [direction] : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Retourne la sélection selon une direction (N/E/S/O), ou vers le point de vue du joueur.", NamedTextColor.BLACK)
     }
 
-    private fun createFAWESelectionSecondePage(): TextComponent {
+    private fun createFAWESelectionSecondePage(): Component {
         return Component.text("", NamedTextColor.BLACK)
-            .append(Component.text("- //paste : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(
-                Component.text(
-                    "Colle la structure + blocs d'air autour complétant la sélection, écrasant les structures existantes.",
-                    NamedTextColor.BLACK
-                )
-            )
-            .append(Component.newline())
-            .append(Component.text("- //paste -a : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(Component.text("Colle la sélection sans modifier les structures existantes.", NamedTextColor.BLACK))
-            .append(Component.newline())
+            .append("- //paste : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Colle la structure + blocs d'air autour complétant la sélection, écrasant les structures existantes.", NamedTextColor.BLACK)
+            .appendNewLine()
+            .append("- //paste -a : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Colle la sélection sans modifier les structures existantes.", NamedTextColor.BLACK)
+            .appendNewLine()
     }
 
-    private fun createFAWESelectionFirstPage(): TextComponent {
+    private fun createFAWESelectionFirstPage(): Component {
         return Component.text("", NamedTextColor.BLACK)
-            .append(Component.text("- //pos1 et //pos2 : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(Component.text("Sélection d'un pavé avec 2 extrémités diagonales.", NamedTextColor.BLACK))
-            .append(Component.newline())
-            .append(Component.text("- //wand : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(
-                Component.text(
-                    "(Alternative) Reçois la hache de sélection, suivre les indications.",
-                    NamedTextColor.BLACK
-                )
-            )
-            .append(Component.newline())
-            .append(Component.text("- //copy : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(Component.text("Copie la structure là où le joueur se trouve.", NamedTextColor.BLACK))
-            .append(Component.newline())
-            .append(Component.text("- //cut : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(Component.text("Coupe la sélection en la copiant.", NamedTextColor.BLACK))
-            .append(Component.newline())
+            .append("- //pos1 et //pos2 : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Sélection d'un pavé avec 2 extrémités diagonales.", NamedTextColor.BLACK)
+            .appendNewLine()
+            .append("- //wand : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("(Alternative) Reçois la hache de sélection, suivre les indications.", NamedTextColor.BLACK)
+            .appendNewLine()
+            .append("- //copy : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Copie la structure là où le joueur se trouve.", NamedTextColor.BLACK)
+            .appendNewLine()
+            .append("- //cut : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Coupe la sélection en la copiant.", NamedTextColor.BLACK)
+            .appendNewLine()
     }
 
-    private fun createFAWESelectionTitlePage(): TextComponent {
+    private fun createFAWESelectionTitlePage(): Component {
         return Component.newline()
-            .append(Component.newline())
-            .append(Component.text(RED_TIRET_LINE, NamedTextColor.RED))
-            .append(Component.newline())
-            .append(Component.text("   II - WorldEdit", NamedTextColor.RED, TextDecoration.BOLD))
-            .append(Component.newline())
-            .append(Component.text(RED_TIRET_LINE, NamedTextColor.RED))
-            .append(Component.newline())
-            .append(Component.newline())
-            .append(Component.text(RED_TIRET_LINE, NamedTextColor.DARK_AQUA))
-            .append(Component.newline())
-            .append(Component.text("1 - Sélection et schématics", NamedTextColor.DARK_AQUA, TextDecoration.BOLD))
-            .append(Component.newline())
-            .append(Component.text(RED_TIRET_LINE, NamedTextColor.DARK_AQUA))
+            .appendNewLine()
+            .append(RED_TIRET_LINE, NamedTextColor.RED)
+            .appendNewLine()
+            .append("   II - WorldEdit", NamedTextColor.RED, TextDecoration.BOLD)
+            .appendNewLine()
+            .append(RED_TIRET_LINE, NamedTextColor.RED)
+            .appendNewLine()
+            .appendNewLine()
+            .append(RED_TIRET_LINE, NamedTextColor.DARK_AQUA)
+            .appendNewLine()
+            .append("1 - Sélection et schématics", NamedTextColor.DARK_AQUA, TextDecoration.BOLD)
+            .appendNewLine()
+            .append(RED_TIRET_LINE, NamedTextColor.DARK_AQUA)
     }
 
-    private fun createSecondePlotPage(): TextComponent {
+    private fun createSecondePlotPage(): Component {
         return Component.text("", NamedTextColor.BLACK)
-            .append(Component.text("- /p visit <pseudo> [n°] : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(Component.text("Visiter un plot de joueur (défaut 1).", NamedTextColor.BLACK))
-            .append(Component.newline())
-            .append(Component.text("- /p home [n°] : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(Component.text("Téléportation à ton plot (défaut 1).", NamedTextColor.BLACK))
-            .append(Component.newline())
-            .append(Component.text("- /p merge : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(Component.text("Regroupe 2 plots consécutifs pour en faire un plus grand.", NamedTextColor.BLACK))
-            .append(Component.newline())
-            .append(Component.text("- /p flag : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(Component.text("Change les paramètres du plot (heure, météo...).", NamedTextColor.BLACK))
+            .append("- /p visit <pseudo> [n°] : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Visiter un plot de joueur (défaut 1).", NamedTextColor.BLACK)
+            .appendNewLine()
+            .append("- /p home [n°] : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Téléportation à ton plot (défaut 1).", NamedTextColor.BLACK)
+            .appendNewLine()
+            .append("- /p merge : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Regroupe 2 plots consécutifs pour en faire un plus grand.", NamedTextColor.BLACK)
+            .appendNewLine()
+            .append("- /p flag : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Change les paramètres du plot (heure, météo...).", NamedTextColor.BLACK)
     }
 
-    private fun createFirstPlotPage(): TextComponent {
+    private fun createFirstPlotPage(): Component {
         return Component.text(RED_TIRET_LINE, NamedTextColor.DARK_GREEN)
-            .append(Component.newline())
-            .append(Component.text("   I - Les plots", NamedTextColor.DARK_GREEN, TextDecoration.BOLD))
-            .append(Component.newline())
-            .append(Component.text(RED_TIRET_LINE, NamedTextColor.DARK_GREEN))
-            .append(Component.newline())
-            .append(Component.text("- /mondes : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(Component.text("Menu des mondes.", NamedTextColor.BLACK))
-            .append(Component.newline())
-            .append(Component.text("- /p (/plot) auto : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(Component.text("Claim le plot vide le plus proche dans le monde actuel.", NamedTextColor.BLACK))
-            .append(Component.newline())
-            .append(Component.text("- /p claim : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(Component.text("Claim le plot dans lequel tu te trouves (si libre).", NamedTextColor.BLACK))
-            .append(Component.newline())
-            .append(Component.text("- /p clear : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(Component.text("Vide le plot.", NamedTextColor.BLACK))
-            .append(Component.newline())
-            .append(Component.text("- /p delete : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(Component.text("Supprime le plot.", NamedTextColor.BLACK))
-            .append(Component.newline())
-            .append(Component.text("- /p add : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(
-                Component.text(
-                    "Ajoute un joueur sur le plot (peut construire si tu es connecté).",
-                    NamedTextColor.BLACK
-                )
-            )
-            .append(Component.newline())
-            .append(Component.text("- /p trust : ", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(
-                Component.text(
-                    "Ajoute un joueur sur le plot (peut construire en ton absence).",
-                    NamedTextColor.BLACK
-                )
-            )
-            .append(Component.newline())
+            .appendNewLine()
+            .append("   I - Les plots", NamedTextColor.DARK_GREEN, TextDecoration.BOLD)
+            .appendNewLine()
+            .append(RED_TIRET_LINE, NamedTextColor.DARK_GREEN)
+            .appendNewLine()
+            .append("- /mondes : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Menu des mondes.", NamedTextColor.BLACK)
+            .appendNewLine()
+            .append("- /p (/plot) auto : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Claim le plot vide le plus proche dans le monde actuel.", NamedTextColor.BLACK)
+            .appendNewLine()
+            .append("- /p claim : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Claim le plot dans lequel tu te trouves (si libre).", NamedTextColor.BLACK)
+            .appendNewLine()
+            .append("- /p clear : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Vide le plot.", NamedTextColor.BLACK)
+            .appendNewLine()
+            .append("- /p delete : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Supprime le plot.", NamedTextColor.BLACK)
+            .appendNewLine()
+            .append("- /p add : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Ajoute un joueur sur le plot (peut construire si tu es connecté).", NamedTextColor.BLACK)
+            .appendNewLine()
+            .append("- /p trust : ", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append("Ajoute un joueur sur le plot (peut construire en ton absence).", NamedTextColor.BLACK)
+            .appendNewLine()
     }
 
-    private fun createSommairePage(): TextComponent {
+    private fun createSommairePage(): Component {
         return Component.text(RED_TIRET_LINE, NamedTextColor.BLUE)
-            .append(Component.text("       Sommaire", NamedTextColor.BLUE, TextDecoration.BOLD))
-            .append(Component.newline())
-            .append(Component.text(RED_TIRET_LINE, NamedTextColor.BLUE))
-            .append(Component.newline())
-            .append(Component.newline())
-            .append(Component.text("I - Les plots p.4", NamedTextColor.DARK_GREEN))
-            .append(Component.newline())
-            .append(Component.newline())
-            .append(Component.text("II - WorldEdit", NamedTextColor.RED))
-            .append(Component.newline())
-            .append(Component.text(" 1 - Sélections et ", NamedTextColor.DARK_AQUA))
-            .append(Component.newline())
-            .append(Component.text(" schématics p.6", NamedTextColor.DARK_AQUA))
-            .append(Component.newline())
-            .append(Component.text(" 2 - Modifications p.11", NamedTextColor.DARK_RED))
-            .append(Component.newline())
-            .append(Component.text(" 3 - Générations p.16", NamedTextColor.GOLD))
-            .append(Component.newline())
-            .append(Component.text(" 4 - Brush p.19", NamedTextColor.DARK_PURPLE))
+            .append("       Sommaire", NamedTextColor.BLUE, TextDecoration.BOLD)
+            .appendNewLine()
+            .append(RED_TIRET_LINE, NamedTextColor.BLUE)
+            .appendNewLine()
+            .appendNewLine()
+            .append("I - Les plots p.4", NamedTextColor.DARK_GREEN)
+            .appendNewLine()
+            .appendNewLine()
+            .append("II - WorldEdit", NamedTextColor.RED)
+            .appendNewLine()
+            .append(" 1 - Sélections et ", NamedTextColor.DARK_AQUA)
+            .appendNewLine()
+            .append(" schématics p.6", NamedTextColor.DARK_AQUA)
+            .appendNewLine()
+            .append(" 2 - Modifications p.11", NamedTextColor.DARK_RED)
+            .appendNewLine()
+            .append(" 3 - Générations p.16", NamedTextColor.GOLD)
+            .appendNewLine()
+            .append(" 4 - Brush p.19", NamedTextColor.DARK_PURPLE)
     }
 
-    private fun createInfoSyntaxePage(): TextComponent {
+    private fun createInfoSyntaxePage(): Component {
         return Component.text(RED_TIRET_LINE, NamedTextColor.DARK_RED)
-            .append(Component.newline())
-            .append(Component.text(" /!\\ INFO SYNTAXE", NamedTextColor.DARK_RED, TextDecoration.BOLD))
-            .append(Component.newline())
-            .append(Component.text(RED_TIRET_LINE, NamedTextColor.DARK_RED))
-            .append(Component.newline())
-            .append(Component.text("Dans les commandes qui vont suivre :", NamedTextColor.BLACK))
-            .append(Component.newline())
-            .append(Component.newline())
-            .append(Component.text("- Les arguments ", NamedTextColor.BLACK))
-            .append(Component.text("[...]", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(Component.text(" sont en option.", NamedTextColor.BLACK))
-            .append(Component.newline())
-            .append(Component.newline())
-            .append(Component.text("- Les arguments ", NamedTextColor.BLACK))
-            .append(Component.text("<...>", NamedTextColor.BLACK, TextDecoration.BOLD))
-            .append(Component.text(" sont ", NamedTextColor.BLACK))
-            .append(Component.text("OBLIGATOIRES ", NamedTextColor.RED, TextDecoration.BOLD))
-            .append(Component.text("!", NamedTextColor.BLACK))
-            .append(Component.newline())
-            .append(Component.newline())
-            .append(Component.text("   Bonne lecture ;)", NamedTextColor.GRAY, TextDecoration.ITALIC))
+            .appendNewLine()
+            .append(" /!\\ INFO SYNTAXE", NamedTextColor.DARK_RED, TextDecoration.BOLD)
+            .appendNewLine()
+            .append(RED_TIRET_LINE, NamedTextColor.DARK_RED)
+            .appendNewLine()
+            .append("Dans les commandes qui vont suivre :", NamedTextColor.BLACK)
+            .appendNewLine()
+            .appendNewLine()
+            .append("- Les arguments ", NamedTextColor.BLACK)
+            .append("[...]", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append(" sont en option.", NamedTextColor.BLACK)
+            .appendNewLine()
+            .appendNewLine()
+            .append("- Les arguments ", NamedTextColor.BLACK)
+            .append("<...>", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append(" sont ", NamedTextColor.BLACK)
+            .append("OBLIGATOIRES ", NamedTextColor.RED, TextDecoration.BOLD)
+            .append("!", NamedTextColor.BLACK)
+            .appendNewLine()
+            .appendNewLine()
+            .append("   Bonne lecture ;)", NamedTextColor.GRAY, TextDecoration.ITALIC)
     }
 
-    private fun createFirstPage(): TextComponent {
+    private fun createFirstPage(): Component {
         return Component.text(RED_TIRET_LINE, NamedTextColor.RED)
-            .append(Component.newline())
-            .append(Component.text("   LE BUILD POUR", NamedTextColor.RED, TextDecoration.BOLD))
-            .append(Component.newline())
-            .append(Component.text("     LES NULS !", NamedTextColor.RED, TextDecoration.BOLD))
-            .append(Component.newline())
-            .append(Component.text(RED_TIRET_LINE, NamedTextColor.RED))
-            .append(Component.newline())
-            .append(
-                Component.text("Dans ce livre, vous trouverez les ", NamedTextColor.BLACK)
-                    .append(Component.text("commandes essentielles", NamedTextColor.BLACK, TextDecoration.BOLD))
-                    .append(
-                        Component.text(
-                            " pour bien démarrer sur le serveur Créatif grâce à nos nombreux outils. Avec cela, vous deviendrez un ",
-                            NamedTextColor.BLACK
-                        )
-                    )
-                    .append(Component.text("pro builder", NamedTextColor.BLACK, TextDecoration.BOLD))
-                    .append(Component.text(" !", NamedTextColor.BLACK))
-            )
+            .appendNewLine()
+            .append("   LE BUILD POUR", NamedTextColor.RED, TextDecoration.BOLD)
+            .appendNewLine()
+            .append("     LES NULS !", NamedTextColor.RED, TextDecoration.BOLD)
+            .appendNewLine()
+            .append(RED_TIRET_LINE, NamedTextColor.RED)
+            .appendNewLine()
+            .append("Dans ce livre, vous trouverez les ", NamedTextColor.BLACK)
+            .append("commandes essentielles", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append(" pour bien démarrer sur le serveur Créatif grâce à nos nombreux outils. Avec cela, vous deviendrez un ", NamedTextColor.BLACK)
+            .append("pro builder", NamedTextColor.BLACK, TextDecoration.BOLD)
+            .append(" !", NamedTextColor.BLACK)
     }
 
     companion object {
