@@ -10,14 +10,9 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
-class SocialsMenu : InventoryMenu {
-    constructor() : super(27, Component.text("Réseaux sociaux", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD))
+class SocialsMenu(previous: InventoryMenu? = null) :
 
-    constructor(previous: InventoryMenu?) : super(
-        27,
-        Component.text("Réseaux sociaux", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD),
-        previous
-    )
+    InventoryMenu(27, Component.text("Réseaux sociaux", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD), previous) {
 
     override fun open(viewer: Player) {
         fill(Material.GRAY_STAINED_GLASS_PANE, " ")

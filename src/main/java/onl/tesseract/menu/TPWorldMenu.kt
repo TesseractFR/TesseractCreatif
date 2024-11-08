@@ -10,14 +10,9 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
-class TPWorldMenu : InventoryMenu {
-    constructor(previous: InventoryMenu?) : super(
-        27,
-        Component.text("Menu des téléportations", NamedTextColor.BLUE, TextDecoration.BOLD),
-        previous
-    )
+class TPWorldMenu(previous: InventoryMenu? = null) :
 
-    constructor() : super(27, Component.text("Menu des téléportations", NamedTextColor.BLUE, TextDecoration.BOLD))
+    InventoryMenu(27, Component.text("Menu des téléportations", NamedTextColor.BLUE, TextDecoration.BOLD), previous) {
 
     override fun open(viewer: Player) {
         fill(Material.GRAY_STAINED_GLASS_PANE, " ")

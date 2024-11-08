@@ -8,17 +8,9 @@ import onl.tesseract.tesseractlib.util.menu.InventoryMenu
 import org.bukkit.Material
 import org.bukkit.entity.Player
 
-class PluginsToolsMenu : InventoryMenu {
-    constructor() : super(
-        27,
-        Component.text("Outils/Plugins du serveur", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD)
-    )
+class PluginsToolsMenu(previous: InventoryMenu? = null) :
 
-    constructor(previous: InventoryMenu?) : super(
-        27,
-        Component.text("Outils/Plugins du serveur", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD),
-        previous
-    )
+    InventoryMenu(27, Component.text("Outils/Plugins du serveur", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD), previous) {
 
     override fun open(viewer: Player) {
         fill(Material.GRAY_STAINED_GLASS_PANE, " ")

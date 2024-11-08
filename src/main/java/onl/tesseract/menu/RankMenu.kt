@@ -8,14 +8,9 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
-class RankMenu : InventoryMenu {
-    constructor() : super(27, Component.text("Grades", NamedTextColor.DARK_GREEN, TextDecoration.BOLD))
+class RankMenu(previous: InventoryMenu? = null) :
 
-    constructor(previous: InventoryMenu?) : super(
-        27,
-        Component.text("Grades", NamedTextColor.DARK_GREEN, TextDecoration.BOLD),
-        previous
-    )
+    InventoryMenu(27, Component.text("Grades", NamedTextColor.DARK_GREEN, TextDecoration.BOLD), previous) {
 
     override fun open(viewer: Player) {
         fill(Material.GRAY_STAINED_GLASS_PANE, " ")

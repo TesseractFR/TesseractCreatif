@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack
 class MenuMenu(val player: Player) :
 
     InventoryMenu(54, Component.text("Menu du Créatif", NamedTextColor.RED, TextDecoration.BOLD)) {
+
     override fun open(viewer: Player) {
         fill(Material.GRAY_STAINED_GLASS_PANE, " ")
 

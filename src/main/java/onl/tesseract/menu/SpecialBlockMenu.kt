@@ -8,23 +8,9 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
-class SpecialBlockMenu : InventoryMenu {
-    val player: Player
+class SpecialBlockMenu(val player: Player, previous: InventoryMenu? = null) :
 
-    constructor(player: Player) : super(
-        27,
-        Component.text("Blocs spéciaux", NamedTextColor.DARK_AQUA, TextDecoration.BOLD)
-    ) {
-        this.player = player
-    }
-
-    constructor(player: Player, previous: InventoryMenu?) : super(
-        27,
-        Component.text("Blocs spéciaux", NamedTextColor.DARK_AQUA, TextDecoration.BOLD),
-        previous
-    ) {
-        this.player = player
-    }
+    InventoryMenu(27, Component.text("Blocs spéciaux", NamedTextColor.DARK_AQUA, TextDecoration.BOLD), previous) {
 
     override fun open(viewer: Player) {
         fill(Material.GRAY_STAINED_GLASS_PANE, " ")
