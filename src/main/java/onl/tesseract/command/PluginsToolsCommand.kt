@@ -8,7 +8,7 @@ import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
 @Command
-class BuildToolsCommand : CommandContext() {
+class PluginsToolsCommand : CommandContext() {
     @CommandBody
     fun onCommand(sender: CommandSender?): Boolean {
         if (sender is Player) {
