@@ -4,11 +4,9 @@ import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
 import onl.tesseract.CommandsBookFactory
-import onl.tesseract.CreativePlayer
 import onl.tesseract.tesseractlib.util.menu.InventoryMenu
 import org.bukkit.Material
 import org.bukkit.entity.Player
-import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.inventory.ItemStack
 
 class MenuMenu(val player: Player) :
