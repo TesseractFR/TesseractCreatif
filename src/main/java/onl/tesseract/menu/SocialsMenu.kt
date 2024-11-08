@@ -30,8 +30,8 @@ class SocialsMenu : InventoryMenu {
             viewer.closeInventory()
             viewer.sendMessage(
                 Component.text("----------\n", NamedTextColor.LIGHT_PURPLE)
-                    .append(Component.text("Instagram", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD))
-                    .append(Component.text("\n----------", NamedTextColor.LIGHT_PURPLE))
+                    .append("Instagram", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD)
+                    .append("\n----------", NamedTextColor.LIGHT_PURPLE)
                     .clickEvent(ClickEvent.openUrl("https://www.instagram.com/tesseractfr/"))
             )
         }
@@ -44,8 +44,8 @@ class SocialsMenu : InventoryMenu {
             viewer.closeInventory()
             viewer.sendMessage(
                 Component.text("------\n", NamedTextColor.GOLD)
-                    .append(Component.text("TikTok", NamedTextColor.GOLD, TextDecoration.BOLD))
-                    .append(Component.text("\n------", NamedTextColor.GOLD))
+                    .append("TikTok", NamedTextColor.GOLD, TextDecoration.BOLD)
+                    .append("\n------", NamedTextColor.GOLD)
                     .clickEvent(ClickEvent.openUrl("https://www.tiktok.com/@tesseractfr?lang=fr"))
             )
         }
@@ -58,8 +58,8 @@ class SocialsMenu : InventoryMenu {
             viewer.closeInventory()
             viewer.sendMessage(
                 Component.text("---------\n", NamedTextColor.BLUE)
-                    .append(Component.text("Facebook", NamedTextColor.BLUE, TextDecoration.BOLD))
-                    .append(Component.text("\n---------", NamedTextColor.BLUE))
+                    .append("Facebook", NamedTextColor.BLUE, TextDecoration.BOLD)
+                    .append("\n---------", NamedTextColor.BLUE)
                     .clickEvent(ClickEvent.openUrl("https://www.facebook.com/TesseractFR?locale=fr_FR"))
             )
         }
@@ -72,8 +72,8 @@ class SocialsMenu : InventoryMenu {
             viewer.closeInventory()
             viewer.sendMessage(
                 Component.text("--------\n", NamedTextColor.DARK_AQUA)
-                    .append(Component.text("Discord", NamedTextColor.DARK_AQUA, TextDecoration.BOLD))
-                    .append(Component.text("\n--------", NamedTextColor.DARK_AQUA))
+                    .append("Discord", NamedTextColor.DARK_AQUA, TextDecoration.BOLD)
+                    .append("\n--------", NamedTextColor.DARK_AQUA)
                     .clickEvent(ClickEvent.openUrl("https://discord.gg/4ajRytDJWK"))
             )
         }
@@ -86,8 +86,8 @@ class SocialsMenu : InventoryMenu {
             viewer.closeInventory()
             viewer.sendMessage(
                 Component.text("--------\n", NamedTextColor.RED)
-                    .append(Component.text("YouTube", NamedTextColor.RED, TextDecoration.BOLD))
-                    .append(Component.text("\n--------", NamedTextColor.RED))
+                    .append("YouTube", NamedTextColor.RED, TextDecoration.BOLD)
+                    .append("\n--------", NamedTextColor.RED)
                     .clickEvent(ClickEvent.openUrl("https://www.youtube.com/@tesseract7852"))
             )
         }
@@ -100,8 +100,8 @@ class SocialsMenu : InventoryMenu {
             viewer.closeInventory()
             viewer.sendMessage(
                 Component.text("-----------\n", NamedTextColor.AQUA)
-                    .append(Component.text("X (Twitter)", NamedTextColor.AQUA, TextDecoration.BOLD))
-                    .append(Component.text("\n-----------", NamedTextColor.AQUA))
+                    .append("X (Twitter)", NamedTextColor.AQUA, TextDecoration.BOLD)
+                    .append("\n-----------", NamedTextColor.AQUA)
                     .clickEvent(ClickEvent.openUrl("https://x.com/TesseractFR"))
             )
         }
@@ -114,8 +114,8 @@ class SocialsMenu : InventoryMenu {
             viewer.closeInventory()
             viewer.sendMessage(
                 Component.text("-------------\n", NamedTextColor.YELLOW)
-                    .append(Component.text("Site Internet", NamedTextColor.YELLOW, TextDecoration.BOLD))
-                    .append(Component.text("\n-------------", NamedTextColor.YELLOW))
+                    .append("Site Internet", NamedTextColor.YELLOW, TextDecoration.BOLD)
+                    .append("\n-------------", NamedTextColor.YELLOW)
                     .clickEvent(ClickEvent.openUrl("https://www.tesseract.onl/"))
             )
         }
