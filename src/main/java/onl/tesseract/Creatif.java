@@ -51,7 +51,7 @@ public final class Creatif extends JavaPlugin implements Listener {
         Objects.requireNonNull(this.getCommand("grades")).setExecutor(new RankCommand());
         Objects.requireNonNull(this.getCommand("blocks")).setExecutor(new SpecialBlockCommand());
         Objects.requireNonNull(this.getCommand("outils")).setExecutor(new PluginsToolsCommand());
-        Objects.requireNonNull(this.getCommand("commandes")).setExecutor(new BasicCommandsCommand());
+        Objects.requireNonNull(this.getCommand("commandes")).setExecutor(new CommandsBookCommand());
     }
 
     @Override
