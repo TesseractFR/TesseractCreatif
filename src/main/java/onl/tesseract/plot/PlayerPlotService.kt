@@ -20,6 +20,7 @@ class PlayerPlotService(private val repository: PlayerPlotInfoRepository) {
             PlotWorld.WORLD_250 -> plotInfo.nbPlot250
             PlotWorld.WORLD_500 -> plotInfo.nbPlot500
             PlotWorld.WORLD_1000 -> plotInfo.nbPlot1000
+            PlotWorld.WORLD_EVENT -> 0
         }
     }
 
@@ -30,6 +31,7 @@ class PlayerPlotService(private val repository: PlayerPlotInfoRepository) {
             PlotWorld.WORLD_250 -> playerRank.rankPlot.plot250
             PlotWorld.WORLD_500 -> playerRank.rankPlot.plot500;
             PlotWorld.WORLD_1000 -> playerRank.rankPlot.plot1000;
+            PlotWorld.WORLD_EVENT -> 1
         }
     }
 

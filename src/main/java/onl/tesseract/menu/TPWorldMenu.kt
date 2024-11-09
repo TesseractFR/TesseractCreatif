@@ -3,7 +3,7 @@ package onl.tesseract.menu
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
-import onl.tesseract.entity.PlotWorld
+import onl.tesseract.plot.entity.PlotWorld
 import onl.tesseract.tesseractlib.util.menu.InventoryMenu
 import onl.tesseract.world.WorldManager
 import org.bukkit.Material
@@ -50,7 +50,7 @@ class TPWorldMenu(previous: InventoryMenu? = null) :
     }
 
     private fun teleport(viewer: Player, plotWorld: PlotWorld) {
-        viewer.teleport(WorldManager.getInstance().getWorldSpawn(plotWorld))
+        viewer.teleport(WorldManager.instance.getWorldSpawn(plotWorld))
     }
 
     companion object {
