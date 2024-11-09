@@ -11,3 +11,32 @@ commands:
     usage: "/menu"
     description: Ouvre le menu
     permission: tesseract.creatif.menu
+  mondes:
+    aliases: mondes
+    usage: "/mondes"
+    description: Ouvre le menu des mondes créa
+    permission: tesseract.creatif.menu
+  reseaux:
+    aliases: reseaux
+    usage: "/reseaux"
+    description: Ouvre le menu des réseaux sociaux
+    permission: tesseract.creatif.menu
+  grades:
+    aliases: grades
+    usage: "/grades"
+    description: Ouvre le menu des grades
+    permission: tesseract.creatif.menu
+  blocks:
+    aliases: blocks
+    usage: "/blocks"
+    description: Ouvre le menu des blocs spéciaux
+    permission: tesseract.creatif.menu
+  outils:
+    aliases: outils
+    usage: "/outils"
+    description: Ouvre le menu des outils de build
+    permission: tesseract.creatif.menu
+  commandes:
+    aliases: commandes
+    usage: "/commandes"
+    description: Reçois un livre guide des commandes de build basiques
