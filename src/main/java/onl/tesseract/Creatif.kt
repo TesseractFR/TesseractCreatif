@@ -1,11 +1,9 @@
 package onl.tesseract
 
-import lombok.Getter
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.milkbowl.vault.permission.Permission
 import onl.tesseract.command.*
-import onl.tesseract.menu.TPWorldMenu
 import onl.tesseract.player.CreativePlayer
 import onl.tesseract.player.CreativePlayerContainer
 import onl.tesseract.rank.PlayerRankService
@@ -18,7 +16,6 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.plugin.java.JavaPlugin
-import java.util.*
 
 class Creatif : JavaPlugin(), Listener {
     var permissions: Permission? = null
