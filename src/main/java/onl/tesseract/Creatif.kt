@@ -4,7 +4,8 @@ import lombok.Getter
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.milkbowl.vault.permission.Permission
-import onl.tesseract.command.MenuCommand
+import onl.tesseract.command.*
+import onl.tesseract.menu.TPWorldMenu
 import onl.tesseract.player.CreativePlayer
 import onl.tesseract.player.CreativePlayerContainer
 import onl.tesseract.rank.PlayerRankService
@@ -43,6 +44,12 @@ class Creatif : JavaPlugin(), Listener {
 
     private fun registerCommands() {
         this.getCommand("menu")?.setExecutor(MenuCommand())
+        this.getCommand("mondes")?.setExecutor(WorldsCommand())
+        this.getCommand("reseaux")?.setExecutor(SocialsCommand())
+        this.getCommand("grades")?.setExecutor(RankCommand())
+        this.getCommand("blocks")?.setExecutor(SpecialBlockCommand())
+        this.getCommand("outils")?.setExecutor(PluginsToolsCommand())
+        this.getCommand("commandes")?.setExecutor(CommandsBookCommand())
     }
 
     override fun onDisable() {
