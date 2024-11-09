@@ -17,7 +17,7 @@ interface PlayerPlotInfoRepository : Repository<PlayerPlotInfo, UUID> {
  */
 class PlayerPlotInfoHibernateRepository : PlayerPlotInfoRepository {
     override fun getById(id: UUID): PlayerPlotInfo? {
-        HibernateUtil.getSessionFactory().openSession().use { session ->
+        HibernateUtil.sessionFactory.openSession().use { session ->
             return session.find(
                 PlayerPlotInfo::class.java, id
             )
@@ -25,7 +25,7 @@ class PlayerPlotInfoHibernateRepository : PlayerPlotInfoRepository {
     }
 
     override fun save(entity: PlayerPlotInfo) {
-        HibernateUtil.getSessionFactory().openSession().use { session ->
+        HibernateUtil.sessionFactory.openSession().use { session ->
             session.persist(entity)
         }
     }

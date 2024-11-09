@@ -1,25 +1,22 @@
-package onl.tesseract.entityConverter;
+package onl.tesseract.entityConverter
 
-import jakarta.persistence.AttributeConverter;
-import jakarta.persistence.Converter;
+import jakarta.persistence.AttributeConverter
+import jakarta.persistence.Converter
+import java.time.Duration
 
-import java.time.Duration;
 @Converter(autoApply = true)
-public class DurationConverter implements AttributeConverter<Duration, Long> {
-
-    @Override
-    public Long convertToDatabaseColumn(Duration duration) {
-        if(duration == null) {
-            return null;
+class DurationConverter : AttributeConverter<Duration?, Long?> {
+    override fun convertToDatabaseColumn(duration: Duration?): Long? {
+        if (duration == null) {
+            return null
         }
-        return duration.toSeconds();
+        return duration.toSeconds()
     }
 
-    @Override
-    public Duration convertToEntityAttribute(Long l) {
-        if (l == null){
-            return null;
+    override fun convertToEntityAttribute(l: Long?): Duration? {
+        if (l == null) {
+            return null
         }
-        return Duration.ofSeconds(l);
+        return Duration.ofSeconds(l)
     }
 }

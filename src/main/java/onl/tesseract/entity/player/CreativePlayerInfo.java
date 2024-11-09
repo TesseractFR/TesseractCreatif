@@ -20,14 +20,6 @@ public class CreativePlayerInfo {
     @JdbcTypeCode(java.sql.Types.VARCHAR)
     UUID uuid;
 
-    @OneToOne()
-    @PrimaryKeyJoinColumn
-    PlayerPlotInfo playerPlotInfo;
-
-    @OneToOne()
-    @PrimaryKeyJoinColumn
-    PlayerRankInfo playerRankInfo;
-
     Duration timePlayed;
 
 }

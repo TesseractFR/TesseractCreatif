@@ -1,95 +1,96 @@
-package onl.tesseract;
+package onl.tesseract
 
-import lombok.Getter;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextColor;
-import net.milkbowl.vault.permission.Permission;
-import onl.tesseract.command.MenuCommand;
-import onl.tesseract.player.CreativePlayer;
-import onl.tesseract.player.CreativePlayerContainer;
-import onl.tesseract.rank.PlayerRankService;
-import onl.tesseract.service.CreativeServices;
-import onl.tesseract.tesseractlib.TesseractLib;
-import org.bukkit.Bukkit;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.RegisteredServiceProvider;
-import org.bukkit.plugin.java.JavaPlugin;
+import lombok.Getter
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.NamedTextColor
+import net.milkbowl.vault.permission.Permission
+import onl.tesseract.command.MenuCommand
+import onl.tesseract.player.CreativePlayer
+import onl.tesseract.player.CreativePlayerContainer
+import onl.tesseract.rank.PlayerRankService
+import onl.tesseract.service.CreativeServices.Companion.get
+import onl.tesseract.service.CreativeServices.Companion.getInstance
+import onl.tesseract.tesseractlib.Config
+import onl.tesseract.tesseractlib.TesseractLib
+import org.bukkit.Bukkit
+import org.bukkit.event.EventHandler
+import org.bukkit.event.Listener
+import org.bukkit.event.player.PlayerJoinEvent
+import org.bukkit.plugin.java.JavaPlugin
+import java.util.*
 
-import java.util.Objects;
-
-public final class Creatif extends JavaPlugin implements Listener {
-    @Getter
-    private static Creatif instance;
-    @Getter
-    private Permission permissions = null;
-    @Override
-    public void onEnable() {
-        Creatif.instance = this;
-        CreativeServices.Companion.getInstance().registerDefaultServices();
-        TesseractLib.setPlayerContainer(new CreativePlayerContainer());
+class Creatif : JavaPlugin(), Listener {
+    var permissions: Permission? = null
+        private set
+    override fun onEnable() {
+        instance = this
+        getInstance().registerDefaultServices()
+        TesseractLib.setPlayerContainer(CreativePlayerContainer())
         // Plugin startup logic
-        if (!setupPermissions())
-        {
-            System.err.println("Could not setup permissions");
-            getServer().getPluginManager().disablePlugin(this);
-            return;
+        if (!setupPermissions()) {
+            System.err.println("Could not setup permissions")
+            server.pluginManager.disablePlugin(this)
+            return
         }
-        Config config = Config.getInstance();
-        registerEvents();
-        registerCommands();
+        registerEvents()
+        registerCommands()
     }
 
-    private void registerEvents() {
-        PluginManager pluginManager = this.getServer().getPluginManager();
-        pluginManager.registerEvents(this,this);
+    private fun registerEvents() {
+        val pluginManager = server.pluginManager
+        pluginManager.registerEvents(this, this)
     }
 
-    private void registerCommands() {
-        Objects.requireNonNull(this.getCommand("menu")).setExecutor(new MenuCommand());
+    private fun registerCommands() {
+        this.getCommand("menu")?.setExecutor(MenuCommand())
     }
 
-    @Override
-    public void onDisable() {
+    override fun onDisable() {
         // Plugin shutdown logic
     }
-    public static CreativePlayerContainer getPlayerContainer()
-    {
-        return (CreativePlayerContainer) TesseractLib.getPlayerContainer();
-    }
-    @EventHandler()
-    public void onJoin(PlayerJoinEvent event){
-        CreativePlayer creativePlayer;
-        if (!event.getPlayer().hasPlayedBefore() || !getPlayerContainer().exists(event.getPlayer().getUniqueId()))
-        {
-            event.getPlayer().teleport(onl.tesseract.tesseractlib.Config.getInstance().getFirstSpawnLocation());
-            event.joinMessage(Component.text("Bienvenue ", NamedTextColor.GOLD)
-                    .append(Component.text(event.getPlayer().getName(), NamedTextColor.GREEN))
-                    .append(Component.text(" sur le Créatif !", NamedTextColor.GOLD)));
 
+    @EventHandler
+    fun onJoin(event: PlayerJoinEvent) {
+        val creativePlayer: CreativePlayer
+        if (!event.player.hasPlayedBefore() || !playerContainer.exists(event.player.uniqueId)) {
+            event.player.teleport(Config.getInstance().firstSpawnLocation)
+            event.joinMessage(
+                Component.text("Bienvenue ", NamedTextColor.GOLD)
+                    .append(Component.text(event.player.name, NamedTextColor.GREEN))
+                    .append(Component.text(" sur le Créatif !", NamedTextColor.GOLD))
+            )
+        } else {
+            creativePlayer = playerContainer[event.player]
+            val color = get(
+                PlayerRankService::class.java
+            ).getPlayerRank(event.player.uniqueId).color
+            creativePlayer.onJoin(event.player)
+            event.joinMessage(
+                Component.text("+ ", NamedTextColor.GREEN)
+                    .append(Component.text(event.player.name, color))
+                    .append(Component.text(" a rejoint le serveur.", NamedTextColor.GOLD))
+            )
+            creativePlayer.updatePermission()
+            Bukkit.getServer().pluginManager.registerEvents(creativePlayer, this)
         }
-        else{
-            creativePlayer = getPlayerContainer().get(event.getPlayer());
-            TextColor color = CreativeServices.get(PlayerRankService.class).getPlayerRank(event.getPlayer().getUniqueId()).getColor();
-            creativePlayer.onJoin(event.getPlayer());
-            event.joinMessage(Component.text("+ ",NamedTextColor.GREEN)
-                    .append(Component.text(event.getPlayer().getName(),color))
-                    .append(Component.text( " a rejoint le serveur.",NamedTextColor.GOLD)));
-            creativePlayer.updatePermission();
-            Bukkit.getServer().getPluginManager().registerEvents(creativePlayer, this);
-
-        }
     }
 
-    private boolean setupPermissions()
-    {
-        RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
-        if (rsp == null)
-            return false;
-        permissions = rsp.getProvider();
-        return true;
+    private fun setupPermissions(): Boolean {
+        val rsp = server.servicesManager.getRegistration(
+            Permission::class.java
+        )
+        if (rsp == null) return false
+        permissions = rsp.provider
+        return true
+    }
+
+
+
+    companion object {
+        @JvmStatic
+        var instance: Creatif? = null
+            private set
+        val playerContainer: CreativePlayerContainer
+            get() = TesseractLib.getPlayerContainer() as CreativePlayerContainer
     }
 }
