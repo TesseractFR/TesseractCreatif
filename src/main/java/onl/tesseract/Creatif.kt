@@ -1,10 +1,12 @@
 package onl.tesseract
 
-import lombok.Getter
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.milkbowl.vault.permission.Permission
 import onl.tesseract.command.MenuCommand
+import onl.tesseract.event.InvisibleItemFrameHandler
+import onl.tesseract.event.IronDoorEventHandler
+import onl.tesseract.event.IronTrapDoorEventHandler
 import onl.tesseract.player.CreativePlayer
 import onl.tesseract.player.CreativePlayerContainer
 import onl.tesseract.rank.PlayerRankService
@@ -39,6 +41,9 @@ class Creatif : JavaPlugin(), Listener {
     private fun registerEvents() {
         val pluginManager = server.pluginManager
         pluginManager.registerEvents(this, this)
+        pluginManager.registerEvents(InvisibleItemFrameHandler(), this)
+        pluginManager.registerEvents(IronTrapDoorEventHandler(), this)
+        pluginManager.registerEvents(IronDoorEventHandler(), this)
     }
 
     private fun registerCommands() {

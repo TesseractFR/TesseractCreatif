@@ -1,33 +1,26 @@
-package onl.tesseract.event;
+package onl.tesseract.event
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.entity.ItemFrame;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.Bukkit
+import org.bukkit.Location
+import org.bukkit.entity.ItemFrame
+import org.bukkit.event.EventHandler
+import org.bukkit.event.EventPriority
+import org.bukkit.event.Listener
+import org.bukkit.event.player.PlayerInteractEntityEvent
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class InvisibleItemFrameHandler implements Listener {
-
-    Map<Location, Integer> ticks = new HashMap<Location, Integer>();
+class InvisibleItemFrameHandler : Listener {
+    private var ticks: MutableMap<Location, Int> = HashMap()
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
-
-    public void onClickFrame(PlayerInteractEntityEvent event) {
-        Bukkit.getServer().getCurrentTick();
-        if (event.getPlayer().isSneaking() && event.getRightClicked() instanceof ItemFrame itemFrame) {
-            int lastTick = ticks.getOrDefault(itemFrame.getLocation(),0);
-            if (lastTick != Bukkit.getServer().getCurrentTick()) {
-                itemFrame.setVisible(!itemFrame.isVisible());
-                event.setCancelled(true);
-                ticks.put(itemFrame.getLocation(), Bukkit.getServer().getCurrentTick());
+    fun onClickFrame(event: PlayerInteractEntityEvent) {
+        Bukkit.getServer().currentTick
+        val itemFrame = event.rightClicked as? ItemFrame
+        if (event.player.isSneaking && itemFrame != null) {
+            val lastTick = ticks.getOrDefault(itemFrame.location, 0)
+            if (lastTick != Bukkit.getServer().currentTick) {
+                itemFrame.isVisible = !itemFrame.isVisible
+                event.isCancelled = true
+                ticks[itemFrame.location] = Bukkit.getServer().currentTick
             }
-
         }
-
     }
 }
