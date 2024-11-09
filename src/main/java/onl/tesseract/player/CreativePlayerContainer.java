@@ -1,8 +1,6 @@
 package onl.tesseract.player;
 
 import onl.tesseract.Creatif;
-import onl.tesseract.CreativePlayer;
-import onl.tesseract.dao.CreativePlayerInfoDAO;
 import onl.tesseract.tesseractlib.equipment.Equipment;
 import onl.tesseract.tesseractlib.player.PlayerContainer;
 import org.bukkit.Bukkit;
@@ -24,10 +22,8 @@ public class CreativePlayerContainer implements PlayerContainer<CreativePlayer, 
     @Override
     public CreativePlayer get(UUID player) {
         if (playerMap.containsKey(player)){
-            CreativePlayerInfoDAO.getInstance().refresh(playerMap.get(player).getCreativePlayerInfo());
             return playerMap.get(player);
         }
-
         OfflinePlayer player1 = Bukkit.getOfflinePlayer(player);
         CreativePlayer tPlayer = new CreativePlayer(player1);
         playerMap.put(player, tPlayer);

@@ -6,9 +6,6 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
 import net.milkbowl.vault.permission.Permission;
 import onl.tesseract.command.MenuCommand;
-import onl.tesseract.event.InvisibleItemFrameHandler;
-import onl.tesseract.event.IronDoorEventHandler;
-import onl.tesseract.event.IronTrapDoorEventHandler;
 import onl.tesseract.player.CreativePlayerContainer;
 import onl.tesseract.tesseractlib.TesseractLib;
 import org.bukkit.Bukkit;
@@ -45,9 +42,6 @@ public final class Creatif extends JavaPlugin implements Listener {
     private void registerEvents() {
         PluginManager pluginManager = this.getServer().getPluginManager();
         pluginManager.registerEvents(this,this);
-        this.getServer().getPluginManager().registerEvents(new InvisibleItemFrameHandler(), this);
-        this.getServer().getPluginManager().registerEvents(new IronTrapDoorEventHandler(), this);
-        this.getServer().getPluginManager().registerEvents(new IronDoorEventHandler(), this);
     }
 
     private void registerCommands() {
