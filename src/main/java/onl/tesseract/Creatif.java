@@ -8,7 +8,7 @@ import net.milkbowl.vault.permission.Permission;
 import onl.tesseract.command.MenuCommand;
 import onl.tesseract.player.CreativePlayer;
 import onl.tesseract.player.CreativePlayerContainer;
-import onl.tesseract.rank.RankService;
+import onl.tesseract.rank.PlayerRankService;
 import onl.tesseract.service.CreativeServices;
 import onl.tesseract.tesseractlib.TesseractLib;
 import org.bukkit.Bukkit;
@@ -73,7 +73,7 @@ public final class Creatif extends JavaPlugin implements Listener {
         }
         else{
             creativePlayer = getPlayerContainer().get(event.getPlayer());
-            TextColor color = CreativeServices.get(RankService.class).getPlayerRank(event.getPlayer().getUniqueId()).getColor();
+            TextColor color = CreativeServices.get(PlayerRankService.class).getPlayerRank(event.getPlayer().getUniqueId()).getColor();
             creativePlayer.onJoin(event.getPlayer());
             event.joinMessage(Component.text("+ ",NamedTextColor.GREEN)
                     .append(Component.text(event.getPlayer().getName(),color))

@@ -1,7 +1,7 @@
 package onl.tesseract.service
 
-import onl.tesseract.persistence.rank.PlayerRankInfoHibernateRepository
-import onl.tesseract.rank.RankService
+import onl.tesseract.rank.persistence.PlayerRankInfoHibernateRepository
+import onl.tesseract.rank.PlayerRankService
 
 class CreativeServices private constructor() {
     private val services :MutableMap<Class<*>,Any> = HashMap()
@@ -16,7 +16,7 @@ class CreativeServices private constructor() {
     }
 
     fun registerDefaultServices() {
-        registerService(RankService::class.java,RankService(PlayerRankInfoHibernateRepository()))
+        registerService(PlayerRankService::class.java,PlayerRankService(PlayerRankInfoHibernateRepository()))
     }
 
     companion object {

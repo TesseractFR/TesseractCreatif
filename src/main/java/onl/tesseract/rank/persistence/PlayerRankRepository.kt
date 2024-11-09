@@ -1,4 +1,4 @@
-package onl.tesseract.persistence.rank
+package onl.tesseract.rank.persistence
 
 import onl.tesseract.HibernateUtil
 import onl.tesseract.rank.entity.PlayerRankInfo
