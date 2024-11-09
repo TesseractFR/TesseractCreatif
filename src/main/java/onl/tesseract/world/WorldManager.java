@@ -3,7 +3,7 @@ package onl.tesseract.world;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import onl.tesseract.entity.PlotWorld;
+import onl.tesseract.plot.entity.PlotWorld;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;

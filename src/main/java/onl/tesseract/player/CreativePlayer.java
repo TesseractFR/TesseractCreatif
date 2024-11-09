@@ -4,11 +4,12 @@ import lombok.Getter;
 import net.milkbowl.vault.permission.Permission;
 import onl.tesseract.Creatif;
 import onl.tesseract.entity.player.CreativePlayerInfo;
+import onl.tesseract.plot.PlayerPlotService;
 import onl.tesseract.rank.entity.PlayerRank;
 import onl.tesseract.rank.entity.Rank;
 import onl.tesseract.rank.entity.StaffRank;
-import onl.tesseract.plot.PlotManager;
 import onl.tesseract.service.CreativePlayerService;
+import onl.tesseract.service.CreativeServices;
 import onl.tesseract.tesseractlib.player.TPlayer;
 import org.bukkit.OfflinePlayer;
 
@@ -38,7 +39,7 @@ public class CreativePlayer extends TPlayer {
         Consumer<Rank> playerUnrankConsumer = rank -> permissions.playerRemoveGroup(null, getOfflinePlayer(), rank.getPermGroup());
         Arrays.stream(PlayerRank.values()).forEach(playerUnrankConsumer);
         Arrays.stream(StaffRank.values()).forEach(playerUnrankConsumer);
-        PlotManager.getInstance().resetPlotPermissions(permissions, this);
+        CreativeServices.get(PlayerPlotService.class).resetPermission(permissions,this.getOfflinePlayer());
         //
     }
 

@@ -21,7 +21,7 @@ class PlayerRankService(private val repository: PlayerRankInfoRepository){
     }
 
     private fun getOrCreatePlayerRankInfo(player: UUID) : PlayerRankInfo {
-        return repository.getById(player)?: PlayerRankInfo();
+        return repository.getById(player)?: PlayerRankInfo(player);
     }
 
 }

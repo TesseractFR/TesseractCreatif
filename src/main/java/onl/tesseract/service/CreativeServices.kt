@@ -1,5 +1,7 @@
 package onl.tesseract.service
 
+import onl.tesseract.plot.PlayerPlotService
+import onl.tesseract.plot.persistence.PlayerPlotInfoHibernateRepository
 import onl.tesseract.rank.persistence.PlayerRankInfoHibernateRepository
 import onl.tesseract.rank.PlayerRankService
 
@@ -17,6 +19,7 @@ class CreativeServices private constructor() {
 
     fun registerDefaultServices() {
         registerService(PlayerRankService::class.java,PlayerRankService(PlayerRankInfoHibernateRepository()))
+        registerService(PlayerPlotService::class.java,PlayerPlotService(PlayerPlotInfoHibernateRepository()))
     }
 
     companion object {
