@@ -35,3 +35,7 @@ commands:
     aliases: commandes
     usage: "/commandes"
     description: Reçois un livre guide des commandes de build basiques
+  boutique:
+    aliases: boutique
+    usage: "boutique"
+    description: Ouvre le menu de la boutique de Tesseract
