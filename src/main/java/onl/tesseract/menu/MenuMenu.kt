@@ -25,15 +25,7 @@ class MenuMenu(val player: Player) :
         }
 
         addButton(
-            12, teteSocialsMenu,
-            Component.text("Réseaux sociaux", NamedTextColor.LIGHT_PURPLE),
-            Component.text("Cliquez pour afficher les différents réseaux sociaux.", NamedTextColor.GRAY)
-        ) {
-            SocialsMenu(this).open(viewer)
-        }
-
-        addButton(
-            13, teteGrades,
+            12, teteGrades,
             Component.text("Grades", NamedTextColor.DARK_GREEN),
             Component.text("Cliquez pour afficher les différents grades du serveur.", NamedTextColor.GRAY)
         ) {
