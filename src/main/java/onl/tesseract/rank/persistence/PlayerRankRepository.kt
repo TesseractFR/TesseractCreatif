@@ -24,8 +24,8 @@ class PlayerRankInfoHibernateRepository : PlayerRankInfoRepository {
     }
 
     override fun save(entity: PlayerRankInfo) {
-        HibernateUtil.sessionFactory.openSession().use { session ->
-            session.persist(entity)
+       HibernateUtil.executeInsideTransaction { session ->
+            session.merge(entity)
         }
     }
 

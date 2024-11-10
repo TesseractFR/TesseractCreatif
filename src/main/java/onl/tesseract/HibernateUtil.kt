@@ -58,7 +58,7 @@ object HibernateUtil {
     }
 
 
-    fun executeInsideTransaction(action: Consumer<Session?>) {
+    fun executeInsideTransaction(action: Consumer<Session>) {
         var transaction: Transaction? = null
         try {
             sessionFactory.openSession().use { session ->

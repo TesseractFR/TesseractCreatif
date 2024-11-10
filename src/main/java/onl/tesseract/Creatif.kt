@@ -11,6 +11,7 @@ import onl.tesseract.service.CreativeServices.Companion.get
 import onl.tesseract.service.CreativeServices.Companion.getInstance
 import onl.tesseract.tesseractlib.Config
 import onl.tesseract.tesseractlib.TesseractLib
+import onl.tesseract.timeplayed.PlayerTimePlayedTask
 import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -30,6 +31,7 @@ class Creatif : JavaPlugin(), Listener {
             server.pluginManager.disablePlugin(this)
             return
         }
+        PlayerTimePlayedTask.start(this,1);
         registerEvents()
         registerCommands()
     }

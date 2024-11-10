@@ -10,6 +10,7 @@ class DurationConverter : AttributeConverter<Duration?, Long?> {
         if (duration == null) {
             return null
         }
+        print(duration.toSeconds())
         return duration.toSeconds()
     }
 
