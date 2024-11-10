@@ -5,6 +5,7 @@ import net.kyori.adventure.text.event.ClickEvent
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
 import onl.tesseract.CommandsBookFactory
+import onl.tesseract.menu.boutique.BoutiqueMenu
 import onl.tesseract.tesseractlib.player.TPlayer
 import onl.tesseract.tesseractlib.util.append
 import onl.tesseract.tesseractlib.util.menu.InventoryMenu
