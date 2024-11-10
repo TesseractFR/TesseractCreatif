@@ -23,7 +23,7 @@ class BoutiqueMenu(val player: TPlayer, previous: InventoryMenu? = null) :
             GlobalBoutiqueMenu(player, this).open(viewer)
         }
         addButton(
-            14, Material.ELYTRA, Component.text("Créatif", NamedTextColor.LIGHT_PURPLE),
+            14, Material.BRICKS, Component.text("Créatif", NamedTextColor.LIGHT_PURPLE),
             Component.text("Cliquez pour afficher les achats disponibles uniquement sur le Créatif.", NamedTextColor.GRAY)
         ) {
             CreativeBoutiqueMenu(player, this).open(viewer)
