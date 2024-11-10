@@ -1,7 +1,7 @@
 package onl.tesseract
 
 import lombok.extern.slf4j.Slf4j
-import onl.tesseract.entity.player.CreativePlayerInfo
+import onl.tesseract.timeplayed.entity.PlayerTimePlayedInfo
 import onl.tesseract.plot.entity.PlayerPlotInfo
 import onl.tesseract.rank.entity.PlayerRankInfo
 import org.hibernate.Session
@@ -22,7 +22,7 @@ object HibernateUtil {
     private fun buildSessionFactory(): SessionFactory {
         try {
             val configuration = Configuration()
-            val config = Config.instance
+            val config = Config.getInstance()
             configuration.setProperty(AvailableSettings.JAKARTA_JDBC_DRIVER, "com.mysql.cj.jdbc.Driver")
             configuration.setProperty(
                 AvailableSettings.JAKARTA_JDBC_URL,
@@ -44,7 +44,7 @@ object HibernateUtil {
             configuration.setProperty(AvailableSettings.HBM2DDL_AUTO, Action.ACTION_UPDATE)
 
 
-            configuration.addAnnotatedClass(CreativePlayerInfo::class.java)
+            configuration.addAnnotatedClass(PlayerTimePlayedInfo::class.java)
             configuration.addAnnotatedClass(PlayerPlotInfo::class.java)
             configuration.addAnnotatedClass(PlayerRankInfo::class.java)
 
