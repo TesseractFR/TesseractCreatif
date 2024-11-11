@@ -27,9 +27,8 @@ class MenuMenu(val player: Player) :
 
         addButton(
             10, teteTPWorldMenu,
-            Component.text("Téléportations dans les mondes", NamedTextColor.BLUE),
-            Component.text("Cliquez pour afficher les différents mondes disponibles et vous y téléporter.", NamedTextColor.GRAY)
             Component.text("Téléportations dans les mondes", NamedTextColor.BLUE, TextDecoration.BOLD),
+            Component.text("Cliquez pour afficher les différents mondes disponibles et vous y téléporter.", NamedTextColor.GRAY)
         ) {
             TPWorldMenu(this).open(viewer)
         }
@@ -44,27 +43,24 @@ class MenuMenu(val player: Player) :
 
         addButton(
             12, Material.LIGHT,
-            Component.text("Blocs spéciaux", NamedTextColor.DARK_AQUA),
-            Component.text("Cliquez pour afficher les différents blocs spéciaux du serveur (hors inventaire).", NamedTextColor.GRAY)
             Component.text("Blocs spéciaux", NamedTextColor.DARK_AQUA, TextDecoration.BOLD),
+            Component.text("Cliquez pour afficher les différents blocs spéciaux du serveur (hors inventaire).", NamedTextColor.GRAY)
         ) {
             SpecialBlockMenu(player, this).open(viewer)
         }
 
         addButton(
             13, Material.WOODEN_AXE,
-            Component.text("Outils/Plugins du serveur", NamedTextColor.DARK_PURPLE),
-            Component.text("Cliquez pour afficher les différents outils et plugins utilisés sur le serveur pour construire.", NamedTextColor.GRAY)
             Component.text("Outils/Plugins du serveur", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD),
+            Component.text("Cliquez pour afficher les différents outils et plugins utilisés sur le serveur pour construire.", NamedTextColor.GRAY)
         ) {
             PluginsToolsMenu(this).open(viewer)
         }
 
         addButton(
             14, Material.BOOK,
-            Component.text("Le Build pour les Nuls", NamedTextColor.RED),
-            Component.text("Cliquez pour recevoir le guide des commandes de build essentielles pour bien démarrer votre construction !", NamedTextColor.GRAY)
             Component.text("Le Build pour les Nuls", NamedTextColor.RED, TextDecoration.BOLD),
+            Component.text("Cliquez pour recevoir le guide des commandes de build essentielles pour bien démarrer votre construction !", NamedTextColor.GRAY)
         ) {
             close()
             CommandsBookFactory.getInstance().giveGuideBook(player)
