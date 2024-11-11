@@ -26,6 +26,12 @@ class MenuMenu(val player: Player) :
         fill(Material.GRAY_STAINED_GLASS_PANE, " ")
 
         addButton(
+            9, teteGenre,
+            Component.text("Sélection du genre", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD),
+            Component.text("Cliquez pour sélectionner votre genre.", NamedTextColor.GRAY)
+        ) { }
+
+        addButton(
             10, teteTPWorldMenu,
             Component.text("Téléportations dans les mondes", NamedTextColor.BLUE, TextDecoration.BOLD),
             Component.text("Cliquez pour afficher les différents mondes disponibles et vous y téléporter.", NamedTextColor.GRAY)
@@ -259,6 +265,13 @@ class MenuMenu(val player: Player) :
             "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2I5NDg0M2QzNDBhYmFkYmQ2NDAxZWY0ZWM3NGRjZWM0YjY2OTY2MTA2NWJkMWEwMWY5YTU5MDVhODkxOWM3MiJ9fX0=",
             "3b94843d340abadbd6401ef4ec74dcec4b669661065bd1a01f9a5905a8919c72"
         )
+        val teteGenre: ItemStack = getCustomHead(
+            "",
+            "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2EwOGQwZGFiYzQzNGEwOTNmMDk4YmFmNTA1YjE2NWMxNGNiZTk2NDU3M2VkOGU5ZTYxODUxNTg5MTc5NTcwIn19fQ==",
+            ""
+        )
+
+
     }
 } //TODO bouton affichage Info perso (plot/temps de jeu ...)
 //TODO bouton menu boutique
