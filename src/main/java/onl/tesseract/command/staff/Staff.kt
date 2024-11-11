@@ -9,7 +9,7 @@ import onl.tesseract.commandBuilder.annotation.Perm
     name = "staff",
     permission = Perm(value = "tesseract.staff", mode = Perm.Mode.AUTO),
     subCommands = [
-        SetRankCommand::class
+        RankCommand::class
     ]
 )
 class Staff : CommandContext()

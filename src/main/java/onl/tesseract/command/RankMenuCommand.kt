@@ -8,7 +8,7 @@ import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
 @Command
-class RankCommand : CommandContext() {
+class RankMenuCommand : CommandContext() {
     @CommandBody
     fun onCommand(sender: CommandSender?): Boolean {
         if (sender is Player) {

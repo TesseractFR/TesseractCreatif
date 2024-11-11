@@ -46,7 +46,7 @@ class Creatif : JavaPlugin(), Listener {
         this.getCommand("menu")?.setExecutor(MenuCommand())
         this.getCommand("mondes")?.setExecutor(WorldsCommand())
         this.getCommand("reseaux")?.setExecutor(SocialsCommand())
-        this.getCommand("grades")?.setExecutor(RankCommand())
+        this.getCommand("grades")?.setExecutor(RankMenuCommand())
         this.getCommand("blocks")?.setExecutor(SpecialBlockCommand())
         this.getCommand("outils")?.setExecutor(PluginsToolsCommand())
         this.getCommand("commandes")?.setExecutor(CommandsBookCommand())
