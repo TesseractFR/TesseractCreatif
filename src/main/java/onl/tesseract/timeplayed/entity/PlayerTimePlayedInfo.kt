@@ -17,5 +17,14 @@ class PlayerTimePlayedInfo (
     )
     var uuid: UUID = UUID.randomUUID(),
     @Convert(converter = DurationConverter::class)
-    var timePlayed: Duration = Duration.ZERO){
+    var timePlayed: Duration = Duration.ZERO,
+
+
+    @Convert(converter = DurationConverter::class)
+    var timeBougth: Duration = Duration.ZERO
+
+    )
+
+
+{
 }

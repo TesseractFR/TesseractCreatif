@@ -20,6 +20,18 @@ class PlayerTimePlayedService(private val repository: PlayerTimePlayedRepository
         repository.save(playerTimePlayedInfo)
     }
 
+    fun getPlayerTimeBought(player: UUID): Duration {
+        return getOrCreatePlayerTimePlayedInfo(player).timeBougth;
+    }
+
+    fun addPlayerTimeBought(player: UUID, seconds : Long) {
+        var playerTimePlayedInfo = getOrCreatePlayerTimePlayedInfo(player);
+        playerTimePlayedInfo.timeBougth = playerTimePlayedInfo.timeBougth.plusSeconds(seconds);
+        repository.save(playerTimePlayedInfo)
+    }
+
+
+
     private fun getOrCreatePlayerTimePlayedInfo(player: UUID) : PlayerTimePlayedInfo {
         return repository.getById(player)?: PlayerTimePlayedInfo(player);
     }

@@ -32,9 +32,10 @@ class PlayerTimePlayedTask(val period: Long) : BukkitRunnable() {
         val uuid = player.uniqueId
         val playerRank = CreativeServices[PlayerRankService::class.java].getPlayerRank(uuid)
         val playedTime = CreativeServices[PlayerTimePlayedService::class.java].getPlayerTimePlayed(uuid)
+        val boughtTime = CreativeServices[PlayerTimePlayedService::class.java].getPlayerTimeBought(uuid)
         if(playerRank < PlayerRank.BATISSEUR){
             val nextRank = PlayerRank.entries[playerRank.ordinal+1]
-            val duration = Duration.ofSeconds(playedTime.seconds)
+            val duration = playedTime + boughtTime
             val duration2 = Duration.ofHours(nextRank.hoursRequired)
             if(duration > duration2){
                 CreativeServices[PlayerRankService::class.java].setPlayerRank(uuid,nextRank)
