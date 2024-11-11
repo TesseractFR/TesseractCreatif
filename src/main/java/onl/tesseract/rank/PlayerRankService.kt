@@ -3,6 +3,7 @@ package onl.tesseract.rank
 import onl.tesseract.rank.persistence.PlayerRankInfoRepository
 import onl.tesseract.rank.entity.PlayerRank
 import onl.tesseract.rank.entity.PlayerRankInfo
+import onl.tesseract.rank.entity.StaffRank
 import java.util.*
 
 /**
@@ -19,6 +20,17 @@ class PlayerRankService(private val repository: PlayerRankInfoRepository){
     fun getPlayerRank(player: UUID) : PlayerRank {
         return getOrCreatePlayerRankInfo(player).playerRank;
     }
+
+    fun setStaffRank(player: UUID, staffRank: StaffRank){
+        val rankInfo = getOrCreatePlayerRankInfo(player)
+        rankInfo.staffRank = staffRank
+        repository.save(rankInfo);
+    }
+
+    fun getStaffRank(player: UUID) : StaffRank? {
+        return getOrCreatePlayerRankInfo(player).staffRank
+    }
+
 
     private fun getOrCreatePlayerRankInfo(player: UUID) : PlayerRankInfo {
         return repository.getById(player)?: PlayerRankInfo(player);
