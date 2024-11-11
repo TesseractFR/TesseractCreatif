@@ -40,3 +40,9 @@ commands:
     aliases: commandes
     usage: "/commandes"
     description: Reçois un livre guide des commandes de build basiques
+  staff:
+    aliases: staff
+    usage: "/staff"
+    description: Commandes staff
+    permission: tesseract.staff
+
