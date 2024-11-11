@@ -16,10 +16,12 @@ class PlayerTimePlayedInfo (
         Types.VARCHAR
     )
     var uuid: UUID = UUID.randomUUID(),
+    @Column(nullable = false)
     @Convert(converter = DurationConverter::class)
     var timePlayed: Duration = Duration.ZERO,
 
 
+    @Column(nullable = false)
     @Convert(converter = DurationConverter::class)
     var timeBougth: Duration = Duration.ZERO
 

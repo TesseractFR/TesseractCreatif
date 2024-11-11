@@ -21,7 +21,7 @@ class PlayerRankService(private val repository: PlayerRankInfoRepository){
         return getOrCreatePlayerRankInfo(player).playerRank;
     }
 
-    fun setStaffRank(player: UUID, staffRank: StaffRank){
+    fun setStaffRank(player: UUID, staffRank: StaffRank?){
         val rankInfo = getOrCreatePlayerRankInfo(player)
         rankInfo.staffRank = staffRank
         repository.save(rankInfo);

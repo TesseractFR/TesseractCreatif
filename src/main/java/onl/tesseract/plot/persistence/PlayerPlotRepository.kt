@@ -25,8 +25,8 @@ class PlayerPlotInfoHibernateRepository : PlayerPlotInfoRepository {
     }
 
     override fun save(entity: PlayerPlotInfo) {
-        HibernateUtil.sessionFactory.openSession().use { session ->
-            session.persist(entity)
+        HibernateUtil.executeInsideTransaction { session ->
+            session.merge(entity)
         }
     }
 
