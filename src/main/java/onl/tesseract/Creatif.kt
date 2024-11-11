@@ -44,11 +44,11 @@ class Creatif : JavaPlugin(), Listener {
     private fun registerCommands() {
         this.getCommand("menu")?.setExecutor(MenuCommand())
         this.getCommand("mondes")?.setExecutor(WorldsCommand())
-        this.getCommand("reseaux")?.setExecutor(SocialsCommand())
         this.getCommand("grades")?.setExecutor(RankCommand())
         this.getCommand("blocks")?.setExecutor(SpecialBlockCommand())
         this.getCommand("outils")?.setExecutor(PluginsToolsCommand())
         this.getCommand("commandes")?.setExecutor(CommandsBookCommand())
+        this.getCommand("boutique")?.setExecutor(BoutiqueCommand())
     }
 
     override fun onDisable() {
