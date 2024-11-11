@@ -4,7 +4,7 @@ import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.milkbowl.vault.permission.Permission
 import onl.tesseract.command.*
-import onl.tesseract.command.staff.Staff
+import onl.tesseract.command.staff.StaffCommand
 import onl.tesseract.command.home.DelhomeCommand
 import onl.tesseract.command.home.HomeCommand
 import onl.tesseract.command.home.SetHomeCommand
@@ -103,6 +103,7 @@ class Creatif : JavaPlugin(), Listener {
         this.getCommand("scoreboard")?.setExecutor(ScoreBoardCommands())
         this.getCommand("tpa")?.setExecutor(TPACommand())
         this.getCommand("nick")?.setExecutor(NickCommand())
+        this.getCommand("staff")?.setExecutor(StaffCommand())
     }
 
     override fun onDisable() {
