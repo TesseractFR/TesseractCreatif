@@ -11,15 +11,13 @@ import onl.tesseract.tesseractlib.command.argument.IntegerCommandArgument
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import onl.tesseract.tesseractlib.command.argument.PlayerArg
-import onl.tesseract.tesseractlib.command.argument.StringArg
 import onl.tesseract.timeplayed.PlayerTimePlayedService
-import onl.tesseract.timeplayed.persistence.PlayerTimePlayedRepository
 import java.time.Duration
 
 @Command(name = "time")
 class TimeCommand : CommandContext() {
 
-    private val timePlayedService = CreativeServices[PlayerTimePlayedService::class.java]
+    private val timePlayed = CreativeServices[PlayerTimePlayedService::class.java]
 
     @Command
     fun setPlayedTime(
@@ -30,8 +28,8 @@ class TimeCommand : CommandContext() {
     ) {
         val totalSeconds = convertToSeconds(unit, value)
         if (totalSeconds != -1) {
-            timePlayedService.setPlayerTimePlayed(player.uniqueId, totalSeconds.toLong())
-            sender.sendMessage(Component.text("Le temps de jeu de ${player.name} a été défini à ${value} $unit(s).", NamedTextColor.YELLOW))
+            timePlayed.setPlayerTimePlayed(player.uniqueId, totalSeconds.toLong())
+            sender.sendMessage(Component.text("Le temps de jeu de ${player.name} a été défini à $value $unit(s).", NamedTextColor.YELLOW))
         } else {
             sender.sendMessage(Component.text("Unité de temps invalide. Utilisez day, month, second, minute, hour.", NamedTextColor.RED))
         }
@@ -46,8 +44,8 @@ class TimeCommand : CommandContext() {
     ) {
         val totalSeconds = convertToSeconds(unit, value)
         if (totalSeconds != -1) {
-            timePlayedService.addPlayerTimePlayed(player.uniqueId, totalSeconds.toLong())
-            sender.sendMessage(Component.text("Le temps de jeu de ${player.name} a été augmenté de ${value} $unit(s).", NamedTextColor.YELLOW))
+            timePlayed.addPlayerTimePlayed(player.uniqueId, totalSeconds.toLong())
+            sender.sendMessage(Component.text("Le temps de jeu de ${player.name} a été augmenté de $value $unit(s).", NamedTextColor.YELLOW))
         } else {
             sender.sendMessage(Component.text("Unité de temps invalide. Utilisez day, month, second, minute, hour.", NamedTextColor.RED))
         }
@@ -61,15 +59,13 @@ class TimeCommand : CommandContext() {
         sender: CommandSender
     ) {
         val totalSeconds = convertToSeconds(unit, value)
-
         if (totalSeconds != -1) {
-            val currentTimePlayed = timePlayedService.getPlayerTimePlayed(player.uniqueId)
-
+            val currentTimePlayed = timePlayed.getPlayerTimePlayed(player.uniqueId)
             if (totalSeconds > currentTimePlayed.seconds) {
-                sender.sendMessage(Component.text("Erreur : Vous ne pouvez pas retirer plus de temps que ce qui a été joué (${formatDuration(currentTimePlayed)}).", NamedTextColor.RED))
+                sender.sendMessage(Component.text("Erreur : Vous ne pouvez pas retirer plus de temps que ce qui a été joué (${formatChat(currentTimePlayed)}).", NamedTextColor.RED))
             } else {
-                timePlayedService.addPlayerTimePlayed(player.uniqueId, -totalSeconds.toLong())
-                sender.sendMessage(Component.text("Le temps de jeu de ${player.name} a été réduit de ${value} $unit(s).", NamedTextColor.YELLOW))
+                timePlayed.addPlayerTimePlayed(player.uniqueId, - totalSeconds.toLong())
+                sender.sendMessage(Component.text("Le temps de jeu de ${player.name} a été réduit de $value $unit(s).", NamedTextColor.YELLOW))
             }
         } else {
             sender.sendMessage(Component.text("Unité de temps invalide. Utilisez day, month, second, minute, hour.", NamedTextColor.RED))
@@ -81,10 +77,9 @@ class TimeCommand : CommandContext() {
         @Argument(value = "player", clazz = PlayerArg::class) player: Player,
         sender: CommandSender
     ) {
-        val timePlayed = timePlayedService.getPlayerTimePlayed(player.uniqueId)
-        val timePlayedFormatted = formatDuration(timePlayed)
-
-        sender.sendMessage(Component.text("Le temps de jeu de ${player.name} est de $timePlayedFormatted.", NamedTextColor.YELLOW))
+        val timePlayed = timePlayed.getPlayerTimePlayed(player.uniqueId)
+        val timePlayedChat = formatChat(timePlayed)
+        sender.sendMessage(Component.text("Le temps de jeu de ${player.name} est de $timePlayedChat.", NamedTextColor.YELLOW))
     }
 
     @Command
@@ -92,22 +87,20 @@ class TimeCommand : CommandContext() {
         @Argument(value = "player", clazz = PlayerArg::class) player: Player,
         sender: CommandSender
     ) {
-        timePlayedService.setPlayerTimePlayed(player.uniqueId, 0)
+        timePlayed.setPlayerTimePlayed(player.uniqueId, 0)
         sender.sendMessage(Component.text("Le temps de jeu de ${player.name} a été réinitialisé.", NamedTextColor.YELLOW))
     }
 
-    private fun formatDuration(duration: Duration): String {
+    private fun formatChat(duration: Duration): String {
         val days = duration.toDays()
         val hours = duration.toHours() % 24
         val minutes = duration.toMinutes() % 60
         val seconds = duration.seconds % 60
-
         val parts = mutableListOf<String>()
         if (days > 0) parts.add("$days day${if (days > 1) "s" else ""}")
         if (hours > 0) parts.add("$hours hour${if (hours > 1) "s" else ""}")
         if (minutes > 0) parts.add("$minutes minute${if (minutes > 1) "s" else ""}")
         if (seconds > 0) parts.add("$seconds second${if (seconds > 1) "s" else ""}")
-
         return parts.joinToString(" ")
     }
 
