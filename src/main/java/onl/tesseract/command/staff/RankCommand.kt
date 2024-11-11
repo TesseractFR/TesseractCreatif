@@ -21,18 +21,13 @@ import org.bukkit.entity.Player
 class RankCommand : CommandContext() {
 
     @Command
-    fun staff(
+    fun setStaff(
         @Argument(value = "player", clazz = PlayerArg::class) player: Player,
-        @Argument(value = "staffRank", clazz = StaffRankCommandArg::class, optional = true) rank: StaffRank?,
+        @Argument(value = "staffRank", clazz = StaffRankCommandArg::class) rank: StaffRank,
         sender: CommandSender
     ) {
-        if (rank == null) {
-            sender.sendMessage(Component.text("Aucun rang spécifié.", NamedTextColor.RED))
-            return
-        }
-
-        val playerRankService = CreativeServices[PlayerRankService::class.java]
-        playerRankService.setStaffRank(player.uniqueId, rank)
+        val staffRankService = CreativeServices[PlayerRankService::class.java]
+        staffRankService.setStaffRank(player.uniqueId, rank)
 
         sender.sendMessage(Component.text("Rang mis à jour.", NamedTextColor.YELLOW))
         player.sendMessage(Component.text("Votre rang a été mis à jour : ", NamedTextColor.YELLOW)
@@ -41,7 +36,19 @@ class RankCommand : CommandContext() {
     }
 
     @Command
-    fun player(
+    fun resetStaff(
+        @Argument(value = "player", clazz = PlayerArg::class) player: Player,
+        sender: CommandSender
+    ) {
+        val staffRankService = CreativeServices[PlayerRankService::class.java]
+        staffRankService.setStaffRank(player.uniqueId, null)
+
+        sender.sendMessage(Component.text("Rang réinitialisé.", NamedTextColor.YELLOW))
+        player.sendMessage(Component.text("Votre rang a été réinitialisé en membre.", NamedTextColor.YELLOW))
+    }
+
+    @Command
+    fun setPlayer(
         @Argument(value = "player", clazz = PlayerArg::class) player: Player,
         @Argument(value = "playerRank", clazz = PlayerRankCommandArg::class ) rank: PlayerRank,
         sender: CommandSender
