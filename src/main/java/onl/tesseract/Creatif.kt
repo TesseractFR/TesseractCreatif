@@ -44,11 +44,11 @@ class Creatif : JavaPlugin(), Listener {
 
     private fun registerCommands() {
         this.getCommand("menu")?.setExecutor(MenuCommand())
-        this.getCommand("mondes")?.setExecutor(WorldsCommand())
+        this.getCommand("mondes")?.setExecutor(WorldsMenuCommand())
         this.getCommand("reseaux")?.setExecutor(SocialsCommand())
         this.getCommand("grades")?.setExecutor(RankMenuCommand())
-        this.getCommand("blocks")?.setExecutor(SpecialBlockCommand())
-        this.getCommand("outils")?.setExecutor(PluginsToolsCommand())
+        this.getCommand("blocks")?.setExecutor(SpecialBlockMenuCommand())
+        this.getCommand("outils")?.setExecutor(PluginsToolsMenuCommand())
         this.getCommand("commandes")?.setExecutor(CommandsBookCommand())
         this.getCommand("staff")?.setExecutor(Staff())
     }
