@@ -11,7 +11,7 @@ import org.bukkit.entity.Player
 
 class BoutiqueMenu(val player: TPlayer, previous: InventoryMenu? = null) :
 
-    InventoryMenu(27, Component.text("Boutique de Tesseract", NamedTextColor.BLUE, TextDecoration.BOLD), previous) {
+    InventoryMenu(27, Component.text("Boutique de Tesseract", NamedTextColor.YELLOW, TextDecoration.BOLD), previous) {
 
     override fun open(viewer: Player) {
         fill(Material.GRAY_STAINED_GLASS_PANE, " ")

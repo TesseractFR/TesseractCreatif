@@ -6,9 +6,14 @@ import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
 import onl.tesseract.CommandsBookFactory
 import onl.tesseract.menu.boutique.BoutiqueMenu
+import onl.tesseract.plot.PlayerPlotService
+import onl.tesseract.plot.entity.PlotWorld
+import onl.tesseract.rank.PlayerRankService
+import onl.tesseract.service.CreativeServices
 import onl.tesseract.tesseractlib.player.TPlayer
 import onl.tesseract.tesseractlib.util.append
 import onl.tesseract.tesseractlib.util.menu.InventoryMenu
+import onl.tesseract.timeplayed.PlayerTimePlayedService
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
@@ -24,13 +29,14 @@ class MenuMenu(val player: Player) :
             10, teteTPWorldMenu,
             Component.text("Téléportations dans les mondes", NamedTextColor.BLUE),
             Component.text("Cliquez pour afficher les différents mondes disponibles et vous y téléporter.", NamedTextColor.GRAY)
+            Component.text("Téléportations dans les mondes", NamedTextColor.BLUE, TextDecoration.BOLD),
         ) {
             TPWorldMenu(this).open(viewer)
         }
 
         addButton(
             11, teteGrades,
-            Component.text("Grades", NamedTextColor.DARK_GREEN),
+            Component.text("Grades", NamedTextColor.DARK_GREEN, TextDecoration.BOLD),
             Component.text("Cliquez pour afficher les différents grades du serveur.", NamedTextColor.GRAY)
         ) {
             RankMenu(this).open(viewer)
@@ -40,6 +46,7 @@ class MenuMenu(val player: Player) :
             12, Material.LIGHT,
             Component.text("Blocs spéciaux", NamedTextColor.DARK_AQUA),
             Component.text("Cliquez pour afficher les différents blocs spéciaux du serveur (hors inventaire).", NamedTextColor.GRAY)
+            Component.text("Blocs spéciaux", NamedTextColor.DARK_AQUA, TextDecoration.BOLD),
         ) {
             SpecialBlockMenu(player, this).open(viewer)
         }
@@ -48,6 +55,7 @@ class MenuMenu(val player: Player) :
             13, Material.WOODEN_AXE,
             Component.text("Outils/Plugins du serveur", NamedTextColor.DARK_PURPLE),
             Component.text("Cliquez pour afficher les différents outils et plugins utilisés sur le serveur pour construire.", NamedTextColor.GRAY)
+            Component.text("Outils/Plugins du serveur", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD),
         ) {
             PluginsToolsMenu(this).open(viewer)
         }
@@ -56,6 +64,7 @@ class MenuMenu(val player: Player) :
             14, Material.BOOK,
             Component.text("Le Build pour les Nuls", NamedTextColor.RED),
             Component.text("Cliquez pour recevoir le guide des commandes de build essentielles pour bien démarrer votre construction !", NamedTextColor.GRAY)
+            Component.text("Le Build pour les Nuls", NamedTextColor.RED, TextDecoration.BOLD),
         ) {
             close()
             CommandsBookFactory.getInstance().giveGuideBook(player)
@@ -63,16 +72,47 @@ class MenuMenu(val player: Player) :
 
         addButton(
             15, Material.EMERALD,
-            Component.text("Boutique de Tesseract", NamedTextColor.BLUE),
+            Component.text("Boutique de Tesseract", NamedTextColor.YELLOW, TextDecoration.BOLD),
             Component.text("Cliquez pour afficher la boutique de Tesseract.", NamedTextColor.GRAY)
         ) {
-            BoutiqueMenu(TPlayer.get(player),this).open(viewer)
+            BoutiqueMenu(TPlayer.get(player), this).open(viewer)
         }
+
+        val playerRankService = CreativeServices[PlayerRankService::class.java]
+        val playerRank = playerRankService.getPlayerRank(player.uniqueId)
+
+        val timePlayed = CreativeServices[PlayerTimePlayedService::class.java]
+
+        val nbPlots = CreativeServices[PlayerPlotService::class.java]
+        val totalPlotsWorld100 = nbPlots.getPlayerTotalPlot(player.uniqueId, PlotWorld.WORLD_100)
+        val totalPlotsWorld250 = nbPlots.getPlayerTotalPlot(player.uniqueId, PlotWorld.WORLD_250)
+        val totalPlotsWorld500 = nbPlots.getPlayerTotalPlot(player.uniqueId, PlotWorld.WORLD_500)
+        val totalPlotsWorld1000 = nbPlots.getPlayerTotalPlot(player.uniqueId, PlotWorld.WORLD_1000)
 
         addButton(
             16, getHead(player.uniqueId),
-            Component.text("Informations du joueur", NamedTextColor.BLUE),
-            Component.text("AJOUTER DESCRIPTION", NamedTextColor.GRAY)
+            Component.text("Informations du joueur", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD),
+            listOf(
+                Component.text(""),
+                Component.text("Pseudo : ", NamedTextColor.GOLD)
+                    .append(player.name, NamedTextColor.WHITE),
+                Component.text("Genre : ", NamedTextColor.GOLD)
+                    .append(TPlayer.get(player.uniqueId).gender.toString(), NamedTextColor.WHITE),
+                Component.text(""),
+                Component.text("Grade : ", NamedTextColor.GOLD)
+                    .append(playerRank.name, playerRank.color),
+                Component.text("Temps de jeu global : ", NamedTextColor.GOLD)
+                    .append("time", NamedTextColor.WHITE),
+                Component.text(""),
+                Component.text("Nombre de plots Monde 100 : ", NamedTextColor.GOLD)
+                    .append(totalPlotsWorld100.toString(), NamedTextColor.WHITE),
+                Component.text("Nombre de plots Monde 250 : ", NamedTextColor.GOLD)
+                    .append(totalPlotsWorld250.toString(), NamedTextColor.WHITE),
+                Component.text("Nombre de plots Monde 500 : ", NamedTextColor.GOLD)
+                    .append(totalPlotsWorld500.toString(), NamedTextColor.WHITE),
+                Component.text("Nombre de plots Monde 1000 : ", NamedTextColor.GOLD)
+                    .append(totalPlotsWorld1000.toString(), NamedTextColor.WHITE),
+            )
         ) { }
 
         addButton(
