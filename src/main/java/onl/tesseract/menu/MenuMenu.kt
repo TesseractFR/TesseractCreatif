@@ -21,7 +21,7 @@ class MenuMenu(val player: Player) :
         fill(Material.GRAY_STAINED_GLASS_PANE, " ")
 
         addButton(
-            11, teteTPWorldMenu,
+            10, teteTPWorldMenu,
             Component.text("Téléportations dans les mondes", NamedTextColor.BLUE),
             Component.text("Cliquez pour afficher les différents mondes disponibles et vous y téléporter.", NamedTextColor.GRAY)
         ) {
@@ -29,7 +29,7 @@ class MenuMenu(val player: Player) :
         }
 
         addButton(
-            12, teteGrades,
+            11, teteGrades,
             Component.text("Grades", NamedTextColor.DARK_GREEN),
             Component.text("Cliquez pour afficher les différents grades du serveur.", NamedTextColor.GRAY)
         ) {
@@ -37,7 +37,7 @@ class MenuMenu(val player: Player) :
         }
 
         addButton(
-            13, Material.LIGHT,
+            12, Material.LIGHT,
             Component.text("Blocs spéciaux", NamedTextColor.DARK_AQUA),
             Component.text("Cliquez pour afficher les différents blocs spéciaux du serveur (hors inventaire).", NamedTextColor.GRAY)
         ) {
@@ -45,7 +45,7 @@ class MenuMenu(val player: Player) :
         }
 
         addButton(
-            14, Material.WOODEN_AXE,
+            13, Material.WOODEN_AXE,
             Component.text("Outils/Plugins du serveur", NamedTextColor.DARK_PURPLE),
             Component.text("Cliquez pour afficher les différents outils et plugins utilisés sur le serveur pour construire.", NamedTextColor.GRAY)
         ) {
@@ -53,7 +53,7 @@ class MenuMenu(val player: Player) :
         }
 
         addButton(
-            15, Material.BOOK,
+            14, Material.BOOK,
             Component.text("Le Build pour les Nuls", NamedTextColor.RED),
             Component.text("Cliquez pour recevoir le guide des commandes de build essentielles pour bien démarrer votre construction !", NamedTextColor.GRAY)
         ) {
@@ -62,12 +62,18 @@ class MenuMenu(val player: Player) :
         }
 
         addButton(
-            16, Material.EMERALD,
+            15, Material.EMERALD,
             Component.text("Boutique de Tesseract", NamedTextColor.BLUE),
             Component.text("Cliquez pour afficher la boutique de Tesseract.", NamedTextColor.GRAY)
         ) {
             BoutiqueMenu(TPlayer.get(player),this).open(viewer)
         }
+
+        addButton(
+            16, getHead(player.uniqueId),
+            Component.text("Informations du joueur", NamedTextColor.BLUE),
+            Component.text("AJOUTER DESCRIPTION", NamedTextColor.GRAY)
+        ) { }
 
         addButton(
             37, teteInstagram,
