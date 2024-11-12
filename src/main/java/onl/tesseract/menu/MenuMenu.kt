@@ -10,6 +10,7 @@ import onl.tesseract.plot.PlayerPlotService
 import onl.tesseract.plot.entity.PlotWorld
 import onl.tesseract.rank.PlayerRankService
 import onl.tesseract.service.CreativeServices
+import onl.tesseract.tesseractlib.menu.GenderMenu
 import onl.tesseract.tesseractlib.player.TPlayer
 import onl.tesseract.tesseractlib.util.append
 import onl.tesseract.tesseractlib.util.menu.InventoryMenu
@@ -29,7 +30,9 @@ class MenuMenu(val player: Player) :
             9, teteGenre,
             Component.text("Sélection du genre", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD),
             Component.text("Cliquez pour sélectionner votre genre.", NamedTextColor.GRAY)
-        ) { }
+        ) {
+            GenderMenu(TPlayer.get(player.uniqueId), this).open(viewer)
+        }
 
         addButton(
             10, teteTPWorldMenu,
@@ -99,7 +102,7 @@ class MenuMenu(val player: Player) :
                 Component.text("Pseudo : ", NamedTextColor.GOLD)
                     .append(player.name, NamedTextColor.WHITE),
                 Component.text("Genre : ", NamedTextColor.GOLD)
-                    .append(TPlayer.get(player.uniqueId).gender.toString(), NamedTextColor.WHITE),
+                    .append(TPlayer.get(player.uniqueId).gender.getName(), NamedTextColor.WHITE),
                 Component.text(""),
                 Component.text("Grade : ", NamedTextColor.GOLD)
                     .append(playerRank.name, playerRank.color),
