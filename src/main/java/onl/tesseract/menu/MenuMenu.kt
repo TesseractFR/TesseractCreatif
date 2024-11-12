@@ -26,20 +26,8 @@ class MenuMenu(val player: Player) :
     override fun open(viewer: Player) {
         fill(Material.GRAY_STAINED_GLASS_PANE, " ")
 
-        addButton(
-            45, teteGenre,
-            Component.text("Sélection du genre", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD),
-            Component.text("Cliquez pour sélectionner votre genre.", NamedTextColor.GRAY)
-        ) {
-            GenderMenu(TPlayer.get(player.uniqueId), this).open(viewer)
-        }
-
-        addButton(
-            10, teteTPWorldMenu,
-            Component.text("Téléportations dans les mondes", NamedTextColor.BLUE, TextDecoration.BOLD),
-            Component.text("Cliquez pour afficher les différents mondes disponibles et vous y téléporter.", NamedTextColor.GRAY)
-        ) {
-            TPWorldMenu(this).open(viewer)
+        for (slot in listOf(2, 6, 10, 12, 14, 16, 18, 26, 28, 30, 32, 34, 38, 42)) {
+            addButton(slot, Material.BLUE_STAINED_GLASS_PANE, Component.text(" ", NamedTextColor.WHITE), Component.text(" ", NamedTextColor.WHITE)) {}
         }
 
         addButton(
@@ -51,15 +39,7 @@ class MenuMenu(val player: Player) :
         }
 
         addButton(
-            12, Material.LIGHT,
-            Component.text("Blocs spéciaux", NamedTextColor.DARK_AQUA, TextDecoration.BOLD),
-            Component.text("Cliquez pour afficher les différents blocs spéciaux du serveur (hors inventaire).", NamedTextColor.GRAY)
-        ) {
-            SpecialBlockMenu(player, this).open(viewer)
-        }
-
-        addButton(
-            13, Material.WOODEN_AXE,
+            15, Material.WOODEN_AXE,
             Component.text("Outils/Plugins du serveur", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD),
             Component.text("Cliquez pour afficher les différents outils et plugins utilisés sur le serveur pour construire.", NamedTextColor.GRAY)
         ) {
@@ -67,7 +47,7 @@ class MenuMenu(val player: Player) :
         }
 
         addButton(
-            14, Material.BOOK,
+            19, Material.BOOK,
             Component.text("Le Build pour les Nuls", NamedTextColor.RED, TextDecoration.BOLD),
             Component.text("Cliquez pour recevoir le guide des commandes de build essentielles pour bien démarrer votre construction !", NamedTextColor.GRAY)
         ) {
@@ -76,11 +56,11 @@ class MenuMenu(val player: Player) :
         }
 
         addButton(
-            15, Material.EMERALD,
-            Component.text("Boutique de Tesseract", NamedTextColor.YELLOW, TextDecoration.BOLD),
-            Component.text("Cliquez pour afficher la boutique de Tesseract.", NamedTextColor.GRAY)
+            21, teteTPWorldMenu,
+            Component.text("Téléportations dans les mondes", NamedTextColor.BLUE, TextDecoration.BOLD),
+            Component.text("Cliquez pour afficher les différents mondes disponibles et vous y téléporter.", NamedTextColor.GRAY)
         ) {
-            BoutiqueMenu(TPlayer.get(player), this).open(viewer)
+            TPWorldMenu(this).open(viewer)
         }
 
         val playerRankService = CreativeServices[PlayerRankService::class.java]
@@ -95,8 +75,8 @@ class MenuMenu(val player: Player) :
         val totalPlotsWorld1000 = nbPlots.getPlayerTotalPlot(player.uniqueId, PlotWorld.WORLD_1000)
 
         addButton(
-            16, getHead(player.uniqueId),
-            Component.text("Informations du joueur", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD),
+            22, getHead(player.uniqueId),
+            Component.text("Informations du joueur", NamedTextColor.YELLOW, TextDecoration.BOLD),
             listOf(
                 Component.text(""),
                 Component.text("Pseudo : ", NamedTextColor.GOLD)
@@ -121,13 +101,37 @@ class MenuMenu(val player: Player) :
         ) { }
 
         addButton(
-            17, tetePlotMenu,
+            23, tetePlotMenu,
             Component.text("Menu des plots", NamedTextColor.AQUA, TextDecoration.BOLD),
             Component.text("Cliquez pour afficher vos plots créatifs.", NamedTextColor.GRAY)
         ) { }
 
         addButton(
-            37, teteInstagram,
+            25, teteGenre,
+            Component.text("Sélection du genre", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD),
+            Component.text("Cliquez pour sélectionner votre genre.", NamedTextColor.GRAY)
+        ) {
+            GenderMenu(TPlayer.get(player.uniqueId), this).open(viewer)
+        }
+
+        addButton(
+            29, Material.EMERALD,
+            Component.text("Boutique de Tesseract", NamedTextColor.GOLD, TextDecoration.BOLD),
+            Component.text("Cliquez pour afficher la boutique de Tesseract.", NamedTextColor.GRAY)
+        ) {
+            BoutiqueMenu(TPlayer.get(player), this).open(viewer)
+        }
+
+        addButton(
+            33, Material.LIGHT,
+            Component.text("Blocs spéciaux", NamedTextColor.DARK_AQUA, TextDecoration.BOLD),
+            Component.text("Cliquez pour afficher les différents blocs spéciaux du serveur (hors inventaire).", NamedTextColor.GRAY)
+        ) {
+            SpecialBlockMenu(player, this).open(viewer)
+        }
+
+        addButton(
+            46, teteInstagram,
             Component.text("Instagram", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD),
             Component.text("Cliquez pour obtenir le lien vers notre Instagram.", NamedTextColor.GRAY)
         ) {
@@ -141,7 +145,7 @@ class MenuMenu(val player: Player) :
         }
 
         addButton(
-            38, teteTiktok,
+            47, teteTiktok,
             Component.text("TikTok", NamedTextColor.GOLD, TextDecoration.BOLD),
             Component.text("Cliquez pour obtenir le lien vers notre compte TikTok.", NamedTextColor.GRAY)
         ) {
@@ -155,7 +159,7 @@ class MenuMenu(val player: Player) :
         }
 
         addButton(
-            39, teteFacebook,
+            48, teteFacebook,
             Component.text("Facebook", NamedTextColor.BLUE, TextDecoration.BOLD),
             Component.text("Cliquez pour obtenir le lien vers notre page Facebook.", NamedTextColor.GRAY)
         ) {
@@ -169,7 +173,7 @@ class MenuMenu(val player: Player) :
         }
 
         addButton(
-            40, teteDiscord,
+            50, teteDiscord,
             Component.text("Discord", NamedTextColor.DARK_AQUA, TextDecoration.BOLD),
             Component.text("Cliquez pour obtenir le lien vers notre Discord.", NamedTextColor.GRAY)
         ) {
@@ -183,7 +187,7 @@ class MenuMenu(val player: Player) :
         }
 
         addButton(
-            41, teteYoutube,
+            51, teteYoutube,
             Component.text("YouTube", NamedTextColor.RED, TextDecoration.BOLD),
             Component.text("Cliquez pour obtenir le lien vers notre chaîne YouTube.", NamedTextColor.GRAY)
         ) {
@@ -197,7 +201,7 @@ class MenuMenu(val player: Player) :
         }
 
         addButton(
-            42, teteTwitter,
+            52, teteTwitter,
             Component.text("X (Twitter)", NamedTextColor.AQUA, TextDecoration.BOLD),
             Component.text("Cliquez pour obtenir le lien vers notre page X (Twitter).", NamedTextColor.GRAY)
         ) {
@@ -211,7 +215,7 @@ class MenuMenu(val player: Player) :
         }
 
         addButton(
-            43, teteSiteWeb,
+            49, teteSiteWeb,
             Component.text("Site Internet", NamedTextColor.YELLOW, TextDecoration.BOLD),
             Component.text("Cliquez pour obtenir le lien vers notre site internet.", NamedTextColor.GRAY)
         ) {
@@ -224,7 +228,6 @@ class MenuMenu(val player: Player) :
             )
         }
 
-        addQuitButton()
         super.open(viewer)
     }
 
