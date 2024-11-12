@@ -27,7 +27,7 @@ class MenuMenu(val player: Player) :
         fill(Material.GRAY_STAINED_GLASS_PANE, " ")
 
         addButton(
-            9, teteGenre,
+            45, teteGenre,
             Component.text("Sélection du genre", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD),
             Component.text("Cliquez pour sélectionner votre genre.", NamedTextColor.GRAY)
         ) {
@@ -118,6 +118,12 @@ class MenuMenu(val player: Player) :
                 Component.text("Nombre de plots Monde 1000 : ", NamedTextColor.GOLD)
                     .append(totalPlotsWorld1000.toString(), NamedTextColor.WHITE),
             )
+        ) { }
+
+        addButton(
+            17, tetePlotMenu,
+            Component.text("Menu des plots", NamedTextColor.AQUA, TextDecoration.BOLD),
+            Component.text("Cliquez pour afficher vos plots créatifs.", NamedTextColor.GRAY)
         ) { }
 
         addButton(
@@ -273,10 +279,13 @@ class MenuMenu(val player: Player) :
             "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2EwOGQwZGFiYzQzNGEwOTNmMDk4YmFmNTA1YjE2NWMxNGNiZTk2NDU3M2VkOGU5ZTYxODUxNTg5MTc5NTcwIn19fQ==",
             ""
         )
-
+        val tetePlotMenu: ItemStack = getCustomHead(
+            "",
+            "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTdmODJhY2ViOThmZTA2OWU4YzE2NmNlZDAwMjQyYTc2NjYwYmJlMDcwOTFjOTJjZGRlNTRjNmVkMTBkY2ZmOSJ9fX0=",
+            "97f82aceb98fe069e8c166ced00242a76660bbe07091c92cdde54c6ed10dcff9"
+        )
 
     }
-} //TODO bouton affichage Info perso (plot/temps de jeu ...)
-//TODO bouton menu boutique
+}
 
 
