@@ -12,9 +12,10 @@ import onl.tesseract.rank.PlayerRankService
 import onl.tesseract.service.CreativeServices
 import onl.tesseract.tesseractlib.menu.GenderMenu
 import onl.tesseract.tesseractlib.player.TPlayer
+import onl.tesseract.tesseractlib.util.ItemBuilder
+import onl.tesseract.tesseractlib.util.ItemLoreBuilder
 import onl.tesseract.tesseractlib.util.append
 import onl.tesseract.tesseractlib.util.menu.InventoryMenu
-import onl.tesseract.timeplayed.PlayerTimePlayedService
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
@@ -27,208 +28,269 @@ class MenuMenu(val player: Player) :
         fill(Material.GRAY_STAINED_GLASS_PANE, " ")
 
         for (slot in listOf(2, 6, 10, 12, 14, 16, 18, 26, 28, 30, 32, 34, 38, 42)) {
-            addButton(slot, Material.BLUE_STAINED_GLASS_PANE, Component.text(" ", NamedTextColor.WHITE), Component.text(" ", NamedTextColor.WHITE)) {}
+            addButton(slot, createBlueStainedGlassPaneItemStack()) {}
         }
 
-        addButton(
-            11, teteGrades,
-            Component.text("Grades", NamedTextColor.DARK_GREEN, TextDecoration.BOLD),
-            Component.text("Cliquez pour afficher les différents grades du serveur.", NamedTextColor.GRAY)
-        ) {
+        addButton(11, createGradesItemStack()) {
             RankMenu(this).open(viewer)
         }
 
-        addButton(
-            15, Material.WOODEN_AXE,
-            Component.text("Outils/Plugins du serveur", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD),
-            Component.text("Cliquez pour afficher les différents outils et plugins utilisés sur le serveur pour construire.", NamedTextColor.GRAY)
-        ) {
+        addButton(15, createPluginsToolsItemStack()) {
             PluginsToolsMenu(this).open(viewer)
         }
 
-        addButton(
-            19, Material.BOOK,
-            Component.text("Le Build pour les Nuls", NamedTextColor.RED, TextDecoration.BOLD),
-            Component.text("Cliquez pour recevoir le guide des commandes de build essentielles pour bien démarrer votre construction !", NamedTextColor.GRAY)
-        ) {
+        addButton(19, createBuildGuideItemStack()) {
             close()
             CommandsBookFactory.getInstance().giveGuideBook(player)
         }
 
-        addButton(
-            21, teteTPWorldMenu,
-            Component.text("Téléportations dans les mondes", NamedTextColor.BLUE, TextDecoration.BOLD),
-            Component.text("Cliquez pour afficher les différents mondes disponibles et vous y téléporter.", NamedTextColor.GRAY)
-        ) {
+        addButton(21, createTPWorldMenuItemStack()) {
             TPWorldMenu(this).open(viewer)
         }
 
+        addButton(22, createPlayerInfoItemStack(player)) { }
+
+        addButton(23, createPlotMenuItemStack()) { }
+
+        addButton(25, createGenreSelectionItemStack()) {
+            GenderMenu(TPlayer.get(player.uniqueId), this).open(viewer)
+        }
+
+        addButton(29, createBoutiqueItemStack()) {
+            BoutiqueMenu(TPlayer.get(player), this).open(viewer)
+        }
+
+        addButton(33, createSpecialBlocksItemStack()) {
+            SpecialBlockMenu(player, this).open(viewer)
+        }
+
+        addButton(46, createInstagramItemStack()) {
+            viewer.closeInventory()
+            viewer.sendMessage(messageInstagram)
+        }
+
+        addButton(47, createTiktokItemStack()) {
+            viewer.closeInventory()
+            viewer.sendMessage(messageTiktok)
+        }
+
+        addButton(48, createFacebookItemStack()) {
+            viewer.closeInventory()
+            viewer.sendMessage(messageFacebook)
+        }
+
+        addButton(50, createDiscordItemStack()) {
+            viewer.closeInventory()
+            viewer.sendMessage(messageDiscord)
+        }
+
+        addButton(51, createYoutubeItemStack()) {
+            viewer.closeInventory()
+            viewer.sendMessage(messageYoutube)
+        }
+
+        addButton(52, createTwitterItemStack()) {
+            viewer.closeInventory()
+            viewer.sendMessage(messageTwitter)
+        }
+
+        addButton(49, createWebsiteItemStack()) {
+            viewer.closeInventory()
+            viewer.sendMessage(messageWebsite)
+        }
+
+        super.open(viewer)
+    }
+
+
+    private fun createBlueStainedGlassPaneItemStack(): ItemStack {
+        return ItemBuilder(Material.BLUE_STAINED_GLASS_PANE)
+            .name(Component.text(" ", NamedTextColor.WHITE))
+            .build()
+    }
+
+    private fun createGradesItemStack(): ItemStack {
+        val ilb = ItemLoreBuilder()
+            .newline()
+            .append(Component.text("Cliquez pour afficher les différents grades du serveur.", NamedTextColor.GRAY))
+        return ItemBuilder(teteGrades)
+            .name(Component.text("Grades", NamedTextColor.DARK_GREEN, TextDecoration.BOLD))
+            .lore(ilb.get())
+            .build()
+    }
+
+    private fun createPluginsToolsItemStack(): ItemStack {
+        val ilb = ItemLoreBuilder()
+            .newline()
+            .append(Component.text("Cliquez pour afficher les différents outils et plugins utilisés sur le serveur pour construire.", NamedTextColor.GRAY))
+        return ItemBuilder(Material.WOODEN_AXE)
+            .name(Component.text("Outils/Plugins du serveur", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD))
+            .lore(ilb.get())
+            .build()
+    }
+
+    private fun createBuildGuideItemStack(): ItemStack {
+        val ilb = ItemLoreBuilder()
+            .newline()
+            .append(Component.text("Cliquez pour recevoir le guide des commandes de build essentielles pour bien démarrer votre construction !", NamedTextColor.GRAY))
+        return ItemBuilder(Material.BOOK)
+            .name(Component.text("Le Build pour les Nuls", NamedTextColor.RED, TextDecoration.BOLD))
+            .lore(ilb.get())
+            .build()
+    }
+
+    private fun createTPWorldMenuItemStack(): ItemStack {
+        val ilb = ItemLoreBuilder()
+            .newline()
+            .append(Component.text("Cliquez pour afficher les différents mondes disponibles et vous y téléporter.", NamedTextColor.GRAY))
+        return ItemBuilder(teteTPWorldMenu)
+            .name(Component.text("Téléportations dans les mondes", NamedTextColor.BLUE, TextDecoration.BOLD))
+            .lore(ilb.get())
+            .build()
+    }
+
+    private fun createPlayerInfoItemStack(player: Player): ItemStack {
         val playerRankService = CreativeServices[PlayerRankService::class.java]
         val playerRank = playerRankService.getPlayerRank(player.uniqueId)
-
-        val timePlayed = CreativeServices[PlayerTimePlayedService::class.java]
-
         val nbPlots = CreativeServices[PlayerPlotService::class.java]
         val totalPlotsWorld100 = nbPlots.getPlayerTotalPlot(player.uniqueId, PlotWorld.WORLD_100)
         val totalPlotsWorld250 = nbPlots.getPlayerTotalPlot(player.uniqueId, PlotWorld.WORLD_250)
         val totalPlotsWorld500 = nbPlots.getPlayerTotalPlot(player.uniqueId, PlotWorld.WORLD_500)
         val totalPlotsWorld1000 = nbPlots.getPlayerTotalPlot(player.uniqueId, PlotWorld.WORLD_1000)
 
-        addButton(
-            22, getHead(player.uniqueId),
-            Component.text("Informations du joueur", NamedTextColor.YELLOW, TextDecoration.BOLD),
-            listOf(
-                Component.text(""),
-                Component.text("Pseudo : ", NamedTextColor.GOLD)
-                    .append(player.name, NamedTextColor.WHITE),
-                Component.text("Genre : ", NamedTextColor.GOLD)
-                    .append(TPlayer.get(player.uniqueId).gender.getName(), NamedTextColor.WHITE),
-                Component.text(""),
-                Component.text("Grade : ", NamedTextColor.GOLD)
-                    .append(playerRank.name, playerRank.color),
-                Component.text("Temps de jeu global : ", NamedTextColor.GOLD)
-                    .append("time", NamedTextColor.WHITE),
-                Component.text(""),
-                Component.text("Nombre de plots Monde 100 : ", NamedTextColor.GOLD)
-                    .append(totalPlotsWorld100.toString(), NamedTextColor.WHITE),
-                Component.text("Nombre de plots Monde 250 : ", NamedTextColor.GOLD)
-                    .append(totalPlotsWorld250.toString(), NamedTextColor.WHITE),
-                Component.text("Nombre de plots Monde 500 : ", NamedTextColor.GOLD)
-                    .append(totalPlotsWorld500.toString(), NamedTextColor.WHITE),
-                Component.text("Nombre de plots Monde 1000 : ", NamedTextColor.GOLD)
-                    .append(totalPlotsWorld1000.toString(), NamedTextColor.WHITE),
-            )
-        ) { }
+        val ilb = ItemLoreBuilder()
+            .newline()
+            .append(Component.text("Pseudo : ", NamedTextColor.GOLD).append(player.name, NamedTextColor.WHITE))
+            .newline()
+            .append(Component.text("Genre : ", NamedTextColor.GOLD).append(TPlayer.get(player.uniqueId).gender.getName(), NamedTextColor.WHITE))
+            .newline()
+            .newline()
+            .append(Component.text("Grade : ", NamedTextColor.GOLD).append(playerRank.name, playerRank.color))
+            .newline()
+            .append(Component.text("Temps de jeu global : ", NamedTextColor.GOLD).append("time", NamedTextColor.WHITE))
+            .newline()
+            .newline()
+            .append(Component.text("Nombre de plots Monde 100 : ", NamedTextColor.GOLD).append(totalPlotsWorld100.toString(), NamedTextColor.WHITE))
+            .newline()
+            .append(Component.text("Nombre de plots Monde 250 : ", NamedTextColor.GOLD).append(totalPlotsWorld250.toString(), NamedTextColor.WHITE))
+            .newline()
+            .append(Component.text("Nombre de plots Monde 500 : ", NamedTextColor.GOLD).append(totalPlotsWorld500.toString(), NamedTextColor.WHITE))
+            .newline()
+            .append(Component.text("Nombre de plots Monde 1000 : ", NamedTextColor.GOLD).append(totalPlotsWorld1000.toString(), NamedTextColor.WHITE))
+        return ItemBuilder(getHead(player.uniqueId))
+            .name(Component.text("Informations du joueur", NamedTextColor.YELLOW, TextDecoration.BOLD))
+            .lore(ilb.get())
+            .build()
+    }
 
-        addButton(
-            23, tetePlotMenu,
-            Component.text("Menu des plots", NamedTextColor.AQUA, TextDecoration.BOLD),
-            Component.text("Cliquez pour afficher vos plots créatifs.", NamedTextColor.GRAY)
-        ) { }
+    private fun createPlotMenuItemStack(): ItemStack {
+        val ilb = ItemLoreBuilder()
+            .newline()
+            .append(Component.text("Cliquez pour afficher vos plots créatifs.", NamedTextColor.GRAY))
+        return ItemBuilder(tetePlotMenu)
+            .name(Component.text("Menu des plots", NamedTextColor.AQUA, TextDecoration.BOLD))
+            .lore(ilb.get())
+            .build()
+    }
 
-        addButton(
-            25, teteGenre,
-            Component.text("Sélection du genre", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD),
-            Component.text("Cliquez pour sélectionner votre genre.", NamedTextColor.GRAY)
-        ) {
-            GenderMenu(TPlayer.get(player.uniqueId), this).open(viewer)
-        }
+    private fun createGenreSelectionItemStack(): ItemStack {
+        val ilb = ItemLoreBuilder()
+            .newline()
+            .append(Component.text("Cliquez pour sélectionner votre genre.", NamedTextColor.GRAY))
+        return ItemBuilder(teteGenre)
+            .name(Component.text("Sélection du genre", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD))
+            .lore(ilb.get())
+            .build()
+    }
 
-        addButton(
-            29, Material.EMERALD,
-            Component.text("Boutique de Tesseract", NamedTextColor.GOLD, TextDecoration.BOLD),
-            Component.text("Cliquez pour afficher la boutique de Tesseract.", NamedTextColor.GRAY)
-        ) {
-            BoutiqueMenu(TPlayer.get(player), this).open(viewer)
-        }
+    private fun createBoutiqueItemStack(): ItemStack {
+        val ilb = ItemLoreBuilder()
+            .newline()
+            .append(Component.text("Cliquez pour afficher la boutique de Tesseract.", NamedTextColor.GRAY))
+        return ItemBuilder(Material.EMERALD)
+            .name(Component.text("Boutique de Tesseract", NamedTextColor.GOLD, TextDecoration.BOLD))
+            .lore(ilb.get())
+            .build()
+    }
 
-        addButton(
-            33, Material.LIGHT,
-            Component.text("Blocs spéciaux", NamedTextColor.DARK_AQUA, TextDecoration.BOLD),
-            Component.text("Cliquez pour afficher les différents blocs spéciaux du serveur (hors inventaire).", NamedTextColor.GRAY)
-        ) {
-            SpecialBlockMenu(player, this).open(viewer)
-        }
+    private fun createSpecialBlocksItemStack(): ItemStack {
+        val ilb = ItemLoreBuilder()
+            .newline()
+            .append(Component.text("Cliquez pour afficher les différents blocs spéciaux du serveur (hors inventaire).", NamedTextColor.GRAY))
+        return ItemBuilder(Material.LIGHT)
+            .name(Component.text("Blocs spéciaux", NamedTextColor.DARK_AQUA, TextDecoration.BOLD))
+            .lore(ilb.get())
+            .build()
+    }
 
-        addButton(
-            46, teteInstagram,
-            Component.text("Instagram", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD),
-            Component.text("Cliquez pour obtenir le lien vers notre Instagram.", NamedTextColor.GRAY)
-        ) {
-            viewer.closeInventory()
-            viewer.sendMessage(
-                Component.text("----------\n", NamedTextColor.LIGHT_PURPLE)
-                    .append("Instagram", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD)
-                    .append("\n----------", NamedTextColor.LIGHT_PURPLE)
-                    .clickEvent(ClickEvent.openUrl("https://www.instagram.com/tesseractfr/"))
-            )
-        }
+    private fun createInstagramItemStack(): ItemStack {
+        val ilb = ItemLoreBuilder()
+            .newline()
+            .append(Component.text("Cliquez pour obtenir le lien vers notre Instagram.", NamedTextColor.GRAY))
+        return ItemBuilder(teteInstagram)
+            .name(Component.text("Instagram", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD))
+            .lore(ilb.get())
+            .build()
+    }
 
-        addButton(
-            47, teteTiktok,
-            Component.text("TikTok", NamedTextColor.GOLD, TextDecoration.BOLD),
-            Component.text("Cliquez pour obtenir le lien vers notre compte TikTok.", NamedTextColor.GRAY)
-        ) {
-            viewer.closeInventory()
-            viewer.sendMessage(
-                Component.text("------\n", NamedTextColor.GOLD)
-                    .append("TikTok", NamedTextColor.GOLD, TextDecoration.BOLD)
-                    .append("\n------", NamedTextColor.GOLD)
-                    .clickEvent(ClickEvent.openUrl("https://www.tiktok.com/@tesseractfr?lang=fr"))
-            )
-        }
+    private fun createTiktokItemStack(): ItemStack {
+        val ilb = ItemLoreBuilder()
+            .newline()
+            .append(Component.text("Cliquez pour obtenir le lien vers notre compte TikTok.", NamedTextColor.GRAY))
+        return ItemBuilder(teteTiktok)
+            .name(Component.text("TikTok", NamedTextColor.GOLD, TextDecoration.BOLD))
+            .lore(ilb.get())
+            .build()
+    }
 
-        addButton(
-            48, teteFacebook,
-            Component.text("Facebook", NamedTextColor.BLUE, TextDecoration.BOLD),
-            Component.text("Cliquez pour obtenir le lien vers notre page Facebook.", NamedTextColor.GRAY)
-        ) {
-            viewer.closeInventory()
-            viewer.sendMessage(
-                Component.text("---------\n", NamedTextColor.BLUE)
-                    .append("Facebook", NamedTextColor.BLUE, TextDecoration.BOLD)
-                    .append("\n---------", NamedTextColor.BLUE)
-                    .clickEvent(ClickEvent.openUrl("https://www.facebook.com/TesseractFR?locale=fr_FR"))
-            )
-        }
+    private fun createFacebookItemStack(): ItemStack {
+        val ilb = ItemLoreBuilder()
+            .newline()
+            .append(Component.text("Cliquez pour obtenir le lien vers notre page Facebook.", NamedTextColor.GRAY))
+        return ItemBuilder(teteFacebook)
+            .name(Component.text("Facebook", NamedTextColor.BLUE, TextDecoration.BOLD))
+            .lore(ilb.get())
+            .build()
+    }
 
-        addButton(
-            50, teteDiscord,
-            Component.text("Discord", NamedTextColor.DARK_AQUA, TextDecoration.BOLD),
-            Component.text("Cliquez pour obtenir le lien vers notre Discord.", NamedTextColor.GRAY)
-        ) {
-            viewer.closeInventory()
-            viewer.sendMessage(
-                Component.text("--------\n", NamedTextColor.DARK_AQUA)
-                    .append("Discord", NamedTextColor.DARK_AQUA, TextDecoration.BOLD)
-                    .append("\n--------", NamedTextColor.DARK_AQUA)
-                    .clickEvent(ClickEvent.openUrl("https://discord.gg/4ajRytDJWK"))
-            )
-        }
+    private fun createDiscordItemStack(): ItemStack {
+        val ilb = ItemLoreBuilder()
+            .newline()
+            .append(Component.text("Cliquez pour obtenir le lien vers notre Discord.", NamedTextColor.GRAY))
+        return ItemBuilder(teteDiscord)
+            .name(Component.text("Discord", NamedTextColor.DARK_AQUA, TextDecoration.BOLD))
+            .lore(ilb.get())
+            .build()
+    }
 
-        addButton(
-            51, teteYoutube,
-            Component.text("YouTube", NamedTextColor.RED, TextDecoration.BOLD),
-            Component.text("Cliquez pour obtenir le lien vers notre chaîne YouTube.", NamedTextColor.GRAY)
-        ) {
-            viewer.closeInventory()
-            viewer.sendMessage(
-                Component.text("--------\n", NamedTextColor.RED)
-                    .append("YouTube", NamedTextColor.RED, TextDecoration.BOLD)
-                    .append("\n--------", NamedTextColor.RED)
-                    .clickEvent(ClickEvent.openUrl("https://www.youtube.com/@tesseract7852"))
-            )
-        }
+    private fun createYoutubeItemStack(): ItemStack {
+        val ilb = ItemLoreBuilder()
+            .newline()
+            .append(Component.text("Cliquez pour obtenir le lien vers notre chaîne YouTube.", NamedTextColor.GRAY))
+        return ItemBuilder(teteYoutube)
+            .name(Component.text("YouTube", NamedTextColor.RED, TextDecoration.BOLD))
+            .lore(ilb.get())
+            .build()
+    }
 
-        addButton(
-            52, teteTwitter,
-            Component.text("X (Twitter)", NamedTextColor.AQUA, TextDecoration.BOLD),
-            Component.text("Cliquez pour obtenir le lien vers notre page X (Twitter).", NamedTextColor.GRAY)
-        ) {
-            viewer.closeInventory()
-            viewer.sendMessage(
-                Component.text("-----------\n", NamedTextColor.AQUA)
-                    .append("X (Twitter)", NamedTextColor.AQUA, TextDecoration.BOLD)
-                    .append("\n-----------", NamedTextColor.AQUA)
-                    .clickEvent(ClickEvent.openUrl("https://x.com/TesseractFR"))
-            )
-        }
+    private fun createTwitterItemStack(): ItemStack {
+        val ilb = ItemLoreBuilder()
+            .newline()
+            .append(Component.text("Cliquez pour obtenir le lien vers notre page X (Twitter).", NamedTextColor.GRAY))
+        return ItemBuilder(teteTwitter)
+            .name(Component.text("X (Twitter)", NamedTextColor.AQUA, TextDecoration.BOLD))
+            .lore(ilb.get())
+            .build()
+    }
 
-        addButton(
-            49, teteSiteWeb,
-            Component.text("Site Internet", NamedTextColor.YELLOW, TextDecoration.BOLD),
-            Component.text("Cliquez pour obtenir le lien vers notre site internet.", NamedTextColor.GRAY)
-        ) {
-            viewer.closeInventory()
-            viewer.sendMessage(
-                Component.text("-------------\n", NamedTextColor.YELLOW)
-                    .append("Site Internet", NamedTextColor.YELLOW, TextDecoration.BOLD)
-                    .append("\n-------------", NamedTextColor.YELLOW)
-                    .clickEvent(ClickEvent.openUrl("https://www.tesseract.onl/"))
-            )
-        }
-
-        super.open(viewer)
+    private fun createWebsiteItemStack(): ItemStack {
+        val ilb = ItemLoreBuilder()
+            .newline()
+            .append(Component.text("Cliquez pour obtenir le lien vers notre site internet.", NamedTextColor.GRAY))
+        return ItemBuilder(teteSiteWeb)
+            .name(Component.text("Site Internet", NamedTextColor.YELLOW, TextDecoration.BOLD))
+            .lore(ilb.get())
+            .build()
     }
 
     companion object {
@@ -287,7 +349,34 @@ class MenuMenu(val player: Player) :
             "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTdmODJhY2ViOThmZTA2OWU4YzE2NmNlZDAwMjQyYTc2NjYwYmJlMDcwOTFjOTJjZGRlNTRjNmVkMTBkY2ZmOSJ9fX0=",
             "97f82aceb98fe069e8c166ced00242a76660bbe07091c92cdde54c6ed10dcff9"
         )
-
+        val messageInstagram: Component = Component.text("----------\n", NamedTextColor.LIGHT_PURPLE)
+            .append("Instagram", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD)
+            .append("\n----------", NamedTextColor.LIGHT_PURPLE)
+            .clickEvent(ClickEvent.openUrl("https://www.instagram.com/tesseractfr/"))
+        val messageTiktok: Component = Component.text("------\n", NamedTextColor.GOLD)
+            .append("TikTok", NamedTextColor.GOLD, TextDecoration.BOLD)
+            .append("\n------", NamedTextColor.GOLD)
+            .clickEvent(ClickEvent.openUrl("https://www.tiktok.com/@tesseractfr?lang=fr"))
+        val messageFacebook: Component = Component.text("---------\n", NamedTextColor.BLUE)
+            .append("Facebook", NamedTextColor.BLUE, TextDecoration.BOLD)
+            .append("\n---------", NamedTextColor.BLUE)
+            .clickEvent(ClickEvent.openUrl("https://www.facebook.com/TesseractFR?locale=fr_FR"))
+        val messageDiscord: Component = Component.text("--------\n", NamedTextColor.DARK_AQUA)
+            .append("Discord", NamedTextColor.DARK_AQUA, TextDecoration.BOLD)
+            .append("\n--------", NamedTextColor.DARK_AQUA)
+            .clickEvent(ClickEvent.openUrl("https://discord.gg/4ajRytDJWK"))
+        val messageYoutube: Component = Component.text("--------\n", NamedTextColor.RED)
+            .append("YouTube", NamedTextColor.RED, TextDecoration.BOLD)
+            .append("\n--------", NamedTextColor.RED)
+            .clickEvent(ClickEvent.openUrl("https://www.youtube.com/@tesseract7852"))
+        val messageTwitter: Component = Component.text("-----------\n", NamedTextColor.AQUA)
+            .append("X (Twitter)", NamedTextColor.AQUA, TextDecoration.BOLD)
+            .append("\n-----------", NamedTextColor.AQUA)
+            .clickEvent(ClickEvent.openUrl("https://x.com/TesseractFR"))
+        val messageWebsite: Component = Component.text("-------------\n", NamedTextColor.YELLOW)
+            .append("Site Internet", NamedTextColor.YELLOW, TextDecoration.BOLD)
+            .append("\n-------------", NamedTextColor.YELLOW)
+            .clickEvent(ClickEvent.openUrl("https://www.tesseract.onl/"))
     }
 }
 
