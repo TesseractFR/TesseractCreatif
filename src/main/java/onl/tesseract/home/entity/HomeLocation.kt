@@ -9,7 +9,7 @@ import org.bukkit.Bukkit
 import org.bukkit.Location
 
 @Embeddable
-class HomeLocation(
+data class HomeLocation(
     @Column(updatable = false, nullable = false)
     var x: Double = 0.0,
     @Column(updatable = false, nullable = false)
@@ -22,10 +22,6 @@ class HomeLocation(
 
     @Transient
     var location: Location? = null
-
-    constructor(location: Location) : this() {
-        this.location = location
-    }
 
     @PrePersist
     private fun prePersist() {

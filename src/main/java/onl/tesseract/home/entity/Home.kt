@@ -1,12 +1,17 @@
 package onl.tesseract.home.entity
 
 import jakarta.persistence.*
+import lombok.AccessLevel
+import lombok.Data
+import lombok.experimental.FieldDefaults
 import org.bukkit.Location
 import java.util.*
 
 @Entity
 @Table(name = "t_homes")
-class Home(
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+data class Home(
     @EmbeddedId
     var homePK: HomePK = HomePK(),
 
@@ -14,18 +19,6 @@ class Home(
     var homeLocation: HomeLocation = HomeLocation()
 
 ) {
-
-    var location: Location?
-        get() = homeLocation.location
-        set(value) {
-            homeLocation.location = value
-        }
-
-    constructor(uuid: UUID, name: String, location: Location) : this() {
-        homePK = HomePK(uuid, name)
-        homeLocation = HomeLocation(location)
-    }
-
     val name: String
         get() = homePK.name
 }
