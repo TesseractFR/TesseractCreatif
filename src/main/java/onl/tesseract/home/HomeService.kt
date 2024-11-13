@@ -11,25 +11,29 @@ import java.util.UUID
 class HomeService(private val repository: HomeRepository) {
 
     fun createHome(uuid: UUID, name: String, location: Location) {
+
         val playerHomes = repository.getAll(uuid)
-        val playerHome = playerHomes.find {it.homePK.name == name}
+        val playerHome = playerHomes.find { it.name == name }
         playerHome?.let {
             repository.delete(it.homePK)
         }
+
+        // Log des détails du nouveau home
         val x = location.x
         val y = location.y
         val z = location.z
-        val world = PlotWorld.entries.find { plotWorld -> plotWorld.world == location.world.name }
-            ?: PlotWorld.WORLD_100
+        val world = location.world.name
+
         val homePK = HomePK(uuid, name)
         val homeLocation = HomeLocation(x, y, z, world)
         val newHome = Home(homePK, homeLocation)
         repository.save(newHome)
     }
 
+
     fun deleteHome(uuid: UUID, name: String) {
         val playerHomes = repository.getAll(uuid)
-        val playerHome = playerHomes.find {it.homePK.name == name}
+        val playerHome = playerHomes.find {it.name == name}
         playerHome?.let {
             repository.delete(it.homePK)
         }
@@ -37,9 +41,9 @@ class HomeService(private val repository: HomeRepository) {
 
     fun getHome(uuid: UUID, name: String) : Location? {
         val playerHomes = repository.getAll(uuid)
-        val playerHome = playerHomes.find {it.homePK.name == name}
+        val playerHome = playerHomes.find {it.name == name}
         if (playerHome != null) {
-            return playerHome.homeLocation.location
+            return playerHome.location
         }
         return null
     }
@@ -48,8 +52,8 @@ class HomeService(private val repository: HomeRepository) {
         val playerHomes = repository.getAll(uuid)
         val homes = HashMap<String, Location>()
         playerHomes.forEach {
-            it.homeLocation.location?.let { location ->
-                homes[it.homePK.name] = location
+            it.location?.let { location ->
+                homes[it.name] = location
             }
         }
         return homes

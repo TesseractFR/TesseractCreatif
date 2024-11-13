@@ -1,6 +1,7 @@
 package onl.tesseract
 
 import lombok.extern.slf4j.Slf4j
+import onl.tesseract.home.entity.Home
 import onl.tesseract.timeplayed.entity.PlayerTimePlayedInfo
 import onl.tesseract.plot.entity.PlayerPlotInfo
 import onl.tesseract.rank.entity.PlayerRankInfo
@@ -43,7 +44,7 @@ object HibernateUtil {
             // Drop and re-create the database schema on startup
             configuration.setProperty(AvailableSettings.HBM2DDL_AUTO, Action.ACTION_UPDATE)
 
-
+            configuration.addAnnotatedClass(Home::class.java)
             configuration.addAnnotatedClass(PlayerTimePlayedInfo::class.java)
             configuration.addAnnotatedClass(PlayerPlotInfo::class.java)
             configuration.addAnnotatedClass(PlayerRankInfo::class.java)

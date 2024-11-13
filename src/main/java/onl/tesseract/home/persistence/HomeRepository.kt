@@ -44,7 +44,7 @@ class HomeHibernateRepository : HomeRepository {
     override fun getAll(uuid: UUID): List<Home> {
         HibernateUtil.sessionFactory.openSession().use { session ->
             val query = session.createQuery("FROM Home h WHERE h.homePK.uuid = :uuid", Home::class.java)
-            query.setParameter("uuid", uuid.toString())
+            query.setParameter("uuid", uuid)
             return query.resultList
         }
     }

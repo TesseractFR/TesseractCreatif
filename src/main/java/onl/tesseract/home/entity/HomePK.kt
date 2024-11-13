@@ -2,7 +2,6 @@ package onl.tesseract.home.entity
 
 import jakarta.persistence.Column
 import jakarta.persistence.Embeddable
-import lombok.Getter
 import org.hibernate.annotations.JdbcTypeCode
 import java.sql.Types
 import java.util.*
@@ -12,8 +11,8 @@ import java.util.*
 data class HomePK(
     @Column(updatable = false, nullable = false, columnDefinition = "VARCHAR(36)", unique = true)
     @field:JdbcTypeCode(Types.VARCHAR)
-    var uuid: UUID = UUID.randomUUID(),
+    val uuid: UUID = UUID.randomUUID(),
 
-    @field:Getter
-    var name: String = ""
+    @Column(updatable = false, nullable = false, columnDefinition = "VARCHAR(36)", unique = true)
+    val name: String = ""
 )
