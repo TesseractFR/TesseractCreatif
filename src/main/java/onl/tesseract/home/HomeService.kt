@@ -4,21 +4,18 @@ import onl.tesseract.home.entity.Home
 import onl.tesseract.home.entity.HomeLocation
 import onl.tesseract.home.entity.HomePK
 import onl.tesseract.home.persistence.HomeRepository
-import onl.tesseract.plot.entity.PlotWorld
 import org.bukkit.Location
 import java.util.UUID
 
 class HomeService(private val repository: HomeRepository) {
 
     fun createHome(uuid: UUID, name: String, location: Location) {
-
         val playerHomes = repository.getAll(uuid)
         val playerHome = playerHomes.find { it.name == name }
         playerHome?.let {
             repository.delete(it.homePK)
         }
 
-        // Log des détails du nouveau home
         val x = location.x
         val y = location.y
         val z = location.z
@@ -61,5 +58,9 @@ class HomeService(private val repository: HomeRepository) {
 
     fun canCreateHome(uuid: UUID): Boolean {
         return true
+    }
+
+    fun exist(uuid: UUID, home: String) {
+        // A faire
     }
 }

@@ -43,3 +43,7 @@ commands:
     aliases: sethome
     usage: "/sethome"
     description: Crée un home pour le joueur.
+  delhome:
+    aliases: delhome
+    usage: "/delhome"
+    description: Supprime le plot du joueur
