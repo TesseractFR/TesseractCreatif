@@ -49,6 +49,7 @@ class Creatif : JavaPlugin(), Listener {
         this.getCommand("outils")?.setExecutor(PluginsToolsCommand())
         this.getCommand("commandes")?.setExecutor(CommandsBookCommand())
         this.getCommand("boutique")?.setExecutor(BoutiqueCommand())
+        this.getCommand("sethome")?.setExecutor(SetHomeCommand())
     }
 
     override fun onDisable() {
