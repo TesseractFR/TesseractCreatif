@@ -10,12 +10,6 @@ import java.util.UUID
 class HomeService(private val repository: HomeRepository) {
 
     fun createHome(uuid: UUID, name: String, location: Location) {
-        val playerHomes = repository.getAll(uuid)
-        val playerHome = playerHomes.find { it.name == name }
-        playerHome?.let {
-            repository.delete(it.homePK)
-        }
-
         val x = location.x
         val y = location.y
         val z = location.z
@@ -60,7 +54,8 @@ class HomeService(private val repository: HomeRepository) {
         return true
     }
 
-    fun exist(uuid: UUID, home: String) {
-        // A faire
+    fun exist(uuid: UUID, home: String) : Boolean {
+        val playerHomes: HashMap<String, Location> = getAllHomes(uuid)
+        return playerHomes.contains(home)
     }
 }
