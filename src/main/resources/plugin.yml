@@ -37,5 +37,17 @@ commands:
     description: Reçois un livre guide des commandes de build basiques
   boutique:
     aliases: boutique
-    usage: "boutique"
+    usage: "/boutique"
     description: Ouvre le menu de la boutique de Tesseract
+  sethome:
+    aliases: sethome
+    usage: "/sethome"
+    description: Crée un home pour le joueur.
+  delhome:
+    aliases: delhome
+    usage: "/delhome"
+    description: Supprime le home du joueur
+  home:
+    aliases: home
+    usage: "/home"
+    description: Teleporte le joueur au home
