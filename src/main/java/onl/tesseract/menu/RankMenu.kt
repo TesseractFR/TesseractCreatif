@@ -3,6 +3,8 @@ package onl.tesseract.menu
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
+import onl.tesseract.menu.boutique.CreativeBoutiqueMenu
+import onl.tesseract.tesseractlib.player.TPlayer
 import onl.tesseract.tesseractlib.util.ItemBuilder
 import onl.tesseract.tesseractlib.util.ItemLoreBuilder
 import onl.tesseract.tesseractlib.util.menu.InventoryMenu
@@ -30,7 +32,9 @@ class RankMenu(previous: InventoryMenu? = null) :
         addButton(4, createCreateurItem()) {}
         addButton(15, createIngenieurItem()) {}
         addButton(8, createBatisseurItem()) {}
-        addButton(22, createVirtuoseItem()) {}
+        addButton(22, createVirtuoseItem()) {
+            CreativeBoutiqueMenu(TPlayer.get(viewer), this).open(viewer)
+        }
 
         addBackButton()
         addQuitButton()
@@ -41,7 +45,13 @@ class RankMenu(previous: InventoryMenu? = null) :
     private fun createApprentiItem(): ItemStack {
         val ilb = ItemLoreBuilder()
             .newline()
-            .append("AJOUTER DESCRIPTION", NamedTextColor.GRAY)
+            .append("Grade initial !", NamedTextColor.RED, TextDecoration.BOLD)
+            .newline().newline()
+            .append("Nombre de plots maximum : ", NamedTextColor.GRAY, TextDecoration.ITALIC)
+            .newline()
+            .append("Monde 100 : ", NamedTextColor.GOLD).append("1", NamedTextColor.WHITE, TextDecoration.BOLD)
+            .newline()
+            .append("Monde 250 : ", NamedTextColor.GOLD).append("1", NamedTextColor.WHITE, TextDecoration.BOLD)
         return ItemBuilder(teteApprenti)
             .name("Apprenti", NamedTextColor.GREEN, TextDecoration.BOLD)
             .lore(ilb.get())
@@ -51,8 +61,15 @@ class RankMenu(previous: InventoryMenu? = null) :
     private fun createConcepteurItem(): ItemStack {
         val ilb = ItemLoreBuilder()
             .newline()
-            .append("AJOUTER DESCRIPTION", NamedTextColor.GRAY)
-        return ItemBuilder(teteConcepteur)
+            .append("Obtenable après : ", NamedTextColor.GRAY, TextDecoration.ITALIC)
+            .append("4h de jeu", NamedTextColor.RED, TextDecoration.BOLD)
+            .newline().newline()
+            .append("Nombre de plots maximum : ", NamedTextColor.GRAY, TextDecoration.ITALIC)
+            .newline()
+            .append("Monde 100 : ", NamedTextColor.GOLD).append("2", NamedTextColor.WHITE, TextDecoration.BOLD)
+            .newline()
+            .append("Monde 250 : ", NamedTextColor.GOLD).append("2", NamedTextColor.WHITE, TextDecoration.BOLD)
+          return ItemBuilder(teteConcepteur)
             .name("Concepteur", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
@@ -61,8 +78,17 @@ class RankMenu(previous: InventoryMenu? = null) :
     private fun createCreateurItem(): ItemStack {
         val ilb = ItemLoreBuilder()
             .newline()
-            .append("AJOUTER DESCRIPTION", NamedTextColor.GRAY)
-        return ItemBuilder(teteCreateur)
+            .append("Obtenable après : ", NamedTextColor.GRAY, TextDecoration.ITALIC)
+            .append("16h de jeu", NamedTextColor.RED, TextDecoration.BOLD)
+            .newline().newline()
+            .append("Nombre de plots maximum : ", NamedTextColor.GRAY, TextDecoration.ITALIC)
+            .newline()
+            .append("Monde 100 : ", NamedTextColor.GOLD).append("3", NamedTextColor.WHITE, TextDecoration.BOLD)
+            .newline()
+            .append("Monde 250 : ", NamedTextColor.GOLD).append("3", NamedTextColor.WHITE, TextDecoration.BOLD)
+            .newline()
+            .append("Monde 500 : ", NamedTextColor.GOLD).append("1", NamedTextColor.WHITE, TextDecoration.BOLD)
+           return ItemBuilder(teteCreateur)
             .name("Créateur", NamedTextColor.YELLOW, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
@@ -71,8 +97,17 @@ class RankMenu(previous: InventoryMenu? = null) :
     private fun createIngenieurItem(): ItemStack {
         val ilb = ItemLoreBuilder()
             .newline()
-            .append("AJOUTER DESCRIPTION", NamedTextColor.GRAY)
-        return ItemBuilder(teteIngenieur)
+            .append("Obtenable après : ", NamedTextColor.GRAY, TextDecoration.ITALIC)
+            .append("2j de jeu", NamedTextColor.RED, TextDecoration.BOLD)
+            .newline().newline()
+            .append("Nombre de plots maximum : ", NamedTextColor.GRAY, TextDecoration.ITALIC)
+            .newline()
+            .append("Monde 100 : ", NamedTextColor.GOLD).append("4", NamedTextColor.WHITE, TextDecoration.BOLD)
+            .newline()
+            .append("Monde 250 : ", NamedTextColor.GOLD).append("4", NamedTextColor.WHITE, TextDecoration.BOLD)
+            .newline()
+            .append("Monde 500 : ", NamedTextColor.GOLD).append("2", NamedTextColor.WHITE, TextDecoration.BOLD)
+            return ItemBuilder(teteIngenieur)
             .name("Ingénieur", NamedTextColor.BLUE, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
@@ -81,17 +116,49 @@ class RankMenu(previous: InventoryMenu? = null) :
     private fun createBatisseurItem(): ItemStack {
         val ilb = ItemLoreBuilder()
             .newline()
-            .append("AJOUTER DESCRIPTION", NamedTextColor.GRAY)
+            .append("Obtenable après : ", NamedTextColor.GRAY, TextDecoration.ITALIC)
+            .append("7j de jeu", NamedTextColor.RED, TextDecoration.BOLD)
+            .newline().newline()
+            .append("Nombre de plots maximum : ", NamedTextColor.GRAY, TextDecoration.ITALIC)
+            .newline()
+            .append("Monde 100 : ", NamedTextColor.GOLD).append("5", NamedTextColor.WHITE, TextDecoration.BOLD)
+            .newline()
+            .append("Monde 250 : ", NamedTextColor.GOLD).append("5", NamedTextColor.WHITE, TextDecoration.BOLD)
+            .newline()
+            .append("Monde 500 : ", NamedTextColor.GOLD).append("3", NamedTextColor.WHITE, TextDecoration.BOLD)
+            .newline()
+            .append("Monde 1000 : ", NamedTextColor.GOLD).append("1", NamedTextColor.WHITE, TextDecoration.BOLD)
         return ItemBuilder(teteBatisseur)
             .name("Bâtisseur", NamedTextColor.AQUA, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
     }
 
+
     private fun createVirtuoseItem(): ItemStack {
         val ilb = ItemLoreBuilder()
             .newline()
-            .append("AJOUTER DESCRIPTION", NamedTextColor.GRAY)
+            .append("Grade PAYANT !", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD)
+            .newline()
+            .append(" (Clique pour ouvrir la boutique)", NamedTextColor.DARK_PURPLE, TextDecoration.ITALIC)
+            .newline().newline()
+            .append("Nombre de plots maximum :", NamedTextColor.GRAY, TextDecoration.ITALIC)
+            .newline()
+            .append("Monde 100 : ", NamedTextColor.GOLD).append("6", NamedTextColor.WHITE, TextDecoration.BOLD)
+            .newline()
+            .append("Monde 200 : ", NamedTextColor.GOLD).append("6", NamedTextColor.WHITE, TextDecoration.BOLD)
+            .newline()
+            .append("Monde 500 : ", NamedTextColor.GOLD).append("4", NamedTextColor.WHITE, TextDecoration.BOLD)
+            .newline()
+            .append("Monde 1000 : ", NamedTextColor.GOLD).append("2", NamedTextColor.WHITE, TextDecoration.BOLD)
+            .newline().newline()
+            .append("Avantages supplémentaires : ", NamedTextColor.GREEN, TextDecoration.BOLD)
+            .newline()
+            .append("- Obtention de ", NamedTextColor.GOLD).append("VoxelSniper", NamedTextColor.DARK_AQUA, TextDecoration.BOLD)
+            .newline()
+            .append("- Commande ", NamedTextColor.GOLD).append("/nick", NamedTextColor.WHITE, TextDecoration.BOLD)
+            .newline()
+            .append("- Et bien plus encore...", NamedTextColor.GOLD, TextDecoration.ITALIC)
         return ItemBuilder(teteVirtuose)
             .name("Virtuose", NamedTextColor.RED, TextDecoration.BOLD)
             .lore(ilb.get())
