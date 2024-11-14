@@ -60,8 +60,6 @@ class SpecialBlockMenu(val player: Player, previous: InventoryMenu? = null) :
 
     private fun createCommandBlockItem(): ItemStack {
         val ilb = ItemLoreBuilder()
-            .newline()
-            .append("AJOUTER DESCRIPTION", NamedTextColor.GRAY)
         return ItemBuilder(Material.COMMAND_BLOCK)
             .name("Bloc de commande", NamedTextColor.GOLD, TextDecoration.BOLD)
             .lore(ilb.get())
@@ -70,8 +68,6 @@ class SpecialBlockMenu(val player: Player, previous: InventoryMenu? = null) :
 
     private fun createChainCommandBlockItem(): ItemStack {
         val ilb = ItemLoreBuilder()
-            .newline()
-            .append("AJOUTER DESCRIPTION", NamedTextColor.GRAY)
         return ItemBuilder(Material.CHAIN_COMMAND_BLOCK)
             .name("Bloc de commande en chaîne", NamedTextColor.GREEN, TextDecoration.BOLD)
             .lore(ilb.get())
@@ -80,8 +76,6 @@ class SpecialBlockMenu(val player: Player, previous: InventoryMenu? = null) :
 
     private fun createRepeatingCommandBlockItem(): ItemStack {
         val ilb = ItemLoreBuilder()
-            .newline()
-            .append("AJOUTER DESCRIPTION", NamedTextColor.GRAY)
         return ItemBuilder(Material.REPEATING_COMMAND_BLOCK)
             .name("Bloc de commande à répétition", NamedTextColor.AQUA, TextDecoration.BOLD)
             .lore(ilb.get())
@@ -90,8 +84,6 @@ class SpecialBlockMenu(val player: Player, previous: InventoryMenu? = null) :
 
     private fun createCommandBlockMinecartItem(): ItemStack {
         val ilb = ItemLoreBuilder()
-            .newline()
-            .append("AJOUTER DESCRIPTION", NamedTextColor.GRAY)
         return ItemBuilder(Material.COMMAND_BLOCK_MINECART)
             .name("Wagonnet à bloc de commande", NamedTextColor.DARK_RED, TextDecoration.BOLD)
             .lore(ilb.get())
@@ -100,8 +92,6 @@ class SpecialBlockMenu(val player: Player, previous: InventoryMenu? = null) :
 
     private fun createStructureBlockItem(): ItemStack {
         val ilb = ItemLoreBuilder()
-            .newline()
-            .append("AJOUTER DESCRIPTION", NamedTextColor.GRAY)
         return ItemBuilder(Material.STRUCTURE_BLOCK)
             .name("Bloc de structure", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD)
             .lore(ilb.get())
@@ -110,8 +100,6 @@ class SpecialBlockMenu(val player: Player, previous: InventoryMenu? = null) :
 
     private fun createJigsawBlockItem(): ItemStack {
         val ilb = ItemLoreBuilder()
-            .newline()
-            .append("AJOUTER DESCRIPTION", NamedTextColor.GRAY)
         return ItemBuilder(Material.JIGSAW)
             .name("Bloc de puzzle", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD)
             .lore(ilb.get())
@@ -120,18 +108,14 @@ class SpecialBlockMenu(val player: Player, previous: InventoryMenu? = null) :
 
     private fun createStructureVoidItem(): ItemStack {
         val ilb = ItemLoreBuilder()
-            .newline()
-            .append("AJOUTER DESCRIPTION", NamedTextColor.GRAY)
         return ItemBuilder(Material.STRUCTURE_VOID)
-            .name("Vide de structure", NamedTextColor.BLUE, TextDecoration.BOLD)
+            .name("Vide de structure", NamedTextColor.DARK_AQUA, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
     }
 
     private fun createBarrierItem(): ItemStack {
         val ilb = ItemLoreBuilder()
-            .newline()
-            .append("AJOUTER DESCRIPTION", NamedTextColor.GRAY)
         return ItemBuilder(Material.BARRIER)
             .name("Barrière invisible", NamedTextColor.RED, TextDecoration.BOLD)
             .lore(ilb.get())
@@ -140,8 +124,6 @@ class SpecialBlockMenu(val player: Player, previous: InventoryMenu? = null) :
 
     private fun createLightItem(): ItemStack {
         val ilb = ItemLoreBuilder()
-            .newline()
-            .append("AJOUTER DESCRIPTION", NamedTextColor.GRAY)
         return ItemBuilder(Material.LIGHT)
             .name("Lumière", NamedTextColor.YELLOW, TextDecoration.BOLD)
             .lore(ilb.get())
