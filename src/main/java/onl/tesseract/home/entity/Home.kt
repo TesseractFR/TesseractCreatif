@@ -19,6 +19,6 @@ data class Home(
     val name: String
         get() = homePK.name
 
-    val location : Location
+    val location : Location?
         get() = homeLocation.location
 }

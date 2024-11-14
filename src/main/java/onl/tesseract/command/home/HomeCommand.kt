@@ -23,7 +23,7 @@ class HomeCommand : CommandContext() {
     fun onCommand(@Env(key = "nom") homeName: String, sender: Player) = run {
         val homeService = CreativeServices[HomeService::class.java]
         try{
-            sender.teleport(homeService.getHome(sender.uniqueId,homeName));
+            sender.teleport(homeService.getHome(sender.uniqueId,homeName)!!);
         } catch (e:NoHomeFoundException) {
             sender.sendMessage(ChatFormats.CHAT_ERROR.append("Ce home n'existe pas !"))
         }

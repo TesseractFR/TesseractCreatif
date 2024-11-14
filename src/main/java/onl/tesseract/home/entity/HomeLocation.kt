@@ -18,9 +18,11 @@ data class HomeLocation(
     @Column(updatable = false, nullable = false)
     var world: String = " "
 ) {
-
+    constructor(loc:Location):this(loc.x, loc.y, loc.z,loc.world.name){
+        this.location = loc;
+    }
     @Transient
-    lateinit var location: Location
+    var location: Location? = null
 
 
     @PrePersist
