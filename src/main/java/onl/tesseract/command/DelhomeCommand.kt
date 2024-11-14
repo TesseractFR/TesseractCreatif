@@ -7,22 +7,24 @@ import onl.tesseract.commandBuilder.annotation.Command
 import onl.tesseract.commandBuilder.annotation.CommandBody
 import onl.tesseract.home.HomeService
 import onl.tesseract.service.CreativeServices
-import onl.tesseract.tesseractlib.player.TPlayer
 import onl.tesseract.tesseractlib.util.ChatFormats
-import onl.tesseract.tesseractlib.util.plus
+import onl.tesseract.tesseractlib.util.append
 import org.bukkit.entity.Player
 
 @Command
 class DelhomeCommand : CommandContext() {
     @CommandBody
-    fun onCommand(@Argument(value = "nom", clazz = PlayerHomeNameArg::class) home: String?, sender: Player) = run {
-        if(home ==null){
-            sender.sendMessage(ChatFormats.CHAT.plus("Vous devez entrer le nom du home."))
+    fun onCommand(@Argument(value = "nom", clazz = PlayerHomeNameArg::class) homeName: String?, sender: Player) = run {
+        if (homeName == null) {
+            sender.sendMessage(ChatFormats.CHAT_ERROR.append("Vous devez entrer le nom du home."))
             return@run
         }
-        val player: TPlayer = TPlayer.get(sender)
-        CreativeServices[HomeService::class.java].deleteHome(player.uuid, home)
-        sender.sendMessage(ChatFormats.CHAT.plus("Votre home $home a bien été supprimé."))
+        val homeService = CreativeServices[HomeService::class.java]
+        if (homeService.exist(sender.uniqueId, homeName)) {
+            homeService.deleteHome(sender.uniqueId, homeName)
+            sender.sendMessage(ChatFormats.CHAT_SUCCESS.append("Votre home $homeName a bien été supprimé."))
+        } else {
+            sender.sendMessage(ChatFormats.CHAT_ERROR.append("Ce home n'existe pas !"))
+        }
     }
 }
-// BOUCLE IF A FAIRE AVEC LA FUTURE METHODE .exist(player, home)

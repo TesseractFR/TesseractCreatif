@@ -23,11 +23,7 @@ class HomeService(private val repository: HomeRepository) {
 
 
     fun deleteHome(uuid: UUID, name: String) {
-        val playerHomes = repository.getAll(uuid)
-        val playerHome = playerHomes.find {it.name == name}
-        playerHome?.let {
-            repository.delete(it.homePK)
-        }
+        repository.delete(HomePK(uuid, name))
     }
 
     fun getHome(uuid: UUID, name: String) : Location? {
