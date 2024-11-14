@@ -11,7 +11,7 @@ import org.bukkit.entity.Player
 
 class BoutiqueMenu(val player: TPlayer, previous: InventoryMenu? = null) :
 
-    InventoryMenu(27, Component.text("Boutique de Tesseract", NamedTextColor.YELLOW, TextDecoration.BOLD), previous) {
+    BoutiqueCoreMenu(27, Component.text("Boutique de Tesseract", NamedTextColor.BLUE, TextDecoration.BOLD), previous) {
 
     override fun open(viewer: Player) {
         fill(Material.GRAY_STAINED_GLASS_PANE, " ")
@@ -28,7 +28,7 @@ class BoutiqueMenu(val player: TPlayer, previous: InventoryMenu? = null) :
         ) {
             CreativeBoutiqueMenu(player, this).open(viewer)
         }
-        // BoutiqueUtil.addBoutiqueButton(this, inventory.size - 5, player)
+        addBoutiqueButton(player, inventory.size - 5)
         addBackButton()
         addQuitButton()
         super.open(viewer)
