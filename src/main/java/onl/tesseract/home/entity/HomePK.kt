@@ -9,10 +9,10 @@ import java.util.*
 
 @Embeddable
 data class HomePK(
-    @Column(updatable = false, nullable = false, columnDefinition = "VARCHAR(36)", unique = true)
+    @Column(updatable = false, nullable = false, columnDefinition = "VARCHAR(36)")
     @field:JdbcTypeCode(Types.VARCHAR)
     val uuid: UUID = UUID.randomUUID(),
 
-    @Column(updatable = false, nullable = false, columnDefinition = "VARCHAR(36)", unique = true)
+    @Column(updatable = false, nullable = false)
     val name: String = ""
 )

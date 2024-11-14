@@ -4,10 +4,8 @@ import jakarta.persistence.Column
 import jakarta.persistence.Embeddable
 import jakarta.persistence.PostLoad
 import jakarta.persistence.PrePersist
-import onl.tesseract.plot.entity.PlotWorld
 import org.bukkit.Bukkit
 import org.bukkit.Location
-import org.bukkit.World
 
 @Embeddable
 data class HomeLocation(
@@ -22,7 +20,8 @@ data class HomeLocation(
 ) {
 
     @Transient
-    var location: Location? = null
+    lateinit var location: Location
+
 
     @PrePersist
     private fun prePersist() {

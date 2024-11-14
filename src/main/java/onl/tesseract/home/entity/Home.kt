@@ -10,15 +10,15 @@ import org.bukkit.Location
 @FieldDefaults(level = AccessLevel.PRIVATE)
 data class Home(
     @EmbeddedId
-    val homePK: HomePK = HomePK(),
+    private val homePK: HomePK = HomePK(),
 
     @Embedded
-    var homeLocation: HomeLocation = HomeLocation()
+    private var homeLocation: HomeLocation = HomeLocation()
 
 ) {
     val name: String
         get() = homePK.name
 
-    val location : Location?
+    val location : Location
         get() = homeLocation.location
 }

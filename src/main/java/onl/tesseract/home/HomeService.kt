@@ -3,9 +3,10 @@ package onl.tesseract.home
 import onl.tesseract.home.entity.Home
 import onl.tesseract.home.entity.HomeLocation
 import onl.tesseract.home.entity.HomePK
+import onl.tesseract.home.entity.NoHomeFoundException
 import onl.tesseract.home.persistence.HomeRepository
 import org.bukkit.Location
-import java.util.UUID
+import java.util.*
 
 class HomeService(private val repository: HomeRepository) {
 
@@ -25,25 +26,17 @@ class HomeService(private val repository: HomeRepository) {
     fun deleteHome(uuid: UUID, name: String) {
         repository.delete(HomePK(uuid, name))
     }
-
-    fun getHome(uuid: UUID, name: String) : Location? {
-        val playerHomes = repository.getAll(uuid)
-        val playerHome = playerHomes.find {it.name == name}
-        if (playerHome != null) {
-            return playerHome.location
-        }
-        return null
+    @Throws(NoHomeFoundException::class)
+    fun getHome(uuid: UUID, name: String): Location  {
+        val home = repository.getById(HomePK(uuid, name))
+        require(home != null) { throw NoHomeFoundException("No home found for $uuid with name $name") }
+        return home.location
     }
 
-    fun getAllHomes(uuid: UUID) : HashMap<String, Location> {
-        val playerHomes = repository.getAll(uuid)
-        val homes = HashMap<String, Location>()
-        playerHomes.forEach {
-            it.location?.let { location ->
-                homes[it.name] = location
-            }
-        }
-        return homes
+    fun getAllHomes(uuid: UUID): Set<String> {
+        return repository.getAll(uuid)
+                .map { it.name }
+                .toSet()
     }
 
     fun canCreateHome(uuid: UUID): Boolean {
@@ -51,7 +44,11 @@ class HomeService(private val repository: HomeRepository) {
     }
 
     fun exist(uuid: UUID, home: String) : Boolean {
-        val playerHomes: HashMap<String, Location> = getAllHomes(uuid)
-        return playerHomes.contains(home)
+         try {
+             getHome(uuid, home)
+             return true
+         }catch (e: NoHomeFoundException) {
+             return false
+         }
     }
 }

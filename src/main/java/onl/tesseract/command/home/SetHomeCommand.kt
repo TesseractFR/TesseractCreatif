@@ -1,4 +1,4 @@
-package onl.tesseract.command
+package onl.tesseract.command.home
 
 import onl.tesseract.commandBuilder.CommandContext
 import onl.tesseract.commandBuilder.annotation.Argument

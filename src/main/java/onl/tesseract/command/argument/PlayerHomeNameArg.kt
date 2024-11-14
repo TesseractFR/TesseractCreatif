@@ -11,7 +11,7 @@ class PlayerHomeNameArg(name: String) : CommandArgument<String>(name) {
         builder.parser { input, _ -> input }
 
             .tabCompleter { _, env ->
-                CreativeServices[HomeService::class.java].getAllHomes(env.senderAsPlayer.uniqueId).keys.toList()
+                CreativeServices[HomeService::class.java].getAllHomes(env.senderAsPlayer.uniqueId).toList()
             }
             .errorHandler(NullPointerException::class.java, "Home introuvable")
     }

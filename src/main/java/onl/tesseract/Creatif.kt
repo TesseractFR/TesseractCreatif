@@ -4,6 +4,9 @@ import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.milkbowl.vault.permission.Permission
 import onl.tesseract.command.*
+import onl.tesseract.command.home.DelhomeCommand
+import onl.tesseract.command.home.HomeCommand
+import onl.tesseract.command.home.SetHomeCommand
 import onl.tesseract.player.CreativePlayer
 import onl.tesseract.player.CreativePlayerContainer
 import onl.tesseract.rank.PlayerRankService
@@ -50,7 +53,12 @@ class Creatif : JavaPlugin(), Listener {
         this.getCommand("commandes")?.setExecutor(CommandsBookCommand())
         this.getCommand("boutique")?.setExecutor(BoutiqueCommand())
         this.getCommand("sethome")?.setExecutor(SetHomeCommand())
-        this.getCommand("delhome")?.setExecutor(DelhomeCommand())
+        val delhomeCommand  = DelhomeCommand()
+        this.getCommand("delhome")?.setExecutor(delhomeCommand)
+        this.getCommand("delhome")?.tabCompleter = delhomeCommand
+        val homeCommand  = HomeCommand()
+        this.getCommand("home")?.setExecutor(homeCommand)
+        this.getCommand("home")?.tabCompleter = homeCommand
     }
 
     override fun onDisable() {

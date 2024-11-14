@@ -11,7 +11,7 @@ import java.util.*
  */
 interface HomeRepository : Repository<Home, HomePK> {
     fun delete(entity: HomePK)
-    fun getAll(uuid: UUID): List<Home>
+    fun getAll(uuid: UUID): Set<Home>
 }
 
 /**
@@ -41,11 +41,11 @@ class HomeHibernateRepository : HomeRepository {
         }
     }
 
-    override fun getAll(uuid: UUID): List<Home> {
+    override fun getAll(uuid: UUID): Set<Home> {
         HibernateUtil.sessionFactory.openSession().use { session ->
             val query = session.createQuery("FROM Home h WHERE h.homePK.uuid = :uuid", Home::class.java)
             query.setParameter("uuid", uuid)
-            return query.resultList
+            return query.resultList.toSet()
         }
     }
 

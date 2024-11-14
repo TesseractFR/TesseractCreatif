@@ -46,4 +46,8 @@ commands:
   delhome:
     aliases: delhome
     usage: "/delhome"
-    description: Supprime le plot du joueur
+    description: Supprime le home du joueur
+  home:
+    aliases: home
+    usage: "/home"
+    description: Teleporte le joueur au home
