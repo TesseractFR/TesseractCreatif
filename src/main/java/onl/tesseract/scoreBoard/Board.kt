@@ -8,9 +8,9 @@ import org.bukkit.entity.Player
 import org.bukkit.scoreboard.*
 
 open class Board {
-    private val scoreboard: Scoreboard = Bukkit.getScoreboardManager().newScoreboard
+    val scoreboard: Scoreboard = Bukkit.getScoreboardManager().newScoreboard
 
-    private lateinit var objective: Objective
+    lateinit var objective: Objective
 
     fun initialize() {
         objective = scoreboard.registerNewObjective(
