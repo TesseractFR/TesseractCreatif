@@ -211,7 +211,7 @@ class MenuMenu(val player: Player) :
     private fun createPlotMenuItemStack(): ItemStack {
         val ilb = ItemLoreBuilder()
             .newline()
-            .append("Fonctionnalité non disponible... pour le moment ;).", NamedTextColor.GRAY, TextDecoration.ITALIC)
+            .append("Fonctionnalité non disponible... pour le moment ;)", NamedTextColor.GRAY, TextDecoration.ITALIC)
         return ItemBuilder(tetePlotMenu)
             .name("Menu des plots", NamedTextColor.AQUA, TextDecoration.BOLD)
             .lore(ilb.get())
