@@ -30,10 +30,21 @@ class PlayerTimePlayedService(private val repository: PlayerTimePlayedRepository
         repository.save(playerTimePlayedInfo)
     }
 
-
-
     private fun getOrCreatePlayerTimePlayedInfo(player: UUID) : PlayerTimePlayedInfo {
         return repository.getById(player)?: PlayerTimePlayedInfo(player);
+    }
+
+    fun formatTime(duration: Duration): String {
+        val days = duration.toDays()
+        val hours = duration.toHours() % 24
+        val minutes = duration.toMinutes() % 60
+        val seconds = duration.seconds % 60
+        val parts = mutableListOf<String>()
+        if (days > 0) parts.add("$days" +"j")
+        if (hours > 0) parts.add("$hours" + "h")
+        if (minutes > 0) parts.add("$minutes" + "m")
+        if (seconds > 0) parts.add("$seconds"+ "s")
+        return parts.joinToString(" ")
     }
 
 }

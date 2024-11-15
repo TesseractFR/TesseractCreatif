@@ -17,6 +17,7 @@ import onl.tesseract.tesseractlib.util.ItemLoreBuilder
 import onl.tesseract.tesseractlib.util.append
 import onl.tesseract.tesseractlib.util.menu.InventoryMenu
 import onl.tesseract.tesseractlib.util.menu.InventoryMenu.getCustomHead
+import onl.tesseract.timeplayed.PlayerTimePlayedService
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
@@ -179,6 +180,8 @@ class MenuMenu(val player: Player) :
         val totalPlotsWorld250 = nbPlots.getPlayerTotalPlot(player.uniqueId, PlotWorld.WORLD_250)
         val totalPlotsWorld500 = nbPlots.getPlayerTotalPlot(player.uniqueId, PlotWorld.WORLD_500)
         val totalPlotsWorld1000 = nbPlots.getPlayerTotalPlot(player.uniqueId, PlotWorld.WORLD_1000)
+        val timePlayedService = CreativeServices[PlayerTimePlayedService::class.java]
+        val timePlayed = timePlayedService.getPlayerTimePlayed(player.uniqueId)
 
         val ilb = ItemLoreBuilder()
             .newline()
@@ -186,17 +189,19 @@ class MenuMenu(val player: Player) :
             .newline()
             .append("Genre : ", NamedTextColor.GOLD).append(TPlayer.get(player.uniqueId).gender.getName(), NamedTextColor.WHITE)
             .newline().newline()
-            .append("Grade : ", NamedTextColor.GOLD).append(playerRank.name, playerRank.color)
+            .append("Grade : ", NamedTextColor.GOLD).append(playerRank.name, playerRank.color, TextDecoration.BOLD)
             .newline()
-            .append("Temps de jeu global : ", NamedTextColor.GOLD).append("time", NamedTextColor.WHITE)
+            .append("Temps de jeu global : ", NamedTextColor.GOLD)
+            .newline()
+            .append(timePlayedService.formatTime(timePlayed), NamedTextColor.WHITE)
             .newline().newline()
-            .append("Nombre de plots Monde 100 : ", NamedTextColor.GOLD).append(totalPlotsWorld100.toString(), NamedTextColor.WHITE)
+            .append("Nombre de plots Monde 100 : ", NamedTextColor.GOLD).append(totalPlotsWorld100.toString(), NamedTextColor.WHITE, TextDecoration.BOLD)
             .newline()
-            .append("Nombre de plots Monde 250 : ", NamedTextColor.GOLD).append(totalPlotsWorld250.toString(), NamedTextColor.WHITE)
+            .append("Nombre de plots Monde 250 : ", NamedTextColor.GOLD).append(totalPlotsWorld250.toString(), NamedTextColor.WHITE, TextDecoration.BOLD)
             .newline()
-            .append("Nombre de plots Monde 500 : ", NamedTextColor.GOLD).append(totalPlotsWorld500.toString(), NamedTextColor.WHITE)
+            .append("Nombre de plots Monde 500 : ", NamedTextColor.GOLD).append(totalPlotsWorld500.toString(), NamedTextColor.WHITE, TextDecoration.BOLD)
             .newline()
-            .append("Nombre de plots Monde 1000 : ", NamedTextColor.GOLD).append(totalPlotsWorld1000.toString(), NamedTextColor.WHITE)
+            .append("Nombre de plots Monde 1000 : ", NamedTextColor.GOLD).append(totalPlotsWorld1000.toString(), NamedTextColor.WHITE, TextDecoration.BOLD)
         return ItemBuilder(getHead(player.uniqueId))
             .name("Informations du joueur", NamedTextColor.YELLOW, TextDecoration.BOLD)
             .lore(ilb.get())
