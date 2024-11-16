@@ -1,5 +1,8 @@
 package onl.tesseract.scoreBoard
 
+import net.kyori.adventure.text.format.NamedTextColor
+import net.kyori.adventure.text.format.TextColor
+import net.kyori.adventure.text.format.TextDecoration
 import onl.tesseract.Creatif
 import onl.tesseract.rank.PlayerRankService
 import onl.tesseract.rank.entity.PlayerRank
@@ -27,32 +30,31 @@ class PlayerBoard : Board() {
                         return
                     }
 
+                    addOrUpdateScore(" ", 16)
                     val rank = rankService.getPlayerRank(player.uniqueId)
-                    updateScore("Grade : $rank", 15)
+                    addOrUpdateScore("Grade : ", 15, NamedTextColor.GOLD)
+                    addOrUpdateScore(rank.toString(), 14, rank.color, TextDecoration.BOLD)
+                    addOrUpdateScore(" ", 13)
 
                     val timePlayed = timePlayedService.getPlayerTimePlayed(player.uniqueId)
                     val timePlayedFormatted = timePlayedService.formatTime(timePlayed)
-                    updateScore("Temps de jeu : $timePlayedFormatted", 14)
+                    addOrUpdateScore("Temps de jeu :", 12, NamedTextColor.GOLD)
+                    addOrUpdateScore(timePlayedFormatted, 11)
+                    addOrUpdateScore(" ", 10)
 
                     val timeToNextRank = getTimeToNextRank(rank, timePlayed.seconds)
-                    updateScore("Temps avant grade suivant : $timeToNextRank", 13)
+                    addOrUpdateScore("Grade suivant :", 9, NamedTextColor.GOLD)
+                    addOrUpdateScore(timeToNextRank, 8)
+                    addOrUpdateScore(" ", 7)
 
                     val worldName = player.world.name
-                    updateScore("Monde : $worldName", 12)
+                    addOrUpdateScore("Monde actuel :", 6, NamedTextColor.GOLD)
+                    addOrUpdateScore(worldName, 5)
 
                     applyToPlayer(player)
                 }
             }.runTaskTimer(it, 0L, 20L)
         }
-    }
-
-    fun updateScore(entry: String, score: Int) {
-        scoreboard.entries.forEach { existingEntry ->
-            if (objective.getScore(existingEntry).score == score) {
-                scoreboard.resetScores(existingEntry)
-            }
-        }
-        addScore(entry, score)
     }
 
     private fun getTimeToNextRank(currentRank: PlayerRank, timePlayedInSeconds: Long): String {

@@ -21,7 +21,12 @@ open class Board {
         objective.displaySlot = DisplaySlot.SIDEBAR
     }
 
-    fun addScore(entry: String, score: Int) {
+    fun addOrUpdateScore(entry: String, score: Int) {
+        scoreboard.entries.forEach { existingEntry ->
+            if (objective.getScore(existingEntry).score == score) {
+                scoreboard.resetScores(existingEntry)
+            }
+        }
         val scoreEntry = objective.getScore(entry)
         scoreEntry.score = score
     }
@@ -29,4 +34,5 @@ open class Board {
     fun applyToPlayer(player: Player) {
         player.scoreboard = scoreboard
     }
+
 }
