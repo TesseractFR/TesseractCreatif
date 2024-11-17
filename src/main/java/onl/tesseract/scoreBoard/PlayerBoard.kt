@@ -7,6 +7,7 @@ import onl.tesseract.service.CreativeServices
 import onl.tesseract.timeplayed.PlayerTimePlayedService
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
+import java.time.Duration
 
 class PlayerBoard(player: Player?) : Board(player) {
 
@@ -31,18 +32,23 @@ class PlayerBoard(player: Player?) : Board(player) {
         addOrUpdateScore("${ChatColor.YELLOW}$timePlayedFormatted", 11)
         addOrUpdateScore("   ", 10)
 
-        val nextRankInfo = getNextRankAndTime(rank, timePlayed.seconds)
-        val nextRank = nextRankInfo.nextRank
+        val nextRank = PlayerRank.entries
+            .dropWhile { it != rank }
+            .drop(1)
+            .firstOrNull()
 
-        if (nextRank == null) {
-            addOrUpdateScore("${ChatColor.GOLD}${ChatColor.ITALIC}${ChatColor.BOLD}- Grade suivant -", 9)
-            addOrUpdateScore("${ChatColor.YELLOW}${nextRankInfo.timeRemaining}", 8)
-        } else {
+        if(nextRank != null && rank != PlayerRank.BATISSEUR && rank != PlayerRank.VIRTUOSE) {
+            val nextRankTimeInSeconds = nextRank.hoursRequired * 3600
+            val remainingTimeInSeconds = nextRankTimeInSeconds - timePlayed.seconds
+
+            val remainingDuration = Duration.ofSeconds(remainingTimeInSeconds)
+            val formattedTime = timePlayedService.formatTime(remainingDuration)
+
             addOrUpdateScore("${ChatColor.GOLD}${ChatColor.ITALIC}${ChatColor.BOLD}- Grade suivant -", 9)
             addOrUpdateScore("${nextRank.color.toChatColor()}${nextRank}", 8)
-            addOrUpdateScore("${ChatColor.YELLOW}${nextRankInfo.timeRemaining}", 7)
+            addOrUpdateScore("${ChatColor.YELLOW}${formattedTime}", 7)
+            addOrUpdateScore("    ", 6)
         }
-        addOrUpdateScore("    ", 6)
 
         val worldName = player.world.name
         addOrUpdateScore("${ChatColor.GOLD}${ChatColor.ITALIC}${ChatColor.BOLD}- Monde actuel -", 5)
@@ -50,30 +56,4 @@ class PlayerBoard(player: Player?) : Board(player) {
 
         player.scoreboard = scoreboard
     }
-}
-
-data class NextRankInfo(
-    val nextRank: PlayerRank?,
-    val timeRemaining: String
-)
-
-private fun getNextRankAndTime(currentRank: PlayerRank, timePlayedInSeconds: Long): NextRankInfo {
-    if (currentRank == PlayerRank.BATISSEUR) {
-        return NextRankInfo(null, "Rank Maximum atteint !")
-    }
-    val nextRank = PlayerRank.entries
-        .filter { it.hoursRequired > currentRank.hoursRequired }
-        .minByOrNull { it.hoursRequired }
-    if (nextRank == null || nextRank == PlayerRank.VIRTUOSE) {
-        return NextRankInfo(null, "Aucun rang suivant")
-    }
-    val nextRankTimeInSeconds = nextRank.hoursRequired * 3600
-    val remainingTimeInSeconds = nextRankTimeInSeconds - timePlayedInSeconds
-    val daysRemaining = remainingTimeInSeconds / 86400
-    val hoursRemaining = (remainingTimeInSeconds % 86400) / 3600
-    val minutesRemaining = (remainingTimeInSeconds % 3600) / 60
-    val secondsRemaining = remainingTimeInSeconds % 60
-    val formattedTime = "${daysRemaining}j ${hoursRemaining}h ${minutesRemaining}min ${secondsRemaining}s"
-
-    return NextRankInfo(nextRank, formattedTime)
 }
