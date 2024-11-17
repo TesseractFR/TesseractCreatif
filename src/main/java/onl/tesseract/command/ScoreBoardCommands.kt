@@ -1,4 +1,4 @@
-package onl.tesseract.command.scoreboard
+package onl.tesseract.command
 
 import onl.tesseract.commandBuilder.CommandContext
 import onl.tesseract.commandBuilder.annotation.Command
@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
 @Command(name = "scoreboard")
-class ScoreBoard : CommandContext() {
+class ScoreBoardCommands : CommandContext() {
 
     @Command(name = "afficher")
     fun enableScoreBoard(sender: CommandSender) {

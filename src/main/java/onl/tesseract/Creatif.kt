@@ -7,11 +7,10 @@ import onl.tesseract.command.*
 import onl.tesseract.command.home.DelhomeCommand
 import onl.tesseract.command.home.HomeCommand
 import onl.tesseract.command.home.SetHomeCommand
-import onl.tesseract.command.scoreboard.ScoreBoard
+import onl.tesseract.command.ScoreBoardCommands
 import onl.tesseract.player.CreativePlayer
 import onl.tesseract.player.CreativePlayerContainer
 import onl.tesseract.rank.PlayerRankService
-import onl.tesseract.scoreBoard.PlayerBoard
 import onl.tesseract.scoreBoard.ScoreBoardCore
 import onl.tesseract.service.CreativeServices.Companion.get
 import onl.tesseract.service.CreativeServices.Companion.getInstance
@@ -62,7 +61,7 @@ class Creatif : JavaPlugin(), Listener {
         val homeCommand  = HomeCommand()
         this.getCommand("home")?.setExecutor(homeCommand)
         this.getCommand("home")?.tabCompleter = homeCommand
-        this.getCommand("scoreboard")?.setExecutor(ScoreBoard())
+        this.getCommand("scoreboard")?.setExecutor(ScoreBoardCommands())
     }
 
     override fun onDisable() {
