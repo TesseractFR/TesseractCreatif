@@ -91,8 +91,6 @@ class Creatif : JavaPlugin(), Listener {
             creativePlayer.updatePermission()
             Bukkit.getServer().pluginManager.registerEvents(creativePlayer, this)
         }
-        ScoreBoardCore.showScoreboard(event.player)
-
     }
 
     private fun setupPermissions(): Boolean {

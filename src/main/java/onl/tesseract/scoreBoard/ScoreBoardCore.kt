@@ -14,7 +14,7 @@ object ScoreBoardCore {
             object : BukkitRunnable() {
                 override fun run() {
                     for (player in Bukkit.getOnlinePlayers()) {
-                        if (playerScoreboardStatus.getOrDefault(player.uniqueId, false)) {
+                        if (playerScoreboardStatus.getOrDefault(player.uniqueId, true)) {
                             updatePlayerBoard(player)
                         }
                     }
