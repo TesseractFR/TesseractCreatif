@@ -18,9 +18,11 @@ import onl.tesseract.tesseractlib.util.append
 import onl.tesseract.tesseractlib.util.menu.InventoryMenu
 import onl.tesseract.tesseractlib.util.menu.InventoryMenu.getCustomHead
 import onl.tesseract.timeplayed.PlayerTimePlayedService
+import onl.tesseract.util.DurationFormat
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
+import kotlin.time.Duration
 
 private val teteGrades = getCustomHead("", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTdlNzgyYjQwOGY1NDU2Y2ZhZDBjNDNlOGM1MDFlZjllZmQwMTI4NjI5NzM2MGJlM2I4M2ZiMTZkYzljZDJhNSJ9fX0=", "")
 private val teteTPWorldMenu = getCustomHead("", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjFkZDRmZTRhNDI5YWJkNjY1ZGZkYjNlMjEzMjFkNmVmYTZhNmI1ZTdiOTU2ZGI5YzVkNTljOWVmYWIyNSJ9fX0=", "")
@@ -193,7 +195,7 @@ class MenuMenu(val player: Player) :
             .newline()
             .append("Temps de jeu global : ", NamedTextColor.GOLD)
             .newline()
-            .append(timePlayedService.formatTime(timePlayed), NamedTextColor.WHITE)
+            .append(DurationFormat.formatTime(timePlayed), NamedTextColor.WHITE)
             .newline().newline()
             .append("Nombre de plots Monde 100 : ", NamedTextColor.GOLD).append(totalPlotsWorld100.toString(), NamedTextColor.WHITE, TextDecoration.BOLD)
             .newline()

@@ -4,8 +4,10 @@ import onl.tesseract.rank.PlayerRankService
 import onl.tesseract.rank.entity.PlayerRank
 import onl.tesseract.service.CreativeServices
 import onl.tesseract.timeplayed.PlayerTimePlayedService
+import onl.tesseract.util.DurationFormat
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
+import java.time.Duration
 
 class PlayerBoard(player: Player?) : Board(player) {
 
@@ -16,33 +18,59 @@ class PlayerBoard(player: Player?) : Board(player) {
 
     private fun displayPlayerBoard(player: Player) {
         val rankService = CreativeServices[PlayerRankService::class.java]
-        val rank = rankService.getPlayerRank(player.uniqueId)
-
         val timePlayedService = CreativeServices[PlayerTimePlayedService::class.java]
+        val rank = rankService.getPlayerRank(player.uniqueId)
         val timePlayed = timePlayedService.getPlayerTimePlayed(player.uniqueId)
-        val timePlayedFormatted = timePlayedService.formatTime(timePlayed)
+        var score = 0
 
-        addOrUpdateScore(" ", 16)
-        addOrUpdateScore("${ChatColor.GOLD}${ChatColor.ITALIC}${ChatColor.BOLD}- Grade actuel -", 15)
-        addOrUpdateScore("${rank.color.toChatColor()}${rank}", 14)
-        addOrUpdateScore("  ", 13)
-        addOrUpdateScore("${ChatColor.GOLD}${ChatColor.ITALIC}${ChatColor.BOLD}- Temps de jeu -", 12)
-        addOrUpdateScore("${ChatColor.YELLOW}$timePlayedFormatted", 11)
-        addOrUpdateScore("   ", 10)
+        score = displayCurrentWorld(player, score)
+        addOrUpdateScore(" ", score++)
+        score = displayTimeNextRank(rank, rankService, player, timePlayedService, score)
+        score = displayActualRank(rank, score)
+        addOrUpdateScore("  ", score++)
+        score = displayTimePlayed(timePlayed, score)
+        addOrUpdateScore("   ", score++)
 
-        val nextRank = rankService.getNextPlayerRank(player.uniqueId)
-
-        if(rank != PlayerRank.BATISSEUR && rank != PlayerRank.VIRTUOSE) {
-            val remainingTime = timePlayedService.getTimeBeforeRankUp(player.uniqueId, nextRank)
-            val remainingTimeFormatted = timePlayedService.formatTime(remainingTime)
-
-            addOrUpdateScore("${ChatColor.GOLD}${ChatColor.ITALIC}${ChatColor.BOLD}- Grade suivant -", 9)
-            addOrUpdateScore("${nextRank.color.toChatColor()}${nextRank}", 8)
-            addOrUpdateScore("${ChatColor.YELLOW}${remainingTimeFormatted}", 7)
-            addOrUpdateScore("    ", 6)
-        }
-        addOrUpdateScore("${ChatColor.GOLD}${ChatColor.ITALIC}${ChatColor.BOLD}- Monde actuel -", 5)
-        addOrUpdateScore("${ChatColor.YELLOW}${player.world.name}", 4)
         player.scoreboard = scoreboard
+    }
+
+    private fun displayTimeNextRank(
+        rank: PlayerRank,
+        rankService: PlayerRankService,
+        player: Player,
+        timePlayedService: PlayerTimePlayedService,
+        score: Int,
+    ): Int {
+        var score1 = score
+        if (rank.ordinal < PlayerRank.BATISSEUR.ordinal) {
+            val nextRank = rankService.getNextPlayerRank(player.uniqueId)
+            val remainingTime = timePlayedService.getTimeBeforeRankUp(player.uniqueId, nextRank)
+            val remainingTimeFormatted = DurationFormat.formatTime(remainingTime)
+
+            addOrUpdateScore("${ChatColor.YELLOW}${remainingTimeFormatted}", score1++)
+            addOrUpdateScore("${nextRank.color.toChatColor()}${nextRank}", score1++)
+            addOrUpdateScore("${ChatColor.GOLD}${ChatColor.ITALIC}${ChatColor.BOLD}- Grade suivant -", score1++)
+            addOrUpdateScore("    ", score1++)
+        }
+        return score1
+    }
+
+    private fun displayCurrentWorld(player: Player, score: Int): Int {
+        addOrUpdateScore("${ChatColor.YELLOW}${player.world.name}", score)
+        addOrUpdateScore("${ChatColor.GOLD}${ChatColor.ITALIC}${ChatColor.BOLD}- Monde actuel -", score + 1)
+        return score + 2
+    }
+
+    private fun displayTimePlayed(timePlayed: Duration, score: Int): Int {
+        val timePlayedFormatted = DurationFormat.formatTime(timePlayed)
+        addOrUpdateScore("${ChatColor.YELLOW}$timePlayedFormatted", score)
+        addOrUpdateScore("${ChatColor.GOLD}${ChatColor.ITALIC}${ChatColor.BOLD}- Temps de jeu -", score + 1)
+        return score + 2
+    }
+
+    private fun displayActualRank(rank: PlayerRank, score: Int): Int {
+        addOrUpdateScore("${rank.color.toChatColor()}${rank}", score)
+        addOrUpdateScore("${ChatColor.GOLD}${ChatColor.ITALIC}${ChatColor.BOLD}- Grade actuel -", score + 1)
+        return score + 2
     }
 }
