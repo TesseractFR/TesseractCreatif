@@ -89,7 +89,7 @@ class RankMenu(previous: InventoryMenu? = null) :
             .newline()
             .append("Monde 500 : ", NamedTextColor.GOLD).append("1", NamedTextColor.WHITE, TextDecoration.BOLD)
            return ItemBuilder(teteCreateur)
-            .name("Créateur", NamedTextColor.YELLOW, TextDecoration.BOLD)
+            .name("Créateur", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
     }
@@ -108,7 +108,7 @@ class RankMenu(previous: InventoryMenu? = null) :
             .newline()
             .append("Monde 500 : ", NamedTextColor.GOLD).append("2", NamedTextColor.WHITE, TextDecoration.BOLD)
             return ItemBuilder(teteIngenieur)
-            .name("Ingénieur", NamedTextColor.BLUE, TextDecoration.BOLD)
+            .name("Ingénieur", NamedTextColor.DARK_BLUE, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
     }
@@ -129,7 +129,7 @@ class RankMenu(previous: InventoryMenu? = null) :
             .newline()
             .append("Monde 1000 : ", NamedTextColor.GOLD).append("1", NamedTextColor.WHITE, TextDecoration.BOLD)
         return ItemBuilder(teteBatisseur)
-            .name("Bâtisseur", NamedTextColor.AQUA, TextDecoration.BOLD)
+            .name("Bâtisseur", NamedTextColor.BLUE, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
     }
@@ -160,7 +160,7 @@ class RankMenu(previous: InventoryMenu? = null) :
             .newline()
             .append("- Et bien plus encore...", NamedTextColor.GOLD, TextDecoration.ITALIC)
         return ItemBuilder(teteVirtuose)
-            .name("Virtuose", NamedTextColor.RED, TextDecoration.BOLD)
+            .name("Virtuose", NamedTextColor.AQUA, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
     }

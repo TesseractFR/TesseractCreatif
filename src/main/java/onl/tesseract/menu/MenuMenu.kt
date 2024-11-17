@@ -5,6 +5,7 @@ import net.kyori.adventure.text.event.ClickEvent
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
 import onl.tesseract.CommandsBookFactory
+import onl.tesseract.Creatif
 import onl.tesseract.menu.boutique.BoutiqueMenu
 import onl.tesseract.plot.PlayerPlotService
 import onl.tesseract.plot.entity.PlotWorld
@@ -18,21 +19,67 @@ import onl.tesseract.tesseractlib.util.append
 import onl.tesseract.tesseractlib.util.menu.InventoryMenu
 import onl.tesseract.tesseractlib.util.menu.InventoryMenu.getCustomHead
 import onl.tesseract.timeplayed.PlayerTimePlayedService
+import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
+import org.bukkit.scheduler.BukkitRunnable
 
-private val teteGrades = getCustomHead("", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTdlNzgyYjQwOGY1NDU2Y2ZhZDBjNDNlOGM1MDFlZjllZmQwMTI4NjI5NzM2MGJlM2I4M2ZiMTZkYzljZDJhNSJ9fX0=", "")
-private val teteTPWorldMenu = getCustomHead("", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjFkZDRmZTRhNDI5YWJkNjY1ZGZkYjNlMjEzMjFkNmVmYTZhNmI1ZTdiOTU2ZGI5YzVkNTljOWVmYWIyNSJ9fX0=", "")
-private val tetePlotMenu = getCustomHead("", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTdmODJhY2ViOThmZTA2OWU4YzE2NmNlZDAwMjQyYTc2NjYwYmJlMDcwOTFjOTJjZGRlNTRjNmVkMTBkY2ZmOSJ9fX0=", "")
-private val teteGenre = getCustomHead("", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2EwOGQwZGFiYzQzNGEwOTNmMDk4YmFmNTA1YjE2NWMxNGNiZTk2NDU3M2VkOGU5ZTYxODUxNTg5MTc5NTcwIn19fQ==", "")
-private val teteInstagram = getCustomHead("", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTBkNDY0MTg2ZTFhNTBkZGFhMTRiZTIyNTk2MTFhNGU4NDU4NTE1YTUzNjdhOTM4OWE5Y2M3Yzg5Yzk0YTkzYiJ9fX0=", "")
-private val teteTiktok = getCustomHead("", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNThkMDI5ODRhNDNlNmM2OTEwZDBkOTA4YTU3ZTA0MWMzY2ZiMWRkODgxYjViNzIwYzU1NTYzZTY4MWY1OWUwZSJ9fX0=", "")
-private val teteFacebook = getCustomHead("", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGViNDYxMjY5MDQ0NjNmMDdlY2ZjOTcyYWFhMzczNzNhMjIzNTliNWJhMjcxODIxYjY4OWNkNTM2N2Y3NTc2MiJ9fX0=", "")
-private val teteDiscord = getCustomHead("", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2I5NDg0M2QzNDBhYmFkYmQ2NDAxZWY0ZWM3NGRjZWM0YjY2OTY2MTA2NWJkMWEwMWY5YTU5MDVhODkxOWM3MiJ9fX0=", "")
-private val teteYoutube = getCustomHead("", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzQ4ODU0NWQ1N2M5ZWVkNTJjM2U1NDdlOTZjNDVkYWJiYjdjZjVmOThkNGM4ZmU2MWRjNmY2OWFiYTBhZWY5NiJ9fX0=", "")
-private val teteTwitter = getCustomHead("", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTFiN2EwYzIxMGU2Y2RmNWEzNWZkODE5N2U2ZTI0YTAzODMxNWJiZTNiZGNkMWJjYzM2MzBiZjI2ZjU5ZWM1YyJ9fX0=", "")
-private val teteSiteWeb = getCustomHead("", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzZmOGEyMTlmMDgwMzk0MGYxZDI3MzQ5ZmIwNTBjMzJkYzdjMDUwZGIzM2NhMWUwYjM2YzIyZjIxYjA3YmU4NiJ9fX0=", "")
+private val teteGrades = getCustomHead(
+    "",
+    "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTdlNzgyYjQwOGY1NDU2Y2ZhZDBjNDNlOGM1MDFlZjllZmQwMTI4NjI5NzM2MGJlM2I4M2ZiMTZkYzljZDJhNSJ9fX0=",
+    ""
+)
+private val teteTPWorldMenu = getCustomHead(
+    "",
+    "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjFkZDRmZTRhNDI5YWJkNjY1ZGZkYjNlMjEzMjFkNmVmYTZhNmI1ZTdiOTU2ZGI5YzVkNTljOWVmYWIyNSJ9fX0=",
+    ""
+)
+private val tetePlotMenu = getCustomHead(
+    "",
+    "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTdmODJhY2ViOThmZTA2OWU4YzE2NmNlZDAwMjQyYTc2NjYwYmJlMDcwOTFjOTJjZGRlNTRjNmVkMTBkY2ZmOSJ9fX0=",
+    ""
+)
+private val teteGenre = getCustomHead(
+    "",
+    "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2EwOGQwZGFiYzQzNGEwOTNmMDk4YmFmNTA1YjE2NWMxNGNiZTk2NDU3M2VkOGU5ZTYxODUxNTg5MTc5NTcwIn19fQ==",
+    ""
+)
+private val teteInstagram = getCustomHead(
+    "",
+    "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTBkNDY0MTg2ZTFhNTBkZGFhMTRiZTIyNTk2MTFhNGU4NDU4NTE1YTUzNjdhOTM4OWE5Y2M3Yzg5Yzk0YTkzYiJ9fX0=",
+    ""
+)
+private val teteTiktok = getCustomHead(
+    "",
+    "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNThkMDI5ODRhNDNlNmM2OTEwZDBkOTA4YTU3ZTA0MWMzY2ZiMWRkODgxYjViNzIwYzU1NTYzZTY4MWY1OWUwZSJ9fX0=",
+    ""
+)
+private val teteFacebook = getCustomHead(
+    "",
+    "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZGViNDYxMjY5MDQ0NjNmMDdlY2ZjOTcyYWFhMzczNzNhMjIzNTliNWJhMjcxODIxYjY4OWNkNTM2N2Y3NTc2MiJ9fX0=",
+    ""
+)
+private val teteDiscord = getCustomHead(
+    "",
+    "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2I5NDg0M2QzNDBhYmFkYmQ2NDAxZWY0ZWM3NGRjZWM0YjY2OTY2MTA2NWJkMWEwMWY5YTU5MDVhODkxOWM3MiJ9fX0=",
+    ""
+)
+private val teteYoutube = getCustomHead(
+    "",
+    "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzQ4ODU0NWQ1N2M5ZWVkNTJjM2U1NDdlOTZjNDVkYWJiYjdjZjVmOThkNGM4ZmU2MWRjNmY2OWFiYTBhZWY5NiJ9fX0=",
+    ""
+)
+private val teteTwitter = getCustomHead(
+    "",
+    "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTFiN2EwYzIxMGU2Y2RmNWEzNWZkODE5N2U2ZTI0YTAzODMxNWJiZTNiZGNkMWJjYzM2MzBiZjI2ZjU5ZWM1YyJ9fX0=",
+    ""
+)
+private val teteSiteWeb = getCustomHead(
+    "",
+    "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNzZmOGEyMTlmMDgwMzk0MGYxZDI3MzQ5ZmIwNTBjMzJkYzdjMDUwZGIzM2NhMWUwYjM2YzIyZjIxYjA3YmU4NiJ9fX0=",
+    ""
+)
 
 private val messageInstagram: Component = Component.text("----------\n", NamedTextColor.LIGHT_PURPLE)
     .append("Instagram", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD)
@@ -85,7 +132,17 @@ class MenuMenu(val player: Player) :
         addButton(21, createTPWorldMenuItemStack()) {
             TPWorldMenu(this).open(viewer)
         }
-        addButton(22, createPlayerInfoItemStack(player)) { }
+
+        Creatif.instance?.let {
+            object : BukkitRunnable() {
+                override fun run() {
+                    for (player in Bukkit.getOnlinePlayers()) {
+                        addButton(22, createPlayerInfoItemStack(player)) { }
+                    }
+                }
+            }.runTaskTimer(it, 0L, 20L)
+        }
+
         addButton(23, createPlotMenuItemStack()) { }
         addButton(25, createGenreSelectionItemStack()) {
             GenderMenu(TPlayer.get(player.uniqueId), this).open(viewer)
@@ -145,7 +202,10 @@ class MenuMenu(val player: Player) :
     private fun createPluginsToolsItemStack(): ItemStack {
         val ilb = ItemLoreBuilder()
             .newline()
-            .append("Cliquez pour afficher les différents outils et plugins utilisés sur le serveur pour construire.", NamedTextColor.GRAY)
+            .append(
+                "Cliquez pour afficher les différents outils et plugins utilisés sur le serveur pour construire.",
+                NamedTextColor.GRAY
+            )
         return ItemBuilder(Material.WOODEN_AXE)
             .name("Outils/Plugins du serveur", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD)
             .lore(ilb.get())
@@ -155,7 +215,10 @@ class MenuMenu(val player: Player) :
     private fun createBuildGuideItemStack(): ItemStack {
         val ilb = ItemLoreBuilder()
             .newline()
-            .append("Cliquez pour recevoir le guide des commandes de build essentielles pour bien démarrer votre construction !", NamedTextColor.GRAY)
+            .append(
+                "Cliquez pour recevoir le guide des commandes de build essentielles pour bien démarrer votre construction !",
+                NamedTextColor.GRAY
+            )
         return ItemBuilder(Material.BOOK)
             .name("Le Build pour les Nuls", NamedTextColor.RED, TextDecoration.BOLD)
             .lore(ilb.get())
@@ -165,14 +228,17 @@ class MenuMenu(val player: Player) :
     private fun createTPWorldMenuItemStack(): ItemStack {
         val ilb = ItemLoreBuilder()
             .newline()
-            .append("Cliquez pour afficher les différents mondes disponibles et vous y téléporter.", NamedTextColor.GRAY)
+            .append(
+                "Cliquez pour afficher les différents mondes disponibles et vous y téléporter.",
+                NamedTextColor.GRAY
+            )
         return ItemBuilder(teteTPWorldMenu)
             .name("Téléportations dans les mondes", NamedTextColor.BLUE, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
     }
 
-    private fun createPlayerInfoItemStack(player: Player): ItemStack {
+    fun createPlayerInfoItemStack(player: Player): ItemStack {
         val playerRankService = CreativeServices[PlayerRankService::class.java]
         val playerRank = playerRankService.getPlayerRank(player.uniqueId)
         val nbPlots = CreativeServices[PlayerPlotService::class.java]
@@ -187,7 +253,8 @@ class MenuMenu(val player: Player) :
             .newline()
             .append("Pseudo : ", NamedTextColor.GOLD).append(player.name, NamedTextColor.WHITE)
             .newline()
-            .append("Genre : ", NamedTextColor.GOLD).append(TPlayer.get(player.uniqueId).gender.getName(), NamedTextColor.WHITE)
+            .append("Genre : ", NamedTextColor.GOLD)
+            .append(TPlayer.get(player.uniqueId).gender.getName(), NamedTextColor.WHITE)
             .newline().newline()
             .append("Grade : ", NamedTextColor.GOLD).append(playerRank.name, playerRank.color, TextDecoration.BOLD)
             .newline()
@@ -195,17 +262,22 @@ class MenuMenu(val player: Player) :
             .newline()
             .append(timePlayedService.formatTime(timePlayed), NamedTextColor.WHITE)
             .newline().newline()
-            .append("Nombre de plots Monde 100 : ", NamedTextColor.GOLD).append(totalPlotsWorld100.toString(), NamedTextColor.WHITE, TextDecoration.BOLD)
+            .append("Nombre de plots Monde 100 : ", NamedTextColor.GOLD)
+            .append(totalPlotsWorld100.toString(), NamedTextColor.WHITE, TextDecoration.BOLD)
             .newline()
-            .append("Nombre de plots Monde 250 : ", NamedTextColor.GOLD).append(totalPlotsWorld250.toString(), NamedTextColor.WHITE, TextDecoration.BOLD)
+            .append("Nombre de plots Monde 250 : ", NamedTextColor.GOLD)
+            .append(totalPlotsWorld250.toString(), NamedTextColor.WHITE, TextDecoration.BOLD)
             .newline()
-            .append("Nombre de plots Monde 500 : ", NamedTextColor.GOLD).append(totalPlotsWorld500.toString(), NamedTextColor.WHITE, TextDecoration.BOLD)
+            .append("Nombre de plots Monde 500 : ", NamedTextColor.GOLD)
+            .append(totalPlotsWorld500.toString(), NamedTextColor.WHITE, TextDecoration.BOLD)
             .newline()
-            .append("Nombre de plots Monde 1000 : ", NamedTextColor.GOLD).append(totalPlotsWorld1000.toString(), NamedTextColor.WHITE, TextDecoration.BOLD)
+            .append("Nombre de plots Monde 1000 : ", NamedTextColor.GOLD)
+            .append(totalPlotsWorld1000.toString(), NamedTextColor.WHITE, TextDecoration.BOLD)
         return ItemBuilder(getHead(player.uniqueId))
             .name("Informations du joueur", NamedTextColor.YELLOW, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
+
     }
 
     private fun createPlotMenuItemStack(): ItemStack {
@@ -241,7 +313,10 @@ class MenuMenu(val player: Player) :
     private fun createSpecialBlocksItemStack(): ItemStack {
         val ilb = ItemLoreBuilder()
             .newline()
-            .append("Cliquez pour afficher les différents blocs spéciaux du serveur (hors inventaire).", NamedTextColor.GRAY)
+            .append(
+                "Cliquez pour afficher les différents blocs spéciaux du serveur (hors inventaire).",
+                NamedTextColor.GRAY
+            )
         return ItemBuilder(Material.LIGHT)
             .name("Blocs spéciaux", NamedTextColor.DARK_AQUA, TextDecoration.BOLD)
             .lore(ilb.get())
