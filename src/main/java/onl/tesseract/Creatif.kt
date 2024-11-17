@@ -7,6 +7,7 @@ import onl.tesseract.command.*
 import onl.tesseract.command.home.DelhomeCommand
 import onl.tesseract.command.home.HomeCommand
 import onl.tesseract.command.home.SetHomeCommand
+import onl.tesseract.command.scoreboard.ScoreBoard
 import onl.tesseract.player.CreativePlayer
 import onl.tesseract.player.CreativePlayerContainer
 import onl.tesseract.rank.PlayerRankService
@@ -61,6 +62,7 @@ class Creatif : JavaPlugin(), Listener {
         val homeCommand  = HomeCommand()
         this.getCommand("home")?.setExecutor(homeCommand)
         this.getCommand("home")?.tabCompleter = homeCommand
+        this.getCommand("scoreboard")?.setExecutor(ScoreBoard())
     }
 
     override fun onDisable() {
@@ -90,8 +92,7 @@ class Creatif : JavaPlugin(), Listener {
             creativePlayer.updatePermission()
             Bukkit.getServer().pluginManager.registerEvents(creativePlayer, this)
         }
-        ScoreBoardCore()
-        ScoreBoardCore.updatePlayerBoard(event.player)
+        ScoreBoardCore.showScoreboard(event.player)
     }
 
     private fun setupPermissions(): Boolean {

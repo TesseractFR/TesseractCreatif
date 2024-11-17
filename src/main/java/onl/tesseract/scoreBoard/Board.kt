@@ -27,7 +27,7 @@ open class Board(player: Player?) {
             Component.text("play.tesseract.onl", NamedTextColor.BLUE, TextDecoration.BOLD)
         )
         objective.displaySlot = DisplaySlot.SIDEBAR
-        initScoreBoard(player)
+        player.scoreboard = scoreboard
     }
 
     open fun initScoreBoard(player: Player) {
