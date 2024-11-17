@@ -2,21 +2,23 @@ package onl.tesseract.scoreBoard
 
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
+import net.kyori.adventure.text.format.TextColor
 import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.Bukkit
+import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import org.bukkit.scoreboard.*
 
 open class Board {
-    val scoreboard: Scoreboard = Bukkit.getScoreboardManager().newScoreboard
+    private val scoreboard: Scoreboard = Bukkit.getScoreboardManager().newScoreboard
 
-    lateinit var objective: Objective
+    private lateinit var objective: Objective
 
     fun initialize() {
         objective = scoreboard.registerNewObjective(
             "main",
             Criteria.DUMMY,
-            Component.text("Bienvenue sur le Créatif", NamedTextColor.GREEN, TextDecoration.BOLD),
+            Component.text("play.tesseract.onl", NamedTextColor.BLUE, TextDecoration.BOLD)
         )
         objective.displaySlot = DisplaySlot.SIDEBAR
     }
@@ -33,6 +35,18 @@ open class Board {
 
     fun applyToPlayer(player: Player) {
         player.scoreboard = scoreboard
+    }
+
+    fun TextColor.toChatColor(): ChatColor {
+        return when (this) {
+            NamedTextColor.GREEN -> ChatColor.GREEN
+            NamedTextColor.LIGHT_PURPLE -> ChatColor.LIGHT_PURPLE
+            NamedTextColor.DARK_PURPLE -> ChatColor.DARK_PURPLE
+            NamedTextColor.DARK_BLUE -> ChatColor.DARK_BLUE
+            NamedTextColor.BLUE -> ChatColor.BLUE
+            NamedTextColor.AQUA -> ChatColor.AQUA
+            else -> ChatColor.WHITE
+        }
     }
 
 }
