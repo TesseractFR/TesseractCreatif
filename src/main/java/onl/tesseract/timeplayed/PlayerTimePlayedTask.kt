@@ -30,15 +30,14 @@ class PlayerTimePlayedTask(val period: Long) : BukkitRunnable() {
     }
     private fun checkUpdateRank(player: Player){
         val uuid = player.uniqueId
-        val playerRank = CreativeServices[PlayerRankService::class.java].getPlayerRank(uuid)
-        val playedTime = CreativeServices[PlayerTimePlayedService::class.java].getPlayerTimePlayed(uuid)
-        val boughtTime = CreativeServices[PlayerTimePlayedService::class.java].getPlayerTimeBought(uuid)
+        val playerRankService = CreativeServices[PlayerRankService::class.java]
+        val playerRank = playerRankService.getPlayerRank(uuid)
         if(playerRank < PlayerRank.BATISSEUR){
-            val nextRank = PlayerRank.entries[playerRank.ordinal+1]
-            val duration = playedTime + boughtTime
-            val duration2 = Duration.ofHours(nextRank.hoursRequired)
-            if(duration > duration2){
-                CreativeServices[PlayerRankService::class.java].setPlayerRank(uuid,nextRank)
+            val nextRank = playerRankService.getNextPlayerRank(uuid)
+            val playerTimePlayedService = CreativeServices[PlayerTimePlayedService::class.java]
+            val timeForRankUp = playerTimePlayedService.getTimeBeforeRankUp(uuid, nextRank)
+            if(!timeForRankUp.isPositive){
+                playerRankService.setPlayerRank(uuid,nextRank)
                 val rankUpMessage = getRankUpMessage(player, nextRank)
                 Bukkit.broadcast(rankUpMessage)
             }
