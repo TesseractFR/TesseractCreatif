@@ -1,4 +1,6 @@
 package onl.tesseract.scoreBoard
 
-class EventBoard : Board() {
+import org.bukkit.entity.Player
+
+class EventBoard(player: Player?) : Board(player) {
 }

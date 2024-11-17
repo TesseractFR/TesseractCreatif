@@ -11,6 +11,7 @@ import onl.tesseract.player.CreativePlayer
 import onl.tesseract.player.CreativePlayerContainer
 import onl.tesseract.rank.PlayerRankService
 import onl.tesseract.scoreBoard.PlayerBoard
+import onl.tesseract.scoreBoard.ScoreBoardCore
 import onl.tesseract.service.CreativeServices.Companion.get
 import onl.tesseract.service.CreativeServices.Companion.getInstance
 import onl.tesseract.tesseractlib.Config
@@ -89,8 +90,8 @@ class Creatif : JavaPlugin(), Listener {
             creativePlayer.updatePermission()
             Bukkit.getServer().pluginManager.registerEvents(creativePlayer, this)
         }
-        val playerBoard = PlayerBoard()
-        playerBoard.setupBoard(event.player)
+        ScoreBoardCore()
+        ScoreBoardCore.updatePlayerBoard(event.player)
     }
 
     private fun setupPermissions(): Boolean {

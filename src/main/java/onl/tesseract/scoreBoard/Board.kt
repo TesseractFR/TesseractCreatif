@@ -9,18 +9,29 @@ import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import org.bukkit.scoreboard.*
 
-open class Board {
-    private val scoreboard: Scoreboard = Bukkit.getScoreboardManager().newScoreboard
-
+open class Board(player: Player?) {
+    private lateinit var scoreboard: Scoreboard
     private lateinit var objective: Objective
 
-    fun initialize() {
-        objective = scoreboard.registerNewObjective(
+    init {
+        if (player != null) {
+            update(player)
+        }
+    }
+
+    fun update(player: Player) {
+        this.scoreboard = Bukkit.getScoreboardManager().newScoreboard
+        this.objective = scoreboard.registerNewObjective(
             "main",
             Criteria.DUMMY,
             Component.text("play.tesseract.onl", NamedTextColor.BLUE, TextDecoration.BOLD)
         )
         objective.displaySlot = DisplaySlot.SIDEBAR
+        initScoreBoard(player)
+    }
+
+    open fun initScoreBoard(player: Player) {
+        player.scoreboard = scoreboard
     }
 
     fun addOrUpdateScore(entry: String, score: Int) {
