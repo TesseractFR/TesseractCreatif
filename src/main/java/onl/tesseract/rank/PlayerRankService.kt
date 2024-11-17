@@ -21,6 +21,10 @@ class PlayerRankService(private val repository: PlayerRankInfoRepository){
         return getOrCreatePlayerRankInfo(player).playerRank;
     }
 
+    fun getNextPlayerRank(player: UUID) : PlayerRank {
+        return PlayerRank.entries[getPlayerRank(player).ordinal+1]
+    }
+
     fun setStaffRank(player: UUID, staffRank: StaffRank?){
         val rankInfo = getOrCreatePlayerRankInfo(player)
         rankInfo.staffRank = staffRank
