@@ -1,5 +1,6 @@
 package onl.tesseract.timeplayed
 
+import onl.tesseract.rank.entity.PlayerRank
 import onl.tesseract.timeplayed.entity.PlayerTimePlayedInfo
 import onl.tesseract.timeplayed.persistence.PlayerTimePlayedRepository
 import java.time.Duration
@@ -36,7 +37,9 @@ class PlayerTimePlayedService(private val repository: PlayerTimePlayedRepository
         return playerTimePlayedInfo.timePlayed.plus(playerTimePlayedInfo.timeBougth);
     }
 
-
+    fun getTimeBeforeRankUp(player: UUID,nextRank: PlayerRank): Duration {
+        return Duration.ofHours(nextRank.hoursRequired).minus(getPlayerTotalTime(player))
+    }
 
     private fun getOrCreatePlayerTimePlayedInfo(player: UUID) : PlayerTimePlayedInfo {
         return repository.getById(player)?: PlayerTimePlayedInfo(player);
