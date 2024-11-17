@@ -70,7 +70,6 @@ class Creatif : JavaPlugin(), Listener {
 
     @EventHandler
     fun onJoin(event: PlayerJoinEvent) {
-        val creativePlayer: CreativePlayer = playerContainer[event.player] ?: CreativePlayer(event.player)
         if (!event.player.hasPlayedBefore() || !playerContainer.exists(event.player.uniqueId)) {
             event.player.teleport(Config.getInstance().firstSpawnLocation)
             event.joinMessage(
@@ -79,6 +78,7 @@ class Creatif : JavaPlugin(), Listener {
                     .append(Component.text(" sur le Créatif !", NamedTextColor.GOLD))
             )
         } else {
+            val creativePlayer: CreativePlayer = playerContainer[event.player] ?: CreativePlayer(event.player)
             val color = get(
                 PlayerRankService::class.java
             ).getPlayerRank(event.player.uniqueId).color
