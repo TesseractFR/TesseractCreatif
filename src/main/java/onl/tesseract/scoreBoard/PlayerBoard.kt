@@ -48,7 +48,7 @@ class PlayerBoard(player: Player?) : Board(player) {
         addOrUpdateScore("${ChatColor.GOLD}${ChatColor.ITALIC}${ChatColor.BOLD}- Monde actuel -", 5)
         addOrUpdateScore("${ChatColor.YELLOW}$worldName", 4)
 
-        applyToPlayer(player)
+        player.scoreboard = scoreboard
     }
 }
 

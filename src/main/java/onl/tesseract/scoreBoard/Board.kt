@@ -10,7 +10,7 @@ import org.bukkit.entity.Player
 import org.bukkit.scoreboard.*
 
 open class Board(player: Player?) {
-    private lateinit var scoreboard: Scoreboard
+    lateinit var scoreboard: Scoreboard
     private lateinit var objective: Objective
 
     init {
@@ -27,7 +27,7 @@ open class Board(player: Player?) {
             Component.text("play.tesseract.onl", NamedTextColor.BLUE, TextDecoration.BOLD)
         )
         objective.displaySlot = DisplaySlot.SIDEBAR
-        player.scoreboard = scoreboard
+        initScoreBoard(player)
     }
 
     open fun initScoreBoard(player: Player) {
@@ -42,10 +42,6 @@ open class Board(player: Player?) {
         }
         val scoreEntry = objective.getScore(entry)
         scoreEntry.score = score
-    }
-
-    fun applyToPlayer(player: Player) {
-        player.scoreboard = scoreboard
     }
 
     fun TextColor.toChatColor(): ChatColor {

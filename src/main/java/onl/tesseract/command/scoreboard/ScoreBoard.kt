@@ -1,10 +1,8 @@
 package onl.tesseract.command.scoreboard
 
 import onl.tesseract.commandBuilder.CommandContext
-import onl.tesseract.commandBuilder.annotation.Argument
 import onl.tesseract.commandBuilder.annotation.Command
 import onl.tesseract.scoreBoard.ScoreBoardCore
-import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 

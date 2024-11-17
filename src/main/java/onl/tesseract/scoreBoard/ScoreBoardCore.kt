@@ -7,7 +7,7 @@ import org.bukkit.scheduler.BukkitRunnable
 import java.util.*
 
 object ScoreBoardCore {
-    private val playerScoreboardStatus: MutableMap<UUID, Boolean> = mutableMapOf()
+    val playerScoreboardStatus: MutableMap<UUID, Boolean> = mutableMapOf()
 
     init {
         Creatif.instance?.let {
@@ -22,7 +22,6 @@ object ScoreBoardCore {
             }.runTaskTimer(it, 0L, 20L)
         }
     }
-
 
     fun updatePlayerBoard(player: Player) {
         require(player.isOnline) { "Player ${player.name} is not online" }
