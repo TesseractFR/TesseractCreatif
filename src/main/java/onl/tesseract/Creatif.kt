@@ -7,9 +7,11 @@ import onl.tesseract.command.*
 import onl.tesseract.command.home.DelhomeCommand
 import onl.tesseract.command.home.HomeCommand
 import onl.tesseract.command.home.SetHomeCommand
+import onl.tesseract.command.ScoreBoardCommands
 import onl.tesseract.player.CreativePlayer
 import onl.tesseract.player.CreativePlayerContainer
 import onl.tesseract.rank.PlayerRankService
+import onl.tesseract.scoreBoard.ScoreBoardCore
 import onl.tesseract.service.CreativeServices.Companion.get
 import onl.tesseract.service.CreativeServices.Companion.getInstance
 import onl.tesseract.tesseractlib.Config
@@ -59,6 +61,7 @@ class Creatif : JavaPlugin(), Listener {
         val homeCommand  = HomeCommand()
         this.getCommand("home")?.setExecutor(homeCommand)
         this.getCommand("home")?.tabCompleter = homeCommand
+        this.getCommand("scoreboard")?.setExecutor(ScoreBoardCommands())
     }
 
     override fun onDisable() {
@@ -67,7 +70,7 @@ class Creatif : JavaPlugin(), Listener {
 
     @EventHandler
     fun onJoin(event: PlayerJoinEvent) {
-        val creativePlayer: CreativePlayer
+        val creativePlayer: CreativePlayer = playerContainer[event.player] ?: CreativePlayer(event.player)
         if (!event.player.hasPlayedBefore() || !playerContainer.exists(event.player.uniqueId)) {
             event.player.teleport(Config.getInstance().firstSpawnLocation)
             event.joinMessage(
@@ -76,7 +79,6 @@ class Creatif : JavaPlugin(), Listener {
                     .append(Component.text(" sur le Créatif !", NamedTextColor.GOLD))
             )
         } else {
-            creativePlayer = playerContainer[event.player]
             val color = get(
                 PlayerRankService::class.java
             ).getPlayerRank(event.player.uniqueId).color
