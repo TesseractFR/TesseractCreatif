@@ -5,14 +5,16 @@ import net.kyori.adventure.text.event.ClickEvent
 import net.kyori.adventure.text.event.HoverEvent
 import net.kyori.adventure.text.format.NamedTextColor
 import onl.tesseract.Creatif
-import onl.tesseract.command.argument.OnlinePlayerArg
 import onl.tesseract.commandBuilder.CommandContext
 import onl.tesseract.commandBuilder.annotation.Argument
 import onl.tesseract.commandBuilder.annotation.Command
 import onl.tesseract.commandBuilder.annotation.CommandBody
+import onl.tesseract.commandBuilder.annotation.Env
+import onl.tesseract.tesseractlib.command.argument.PlayerArg
 import onl.tesseract.tesseractlib.player.TPlayer
-import onl.tesseract.tesseractlib.util.ChatFormat
+import onl.tesseract.tesseractlib.util.ChatFormats
 import onl.tesseract.tesseractlib.util.append
+import onl.tesseract.tesseractlib.util.plus
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
@@ -20,66 +22,66 @@ import org.bukkit.scheduler.BukkitRunnable
 import java.time.Duration
 import java.time.Instant
 import java.util.*
-import javax.annotation.Nonnull
 
 
 @Command(
     name = "tpa",
-    playerOnly = true,
-    args = [Argument(value = "joueur", clazz = OnlinePlayerArg::class)]
+    args = [Argument(value = "joueur", clazz = PlayerArg::class)]
 )
 class TPACommand : CommandContext() {
     private val requests = mutableMapOf<UUID, TimedBukkitTask>()
 
     @CommandBody
-    fun onCommand(@Nonnull sender: CommandSender, @Nonnull args: Array<String>?): Boolean {
+    fun onCommand(@Env(key = "joueur") dest: Player, sender: CommandSender): Boolean {
         if (sender !is Player) return false
         val player: Player = sender
 
-        if (args.isNullOrEmpty()) {
-            player.sendMessage(ChatFormat.CHAT_ERROR + "Veuillez spécifier un joueur pour la téléportation.")
+        println("Sender : $player")
+        println("dest : $dest")
+        if (dest.name.isEmpty()) {
+            player.sendMessage(ChatFormats.CHAT_ERROR + "Veuillez spécifier un joueur pour la téléportation.")
             return false
         }
 
         if (requests.containsKey(sender.uniqueId)) {
-            val duration: Duration = Duration.between(Instant.now(), requests[player.uniqueId]?.removeInstant ?: Instant.now())
+            val duration: Duration =
+                Duration.between(Instant.now(), requests[player.uniqueId]?.removeInstant ?: Instant.now())
             val secondsLeft: Long = duration.toSeconds()
 
             if (secondsLeft > 0) {
                 if (secondsLeft >= 30) {
-                    player.sendMessage(ChatFormat.CHAT_ERROR + "Vous devez attendre encore " + secondsLeft + " secondes avant de vous téléporter de nouveau.")
+                    player.sendMessage(ChatFormats.CHAT_ERROR + "Vous devez attendre encore $secondsLeft secondes avant de vous téléporter de nouveau.")
                 }
                 return true
             }
         }
 
-        val dest: Player? = Bukkit.getPlayer(args[0])
-        if (dest != null && player.uniqueId != dest.uniqueId) {
+        if (player.uniqueId != dest.uniqueId) {
             askTeleport(player, dest)
-        } else  {
-            player.sendMessage(ChatFormat.CHAT_ERROR + "Joueur invalide.")
+        } else {
+            player.sendMessage(ChatFormats.CHAT_ERROR + "Joueur invalide.")
         }
         return true
     }
 
     fun askTeleport(sender: Player, dest: Player) {
-        sender.sendMessage(ChatFormat.CHAT + " Demande envoyée !")
-        dest.sendMessage(ChatFormat.CHAT + sender.name + " souhaite se téléporter vers votre position.")
+        sender.sendMessage(ChatFormats.CHAT + " Demande envoyée !")
+        dest.sendMessage(ChatFormats.CHAT + sender.name + " souhaite se téléporter vers votre position.")
 
-        val acceptDeny = Component.text("[Accepter]", NamedTextColor.GREEN)
+        val acceptButton = Component.text("[Accepter]", NamedTextColor.GREEN)
             .clickEvent(ClickEvent.runCommand("/command accept ${sender.uniqueId}"))
-            .hoverEvent(HoverEvent.showText(Component.text("Cliquez pour accepter la demande")))
-            .append(" ")
-            .append("[Refuser]", NamedTextColor.RED)
-            .clickEvent(ClickEvent.runCommand("/commande deny ${sender.uniqueId}"))
-            .hoverEvent(HoverEvent.showText(Component.text("Cliquez pour refuser la demande")))
 
+        val denyButton = Component.text("[Refuser]", NamedTextColor.RED)
+            .clickEvent(ClickEvent.runCommand("/command deny ${sender.uniqueId}"))
+
+        val acceptDeny = acceptButton.append(" ").append(denyButton)
         dest.sendMessage(acceptDeny)
 
         TPlayer.get(dest).getChatCommand { response ->
+            println("Réponse : ${response.joinToString(", ")}")
             if (response.isNotEmpty() && response[0] == "accept") {
-                dest.sendMessage(ChatFormat.CHAT + "Demande acceptée.")
-                sender.sendMessage(ChatFormat.CHAT + "Demande de téléportation acceptée. Préparez-vous à être téléporté...")
+                dest.sendMessage(ChatFormats.CHAT_SUCCESS + "Demande acceptée.")
+                sender.sendMessage(ChatFormats.CHAT_SUCCESS + "Demande de téléportation acceptée. Préparez-vous à être téléporté...")
 
                 Creatif.instance?.let {
                     object : BukkitRunnable() {
@@ -88,10 +90,9 @@ class TPACommand : CommandContext() {
                         }
                     }.runTaskLater(it, 40)
                 }
-            }
-            else if (response.isNotEmpty() && response[0] == "deny") {
-                dest.sendMessage(ChatFormat.CHAT_ERROR + "Demande refusée.")
-                sender.sendMessage(ChatFormat.CHAT_ERROR + "Demande refusée.")
+            } else if (response.isNotEmpty() && response[0] == "deny") {
+                dest.sendMessage(ChatFormats.CHAT_ERROR + "Demande refusée.")
+                sender.sendMessage(ChatFormats.CHAT_ERROR + "Demande refusée.")
             }
         }
     }
