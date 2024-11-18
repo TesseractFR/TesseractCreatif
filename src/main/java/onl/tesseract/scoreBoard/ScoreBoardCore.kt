@@ -3,25 +3,21 @@ package onl.tesseract.scoreBoard
 import onl.tesseract.Creatif
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
+import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitRunnable
 import java.util.*
 
 object ScoreBoardCore {
     val playerScoreboardStatus: MutableMap<UUID, Boolean> = mutableMapOf()
-
-    init {
-        Creatif.instance?.let {
-            object : BukkitRunnable() {
-                override fun run() {
-                    for (player in Bukkit.getOnlinePlayers()) {
-                        if (playerScoreboardStatus.getOrDefault(player.uniqueId, true)) {
-                            updatePlayerBoard(player)
-                        }
-                    }
+    private val task : BukkitRunnable = object : BukkitRunnable(){
+        override fun run() {
+            for (player in Bukkit.getOnlinePlayers()) {
+                if (playerScoreboardStatus.getOrDefault(player.uniqueId, true)) {
+                    updatePlayerBoard(player)
                 }
-            }.runTaskTimer(it, 0L, 20L)
+            }
         }
-    }
+    };
 
     fun updatePlayerBoard(player: Player) {
         require(player.isOnline) { "Player ${player.name} is not online" }
@@ -39,6 +35,14 @@ object ScoreBoardCore {
         player.scoreboard = Bukkit.getScoreboardManager().mainScoreboard
         playerScoreboardStatus[player.uniqueId] = true
         updatePlayerBoard(player)
+    }
+
+    fun startScoreboard(plugin: JavaPlugin) {
+        task.runTaskTimer(plugin, 0L, 20L)
+    }
+
+    fun stopScoreboard() {
+        task.cancel();
     }
 
 

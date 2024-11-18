@@ -39,6 +39,7 @@ class Creatif : JavaPlugin(), Listener {
         PlayerTimePlayedTask.start(this,1);
         registerEvents()
         registerCommands()
+        ScoreBoardCore.startScoreboard(this)
     }
 
     private fun registerEvents() {
