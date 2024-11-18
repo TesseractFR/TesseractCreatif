@@ -2,7 +2,6 @@ package onl.tesseract.command
 
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.event.ClickEvent
-import net.kyori.adventure.text.event.HoverEvent
 import net.kyori.adventure.text.format.NamedTextColor
 import onl.tesseract.Creatif
 import onl.tesseract.commandBuilder.CommandContext
@@ -15,7 +14,7 @@ import onl.tesseract.tesseractlib.player.TPlayer
 import onl.tesseract.tesseractlib.util.ChatFormats
 import onl.tesseract.tesseractlib.util.append
 import onl.tesseract.tesseractlib.util.plus
-import org.bukkit.Bukkit
+import onl.tesseract.util.DurationFormat.formatTime
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.scheduler.BukkitRunnable
@@ -23,48 +22,55 @@ import java.time.Duration
 import java.time.Instant
 import java.util.*
 
-
 @Command(
     name = "tpa",
     args = [Argument(value = "joueur", clazz = PlayerArg::class)]
 )
 class TPACommand : CommandContext() {
-    private val requests = mutableMapOf<UUID, TimedBukkitTask>()
+    private val teleportCooldowns = mutableMapOf<UUID, Instant>()
+    private val requestsCooldowns = mutableMapOf<UUID, TimedBukkitTask>()
+    private val teleportCooldownDuration = Duration.ofSeconds(30)
+    private val requestsCooldownsDuration = Duration.ofMinutes(2)
 
     @CommandBody
     fun onCommand(@Env(key = "joueur") dest: Player, sender: CommandSender): Boolean {
         if (sender !is Player) return false
         val player: Player = sender
 
-        println("Sender : $player")
-        println("dest : $dest")
         if (dest.name.isEmpty()) {
             player.sendMessage(ChatFormats.CHAT_ERROR + "Veuillez spécifier un joueur pour la téléportation.")
             return false
         }
 
-        if (requests.containsKey(sender.uniqueId)) {
-            val duration: Duration =
-                Duration.between(Instant.now(), requests[player.uniqueId]?.removeInstant ?: Instant.now())
-            val secondsLeft: Long = duration.toSeconds()
+        val lastTeleport = teleportCooldowns[player.uniqueId]
+        if (lastTeleport != null && Duration.between(lastTeleport, Instant.now()).seconds < teleportCooldownDuration.seconds) {
+            val duration = teleportCooldownDuration.minus(Duration.between(lastTeleport, Instant.now()))
+            val durationFormatted = formatTime(duration)
+            player.sendMessage(ChatFormats.CHAT_ERROR + "Vous devez attendre encore $durationFormatted avant une nouvelle téléportation.")
+            return true
+        }
 
-            if (secondsLeft > 0) {
-                if (secondsLeft >= 30) {
-                    player.sendMessage(ChatFormats.CHAT_ERROR + "Vous devez attendre encore $secondsLeft secondes avant de vous téléporter de nouveau.")
-                }
+        val requestCooldownTask = requestsCooldowns[player.uniqueId]
+        if (requestCooldownTask != null) {
+            val lastRequest = requestCooldownTask.removeInstant
+            if (lastRequest != null && Duration.between(lastRequest, Instant.now()) < requestsCooldownsDuration) {
+                val remainingTime = requestsCooldownsDuration.minus(Duration.between(lastRequest, Instant.now()))
+                val remainingTimeFormatted = formatTime(remainingTime)
+                player.sendMessage(ChatFormats.CHAT_ERROR + "Vous avec une demande en attente, vous devez attendre encore ${remainingTimeFormatted} avant de refaire une demande.")
                 return true
             }
         }
 
-        if (player.uniqueId != dest.uniqueId) {
+        //if (player.uniqueId != dest.uniqueId) {
             askTeleport(player, dest)
-        } else {
-            player.sendMessage(ChatFormats.CHAT_ERROR + "Joueur invalide.")
-        }
+        //} else {
+        //    player.sendMessage(ChatFormats.CHAT_ERROR + "Joueur invalide.")
+        //}
+
         return true
     }
 
-    fun askTeleport(sender: Player, dest: Player) {
+    private fun askTeleport(sender: Player, dest: Player) {
         sender.sendMessage(ChatFormats.CHAT + " Demande envoyée !")
         dest.sendMessage(ChatFormats.CHAT + sender.name + " souhaite se téléporter vers votre position.")
 
@@ -78,7 +84,8 @@ class TPACommand : CommandContext() {
         dest.sendMessage(acceptDeny)
 
         TPlayer.get(dest).getChatCommand { response ->
-            println("Réponse : ${response.joinToString(", ")}")
+            requestsCooldowns[sender.uniqueId]?.cancel()
+            requestsCooldowns.remove(sender.uniqueId)
             if (response.isNotEmpty() && response[0] == "accept") {
                 dest.sendMessage(ChatFormats.CHAT_SUCCESS + "Demande acceptée.")
                 sender.sendMessage(ChatFormats.CHAT_SUCCESS + "Demande de téléportation acceptée. Préparez-vous à être téléporté...")
@@ -88,31 +95,33 @@ class TPACommand : CommandContext() {
                         override fun run() {
                             teleport(sender, dest)
                         }
-                    }.runTaskLater(it, 40)
+                    }.runTaskLater(it, 60)
                 }
             } else if (response.isNotEmpty() && response[0] == "deny") {
                 dest.sendMessage(ChatFormats.CHAT_ERROR + "Demande refusée.")
                 sender.sendMessage(ChatFormats.CHAT_ERROR + "Demande refusée.")
             }
         }
+
+        val resetTask = object : TimedBukkitTask() {
+            override fun run() {
+                requestsCooldowns.remove(sender.uniqueId)
+            }
+        }
+        resetTask.removeInstant = Instant.now()
+        Creatif.instance?.let { resetTask.runTaskLater(it, requestsCooldownsDuration.seconds * 20) }
+        requestsCooldowns[sender.uniqueId] = resetTask
     }
 
     fun teleport(sender: Player, dest: Player) {
-        val cooldown = 30
         sender.teleport(dest.location)
-
-        val request = object : TimedBukkitTask() {
-            override fun run() {
-                requests.remove(sender.uniqueId)
-            }
-        }
-        request.removeInstant = Instant.ofEpochMilli(Instant.now().toEpochMilli() + cooldown * 50)
-        Creatif.instance?.let { request.runTaskLater(it, cooldown.toLong()) }
-        requests[sender.uniqueId] = request
+        requestsCooldowns.remove(sender.uniqueId)
+        teleportCooldowns[sender.uniqueId] = Instant.now()
+        sender.sendMessage(ChatFormats.CHAT_SUCCESS + "Vous avez été téléporté avec succès ! Vous devrez attendre 30s avant une nouvelle téléportation.")
     }
 
     private open class TimedBukkitTask : BukkitRunnable() {
-        var removeInstant: Instant = Instant.now()
+        var removeInstant: Instant? = null
 
         override fun run() {
         }
