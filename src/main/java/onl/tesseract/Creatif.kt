@@ -63,6 +63,7 @@ class Creatif : JavaPlugin(), Listener {
         this.getCommand("home")?.setExecutor(homeCommand)
         this.getCommand("home")?.tabCompleter = homeCommand
         this.getCommand("scoreboard")?.setExecutor(ScoreBoardCommands())
+        this.getCommand("nick")?.setExecutor(NickCommand())
     }
 
     override fun onDisable() {

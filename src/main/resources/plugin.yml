@@ -55,3 +55,7 @@ commands:
     aliases: scoreboard
     usage: "/scoreboard"
     description: Commandes du scoreboard
+  nick:
+    aliases: nick
+    usage: "/nick"
+    description: Mettre un surnom au joueur
