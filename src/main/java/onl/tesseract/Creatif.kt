@@ -8,6 +8,7 @@ import onl.tesseract.command.home.DelhomeCommand
 import onl.tesseract.command.home.HomeCommand
 import onl.tesseract.command.home.SetHomeCommand
 import onl.tesseract.command.ScoreBoardCommands
+import onl.tesseract.listener.NicknameListener
 import onl.tesseract.nickname.NicknameService
 import onl.tesseract.player.CreativePlayer
 import onl.tesseract.player.CreativePlayerContainer
@@ -49,6 +50,7 @@ class Creatif : JavaPlugin(), Listener {
     private fun registerEvents() {
         val pluginManager = server.pluginManager
         pluginManager.registerEvents(this, this)
+        pluginManager.registerEvents(NicknameListener(), this)
     }
 
     private fun registerCommands() {
@@ -89,19 +91,9 @@ class Creatif : JavaPlugin(), Listener {
                 PlayerRankService::class.java
             ).getPlayerRank(event.player.uniqueId).color
             creativePlayer.onJoin(event.player)
-
-            val nickname = get(NicknameService::class.java).getNickname(event.player.uniqueId)
-            val displayName = if (nickname != null) {
-                val formattedNickname = ColoredChat.colorComponent(Component.text(nickname))
-                event.player.displayName(formattedNickname)
-                event.player.playerListName(formattedNickname)
-                formattedNickname
-            } else {
-                Component.text(event.player.name, color)
-            }
             event.joinMessage(
                 Component.text("+ ", NamedTextColor.GREEN)
-                    .append(displayName)
+                    .append(event.player.name, color)
                     .append(" a rejoint le serveur.", NamedTextColor.GOLD)
             )
             creativePlayer.updatePermission()
