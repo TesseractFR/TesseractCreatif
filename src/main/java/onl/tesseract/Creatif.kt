@@ -8,6 +8,7 @@ import onl.tesseract.command.home.DelhomeCommand
 import onl.tesseract.command.home.HomeCommand
 import onl.tesseract.command.home.SetHomeCommand
 import onl.tesseract.command.ScoreBoardCommands
+import onl.tesseract.nickname.NicknameManager
 import onl.tesseract.player.CreativePlayer
 import onl.tesseract.player.CreativePlayerContainer
 import onl.tesseract.rank.PlayerRankService
@@ -16,6 +17,7 @@ import onl.tesseract.service.CreativeServices.Companion.get
 import onl.tesseract.service.CreativeServices.Companion.getInstance
 import onl.tesseract.tesseractlib.Config
 import onl.tesseract.tesseractlib.TesseractLib
+import onl.tesseract.tesseractlib.event.ColoredChat
 import onl.tesseract.timeplayed.PlayerTimePlayedTask
 import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
@@ -26,6 +28,9 @@ import org.bukkit.plugin.java.JavaPlugin
 class Creatif : JavaPlugin(), Listener {
     var permissions: Permission? = null
         private set
+
+    lateinit var nicknameManager: NicknameManager
+
     override fun onEnable() {
         instance = this
         getInstance().registerDefaultServices()
@@ -36,6 +41,7 @@ class Creatif : JavaPlugin(), Listener {
             server.pluginManager.disablePlugin(this)
             return
         }
+        nicknameManager = NicknameManager()
         PlayerTimePlayedTask.start(this,1);
         registerEvents()
         registerCommands()
@@ -84,10 +90,11 @@ class Creatif : JavaPlugin(), Listener {
             val color = get(
                 PlayerRankService::class.java
             ).getPlayerRank(event.player.uniqueId).color
+            val nickname = nicknameManager.loadNickname(event.player.uniqueId, event.player)
             creativePlayer.onJoin(event.player)
             event.joinMessage(
                 Component.text("+ ", NamedTextColor.GREEN)
-                    .append(Component.text(event.player.name, color))
+                    .append(Component.text(ColoredChat.colorMessage(nickname), color))
                     .append(Component.text(" a rejoint le serveur.", NamedTextColor.GOLD))
             )
             creativePlayer.updatePermission()

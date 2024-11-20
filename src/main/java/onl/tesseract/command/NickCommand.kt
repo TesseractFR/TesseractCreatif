@@ -2,13 +2,15 @@ package onl.tesseract.command
 
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
-import net.kyori.adventure.text.format.TextDecoration
+import onl.tesseract.Creatif
+import onl.tesseract.nickname.NicknameManager
 import onl.tesseract.commandBuilder.CommandContext
 import onl.tesseract.commandBuilder.annotation.Argument
 import onl.tesseract.commandBuilder.annotation.Command
 import onl.tesseract.commandBuilder.annotation.CommandBody
 import onl.tesseract.commandBuilder.annotation.Env
 import onl.tesseract.tesseractlib.command.argument.StringArg
+import onl.tesseract.tesseractlib.event.ColoredChat
 import onl.tesseract.tesseractlib.util.append
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
@@ -18,6 +20,8 @@ import org.bukkit.entity.Player
     args = [Argument(value = "surnom", clazz = StringArg::class, optional = true)]
 )
 class NickCommand : CommandContext() {
+
+    private val nicknameManager: NicknameManager = Creatif.instance!!.nicknameManager
 
     @CommandBody
     fun onCommand(
@@ -39,23 +43,26 @@ class NickCommand : CommandContext() {
             )
         } else {
             setNickname(sender, nickname)
+            val coloredNickname = ColoredChat.colorMessage(nickname)
             sender.sendMessage(
                 Component.text("Votre surnom est maintenant : ", NamedTextColor.GREEN)
-                    .append(nickname)
+                    .append(coloredNickname)
             )
         }
         return true
     }
 
     private fun setNickname(player: Player, nickname: String) {
-        val formattedNickname = Component.text(nickname)
+        val formattedNickname = ColoredChat.colorComponent(Component.text(nickname))
         player.displayName(Component.text().append(formattedNickname).build())
         player.playerListName(Component.text().append(formattedNickname).build())
+        nicknameManager.saveNickname(player.uniqueId, nickname)
     }
 
     private fun removeNickname(player: Player) {
         val defaultName = Component.text(player.name)
         player.displayName(defaultName)
         player.playerListName(defaultName)
+        nicknameManager.saveNickname(player.uniqueId, null)
     }
 }
