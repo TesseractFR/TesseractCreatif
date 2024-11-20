@@ -15,7 +15,6 @@ import onl.tesseract.tesseractlib.util.ChatFormats
 import onl.tesseract.tesseractlib.util.append
 import onl.tesseract.tesseractlib.util.plus
 import onl.tesseract.util.DurationFormat.formatTime
-import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.scheduler.BukkitRunnable
 import java.time.Duration
@@ -33,36 +32,34 @@ class TPACommand : CommandContext() {
     private val requestsCooldownsDuration = Duration.ofMinutes(2)
 
     @CommandBody
-    fun onCommand(@Env(key = "joueur") dest: Player, sender: CommandSender): Boolean {
-        if (sender !is Player) return false
-        val player: Player = sender
+    fun onCommand(@Env(key = "joueur") dest: Player, sender: Player): Boolean {
 
         if (dest.name.isEmpty()) {
-            player.sendMessage(ChatFormats.CHAT_ERROR + "Veuillez spécifier un joueur pour la téléportation.")
+            sender.sendMessage(ChatFormats.CHAT_ERROR + "Veuillez spécifier un joueur pour la téléportation.")
             return false
         }
 
-        val lastTeleport = teleportCooldowns[player.uniqueId]
+        val lastTeleport = teleportCooldowns[sender.uniqueId]
         if (lastTeleport != null && Duration.between(lastTeleport, Instant.now()).seconds < teleportCooldownDuration.seconds) {
             val duration = teleportCooldownDuration.minus(Duration.between(lastTeleport, Instant.now()))
             val durationFormatted = formatTime(duration)
-            player.sendMessage(ChatFormats.CHAT_ERROR + "Vous devez attendre encore $durationFormatted avant une nouvelle téléportation.")
+            sender.sendMessage(ChatFormats.CHAT_ERROR + "Vous devez attendre encore $durationFormatted avant une nouvelle téléportation.")
             return true
         }
 
-        val requestCooldownTask = requestsCooldowns[player.uniqueId]
+        val requestCooldownTask = requestsCooldowns[sender.uniqueId]
         if (requestCooldownTask != null) {
             val lastRequest = requestCooldownTask.removeInstant
             if (lastRequest != null && Duration.between(lastRequest, Instant.now()) < requestsCooldownsDuration) {
                 val remainingTime = requestsCooldownsDuration.minus(Duration.between(lastRequest, Instant.now()))
                 val remainingTimeFormatted = formatTime(remainingTime)
-                player.sendMessage(ChatFormats.CHAT_ERROR + "Vous avec une demande en attente, vous devez attendre encore ${remainingTimeFormatted} avant de refaire une demande.")
+                sender.sendMessage(ChatFormats.CHAT_ERROR + "Vous avec une demande en attente, vous devez attendre encore $remainingTimeFormatted avant de refaire une demande.")
                 return true
             }
         }
 
         //if (player.uniqueId != dest.uniqueId) {
-            askTeleport(player, dest)
+            askTeleport(sender, dest)
         //} else {
         //    player.sendMessage(ChatFormats.CHAT_ERROR + "Joueur invalide.")
         //}
