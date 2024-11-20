@@ -8,7 +8,7 @@ import onl.tesseract.command.home.DelhomeCommand
 import onl.tesseract.command.home.HomeCommand
 import onl.tesseract.command.home.SetHomeCommand
 import onl.tesseract.command.ScoreBoardCommands
-import onl.tesseract.nickname.NicknameManager
+import onl.tesseract.nickname.NicknameService
 import onl.tesseract.player.CreativePlayer
 import onl.tesseract.player.CreativePlayerContainer
 import onl.tesseract.rank.PlayerRankService
@@ -18,6 +18,7 @@ import onl.tesseract.service.CreativeServices.Companion.getInstance
 import onl.tesseract.tesseractlib.Config
 import onl.tesseract.tesseractlib.TesseractLib
 import onl.tesseract.tesseractlib.event.ColoredChat
+import onl.tesseract.tesseractlib.util.append
 import onl.tesseract.timeplayed.PlayerTimePlayedTask
 import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
@@ -29,8 +30,6 @@ class Creatif : JavaPlugin(), Listener {
     var permissions: Permission? = null
         private set
 
-    lateinit var nicknameManager: NicknameManager
-
     override fun onEnable() {
         instance = this
         getInstance().registerDefaultServices()
@@ -41,7 +40,6 @@ class Creatif : JavaPlugin(), Listener {
             server.pluginManager.disablePlugin(this)
             return
         }
-        nicknameManager = NicknameManager()
         PlayerTimePlayedTask.start(this,1);
         registerEvents()
         registerCommands()
@@ -82,20 +80,29 @@ class Creatif : JavaPlugin(), Listener {
             event.player.teleport(Config.getInstance().firstSpawnLocation)
             event.joinMessage(
                 Component.text("Bienvenue ", NamedTextColor.GOLD)
-                    .append(Component.text(event.player.name, NamedTextColor.GREEN))
-                    .append(Component.text(" sur le Créatif !", NamedTextColor.GOLD))
+                    .append(event.player.name, NamedTextColor.GREEN)
+                    .append(" sur le Créatif !", NamedTextColor.GOLD)
             )
         } else {
             val creativePlayer: CreativePlayer = playerContainer[event.player] ?: CreativePlayer(event.player)
             val color = get(
                 PlayerRankService::class.java
             ).getPlayerRank(event.player.uniqueId).color
-            val nickname = nicknameManager.loadNickname(event.player.uniqueId, event.player)
             creativePlayer.onJoin(event.player)
+
+            val nickname = get(NicknameService::class.java).getNickname(event.player.uniqueId)
+            val displayName = if (nickname != null) {
+                val formattedNickname = ColoredChat.colorComponent(Component.text(nickname))
+                event.player.displayName(formattedNickname)
+                event.player.playerListName(formattedNickname)
+                formattedNickname
+            } else {
+                Component.text(event.player.name, color)
+            }
             event.joinMessage(
                 Component.text("+ ", NamedTextColor.GREEN)
-                    .append(Component.text(ColoredChat.colorMessage(nickname), color))
-                    .append(Component.text(" a rejoint le serveur.", NamedTextColor.GOLD))
+                    .append(displayName)
+                    .append(" a rejoint le serveur.", NamedTextColor.GOLD)
             )
             creativePlayer.updatePermission()
             Bukkit.getServer().pluginManager.registerEvents(creativePlayer, this)

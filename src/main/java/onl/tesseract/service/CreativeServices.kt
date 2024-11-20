@@ -4,6 +4,8 @@ import onl.tesseract.permpack.PlayerPermPackService
 import onl.tesseract.permpack.persistence.PlayerPermPackInfoHibernateRepository
 import onl.tesseract.home.HomeService
 import onl.tesseract.home.persistence.HomeHibernateRepository
+import onl.tesseract.nickname.NicknameService
+import onl.tesseract.nickname.persistence.NicknameHibernateRepository
 import onl.tesseract.plot.PlayerPlotService
 import onl.tesseract.plot.persistence.PlayerPlotInfoHibernateRepository
 import onl.tesseract.rank.PlayerRankService
@@ -29,6 +31,7 @@ class CreativeServices private constructor() {
         registerService(PlayerTimePlayedService::class.java,PlayerTimePlayedService(PlayerTimePlayedHibernateRepository()))
         registerService(PlayerPermPackService::class.java,PlayerPermPackService(PlayerPermPackInfoHibernateRepository()))
         registerService(HomeService::class.java,HomeService(HomeHibernateRepository()))
+        registerService(NicknameService::class.java,NicknameService(NicknameHibernateRepository()))
     }
 
     companion object {

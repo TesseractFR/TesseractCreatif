@@ -2,13 +2,14 @@ package onl.tesseract.command
 
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
-import onl.tesseract.Creatif
-import onl.tesseract.nickname.NicknameManager
 import onl.tesseract.commandBuilder.CommandContext
 import onl.tesseract.commandBuilder.annotation.Argument
 import onl.tesseract.commandBuilder.annotation.Command
 import onl.tesseract.commandBuilder.annotation.CommandBody
 import onl.tesseract.commandBuilder.annotation.Env
+import onl.tesseract.nickname.NicknameService
+import onl.tesseract.rank.PlayerRankService
+import onl.tesseract.service.CreativeServices
 import onl.tesseract.tesseractlib.command.argument.StringArg
 import onl.tesseract.tesseractlib.event.ColoredChat
 import onl.tesseract.tesseractlib.util.append
@@ -21,13 +22,11 @@ import org.bukkit.entity.Player
 )
 class NickCommand : CommandContext() {
 
-    private val nicknameManager: NicknameManager = Creatif.instance!!.nicknameManager
+    private val nicknameService = CreativeServices[NicknameService::class.java]
+    private val rankService = CreativeServices[PlayerRankService::class.java]
 
     @CommandBody
-    fun onCommand(
-        @Env(key = "surnom") nickname: String?,
-        sender: CommandSender
-    ): Boolean {
+    fun onCommand(@Env(key = "surnom") nickname: String?, sender: CommandSender): Boolean {
         if (sender !is Player) {
             sender.sendMessage(
                 Component.text("Cette commande est réservée aux joueurs.")
@@ -36,33 +35,41 @@ class NickCommand : CommandContext() {
             return false
         }
 
+        val currentNickname = nicknameService.getNickname(sender.uniqueId)
+        val rank = rankService.getPlayerRank(sender.uniqueId)
+
         if (nickname.isNullOrBlank()) {
-            removeNickname(sender)
-            sender.sendMessage(
-                Component.text("Votre surnom a été supprimé.", NamedTextColor.GREEN)
-            )
+            if (currentNickname == null) {
+                sender.sendMessage(
+                    Component.text("Vous n'avez pas de surnom.", NamedTextColor.RED)
+                )
+            } else {
+                removeNickname(sender)
+                sender.sendMessage(
+                    Component.text("Votre surnom a été supprimé.", NamedTextColor.GREEN)
+                )
+            }
         } else {
             setNickname(sender, nickname)
             val coloredNickname = ColoredChat.colorMessage(nickname)
             sender.sendMessage(
                 Component.text("Votre surnom est maintenant : ", NamedTextColor.GREEN)
-                    .append(coloredNickname)
+                    .append(coloredNickname, rank.color)
             )
         }
         return true
     }
 
     private fun setNickname(player: Player, nickname: String) {
+        nicknameService.setNickname(player.uniqueId, nickname)
         val formattedNickname = ColoredChat.colorComponent(Component.text(nickname))
-        player.displayName(Component.text().append(formattedNickname).build())
-        player.playerListName(Component.text().append(formattedNickname).build())
-        nicknameManager.saveNickname(player.uniqueId, nickname)
+        player.displayName(formattedNickname)
+        player.playerListName(formattedNickname)
     }
 
     private fun removeNickname(player: Player) {
-        val defaultName = Component.text(player.name)
-        player.displayName(defaultName)
-        player.playerListName(defaultName)
-        nicknameManager.saveNickname(player.uniqueId, null)
+        nicknameService.setNickname(player.uniqueId, null)
+        player.displayName(Component.text(player.name))
+        player.playerListName(Component.text(player.name))
     }
 }
