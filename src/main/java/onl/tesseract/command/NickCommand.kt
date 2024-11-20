@@ -13,7 +13,6 @@ import onl.tesseract.service.CreativeServices
 import onl.tesseract.tesseractlib.command.argument.StringArg
 import onl.tesseract.tesseractlib.event.ColoredChat
 import onl.tesseract.tesseractlib.util.append
-import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
 @Command(
@@ -26,15 +25,7 @@ class NickCommand : CommandContext() {
     private val rankService = CreativeServices[PlayerRankService::class.java]
 
     @CommandBody
-    fun onCommand(@Env(key = "surnom") nickname: String?, sender: CommandSender): Boolean {
-        if (sender !is Player) {
-            sender.sendMessage(
-                Component.text("Cette commande est réservée aux joueurs.")
-                    .color(NamedTextColor.RED)
-            )
-            return false
-        }
-
+    fun onCommand(@Env(key = "surnom") nickname: String?, sender: Player): Boolean {
         val currentNickname = nicknameService.getNickname(sender.uniqueId)
         val rank = rankService.getPlayerRank(sender.uniqueId)
 
