@@ -5,8 +5,7 @@ import onl.tesseract.nickname.entity.Nickname
 import onl.tesseract.persistence.Repository
 import java.util.UUID
 
-interface NicknameRepository : Repository<Nickname, UUID> {
-}
+interface NicknameRepository : Repository<Nickname, UUID>
 
 class NicknameHibernateRepository : NicknameRepository {
     override fun getById(id: UUID): Nickname? {

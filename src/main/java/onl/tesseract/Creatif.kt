@@ -8,8 +8,7 @@ import onl.tesseract.command.home.DelhomeCommand
 import onl.tesseract.command.home.HomeCommand
 import onl.tesseract.command.home.SetHomeCommand
 import onl.tesseract.command.ScoreBoardCommands
-import onl.tesseract.listener.NicknameListener
-import onl.tesseract.nickname.NicknameService
+import onl.tesseract.nickname.NicknameListener
 import onl.tesseract.player.CreativePlayer
 import onl.tesseract.player.CreativePlayerContainer
 import onl.tesseract.rank.PlayerRankService
@@ -18,7 +17,6 @@ import onl.tesseract.service.CreativeServices.Companion.get
 import onl.tesseract.service.CreativeServices.Companion.getInstance
 import onl.tesseract.tesseractlib.Config
 import onl.tesseract.tesseractlib.TesseractLib
-import onl.tesseract.tesseractlib.event.ColoredChat
 import onl.tesseract.tesseractlib.util.append
 import onl.tesseract.timeplayed.PlayerTimePlayedTask
 import org.bukkit.Bukkit
