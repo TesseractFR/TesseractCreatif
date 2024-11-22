@@ -1,9 +1,8 @@
-package onl.tesseract.command
+package onl.tesseract
 
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.event.ClickEvent
 import net.kyori.adventure.text.format.NamedTextColor
-import onl.tesseract.Creatif
 import onl.tesseract.tesseractlib.player.TPlayer
 import onl.tesseract.tesseractlib.util.ChatFormats
 import onl.tesseract.tesseractlib.util.append

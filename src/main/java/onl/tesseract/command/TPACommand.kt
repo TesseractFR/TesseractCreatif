@@ -1,5 +1,6 @@
 package onl.tesseract.command
 
+import onl.tesseract.TPAManager
 import onl.tesseract.commandBuilder.CommandContext
 import onl.tesseract.commandBuilder.annotation.Argument
 import onl.tesseract.commandBuilder.annotation.Command
