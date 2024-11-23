@@ -8,9 +8,9 @@ import onl.tesseract.commandBuilder.annotation.CommandBody
 import onl.tesseract.commandBuilder.annotation.Env
 import onl.tesseract.home.HomeService
 import onl.tesseract.home.entity.NoHomeFoundException
-import onl.tesseract.service.CreativeServices
-import onl.tesseract.tesseractlib.util.ChatFormats
-import onl.tesseract.tesseractlib.util.append
+import onl.tesseract.lib.service.ServiceContainer
+import onl.tesseract.lib.util.ChatFormats
+import onl.tesseract.lib.util.append
 import org.bukkit.entity.Player
 
 
@@ -21,7 +21,7 @@ import org.bukkit.entity.Player
 class HomeCommand : CommandContext() {
     @CommandBody
     fun onCommand(@Env(key = "nom") homeName: String, sender: Player) = run {
-        val homeService = CreativeServices[HomeService::class.java]
+        val homeService = ServiceContainer[HomeService::class.java]
         try{
             sender.teleport(homeService.getHome(sender.uniqueId,homeName)!!);
         } catch (e:NoHomeFoundException) {

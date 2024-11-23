@@ -7,9 +7,9 @@ import onl.tesseract.commandBuilder.annotation.Command
 import onl.tesseract.commandBuilder.annotation.CommandBody
 import onl.tesseract.commandBuilder.annotation.Env
 import onl.tesseract.home.HomeService
-import onl.tesseract.service.CreativeServices
-import onl.tesseract.tesseractlib.util.ChatFormats
-import onl.tesseract.tesseractlib.util.append
+import onl.tesseract.lib.service.ServiceContainer
+import onl.tesseract.lib.util.ChatFormats
+import onl.tesseract.lib.util.append
 import org.bukkit.entity.Player
 
 @Command(
@@ -19,7 +19,7 @@ import org.bukkit.entity.Player
 class DelhomeCommand : CommandContext() {
     @CommandBody
     fun onCommand(@Env(key = "nom") homeName: String, sender: Player) = run {
-        val homeService = CreativeServices[HomeService::class.java]
+        val homeService = ServiceContainer[HomeService::class.java]
         if (homeService.exist(sender.uniqueId, homeName)) {
             homeService.deleteHome(sender.uniqueId, homeName)
             sender.sendMessage(ChatFormats.CHAT_SUCCESS.append("Votre home $homeName a bien été supprimé."))
