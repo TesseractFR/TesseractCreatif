@@ -5,20 +5,19 @@ import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
 import onl.tesseract.lib.menu.Menu
 import onl.tesseract.lib.menu.MenuSize
-import onl.tesseract.lib.util.ItemBuilder
+import onl.tesseract.lib.menu.ItemBuilder
 import onl.tesseract.lib.util.ItemLoreBuilder
+import onl.tesseract.menu.boutique.RentPluginsMenu
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
-class PluginsToolsMenu(previous: Menu? = null) :
-private val tetePlayerParticles: ItemStack = getCustomHead(
-    "",
+private val tetePlayerParticles = ItemBuilder(Material.PLAYER_HEAD).customHead(
     "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDQ2MWQ5ZDA2YzBiZjRhN2FmNGIxNmZkMTI4MzFlMmJlMGNmNDJlNmU1NWU5YzBkMzExYTJhODk2NWEyM2IzNCJ9fX0=",
-    "4461d9d06c0bf4a7af4b16fd12831e2be0cf42e6e55e9c0d311a2a8965a23b34"
+    " "
 )
 
-class PluginsToolsMenu(previous: InventoryMenu? = null) :
+class PluginsToolsMenu(previous: Menu? = null) :
 
         Menu(
             MenuSize.Three,
@@ -34,22 +33,22 @@ class PluginsToolsMenu(previous: InventoryMenu? = null) :
         addButton(2, createBuilderUtilitiesItem()) {}
         addButton(4, createHdbItem()) {}
         addButton(6, createArceonItem()) {
-            RentPluginsMenu(TPlayer.get(viewer), this).open(viewer)
+            RentPluginsMenu(viewer, this).open(viewer)
         }
         addButton(8, createGoPaintItem()) {}
         addButton(10, createFaweItem()) {}
         addButton(12, createArmorStandToolsItem()) {}
         addButton(13, createMetaBrushItem()) {
-            RentPluginsMenu(TPlayer.get(viewer), this).open(viewer)
+            RentPluginsMenu(viewer, this).open(viewer)
         }
         addButton(14, createVoxelSniperItem()) {}
         addButton(16, createGoBrushItem()) {}
         addButton(20, createAxiomItem()) {}
         addButton(22, createPlayerParticlesItem()) {
-            RentPluginsMenu(TPlayer.get(viewer), this).open(viewer)
+            RentPluginsMenu(viewer, this).open(viewer)
         }
         addButton(24, createDisplayEntitiesItem()) {
-            RentPluginsMenu(TPlayer.get(viewer), this).open(viewer)
+            RentPluginsMenu(viewer, this).open(viewer)
         }
 
         addBackButton()
@@ -206,7 +205,7 @@ class PluginsToolsMenu(previous: InventoryMenu? = null) :
             .append(" (Clique pour ouvrir la boutique)", NamedTextColor.DARK_PURPLE, TextDecoration.ITALIC)
             .newline().newline()
             .append("PlayerParticles permet d'ajouter des particules personnalisées à vos constructions.", NamedTextColor.GRAY)
-        return ItemBuilder(tetePlayerParticles)
+        return tetePlayerParticles
             .name("PlayerParticles", NamedTextColor.DARK_GREEN, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()

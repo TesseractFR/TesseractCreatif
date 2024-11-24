@@ -12,12 +12,24 @@ import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
-private val teteApprenti = getCustomHead("", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWQwMzgyYjY1ZjQ0NmI3NDkxNTg2ZGE2MGE2MThlMTU3NTU2NWI5M2Q1NmIwZjAzZWVjNWQ3NjlkMmY1NmFjYSJ9fX0=", "")
-private val teteConcepteur = getCustomHead("", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzJiZDVlYTA0OTliYjM0Y2JhMzE1OTc3ZGMwMjFjNmI0NGM0MGE1OWZhYmI4ODI1YWIxOGI0NjAyYWExOWU4YSJ9fX0=", "")
-private val teteCreateur = getCustomHead("", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjRmZGJkNGJjMDYwM2EzYTVkNjhjYzRkZWI5ZmFiZjY2YzVjZTdkMTk1OTc0MjFkOTI5YjhhZGI3NDUzNzEyMCJ9fX0=", "")
-private val teteIngenieur = getCustomHead("", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTZkOTZkYzlmZGY4YmViMzBkNDA1NDUyNDJiNGJmNWE0NWI2NWY4MzU0MTBmZTU3Njg5OGMyYjJmMDQyMjQ0NSJ9fX0=", "")
-private val teteBatisseur = getCustomHead("", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTdlNzgyYjQwOGY1NDU2Y2ZhZDBjNDNlOGM1MDFlZjllZmQwMTI4NjI5NzM2MGJlM2I4M2ZiMTZkYzljZDJhNSJ9fX0=", "")
-private val teteVirtuose = getCustomHead("", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjQ3OTgwYzZkODZlYzA2ZDcyNDZhMmUxMzMzODE5MjQzNDAyNDk2YjRlYmRhZDJkNTRkMzUzNzAzNDJjNWFlYSJ9fX0=", "")
+private val teteApprenti = ItemBuilder(Material.PLAYER_HEAD).customHead(
+    "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYWQwMzgyYjY1ZjQ0NmI3NDkxNTg2ZGE2MGE2MThlMTU3NTU2NWI5M2Q1NmIwZjAzZWVjNWQ3NjlkMmY1NmFjYSJ9fX0=",
+    "")
+private val teteConcepteur = ItemBuilder(Material.PLAYER_HEAD).customHead(
+    "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzJiZDVlYTA0OTliYjM0Y2JhMzE1OTc3ZGMwMjFjNmI0NGM0MGE1OWZhYmI4ODI1YWIxOGI0NjAyYWExOWU4YSJ9fX0=",
+    "")
+private val teteCreateur = ItemBuilder(Material.PLAYER_HEAD).customHead(
+    "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjRmZGJkNGJjMDYwM2EzYTVkNjhjYzRkZWI5ZmFiZjY2YzVjZTdkMTk1OTc0MjFkOTI5YjhhZGI3NDUzNzEyMCJ9fX0=",
+    "")
+private val teteIngenieur = ItemBuilder(Material.PLAYER_HEAD).customHead(
+    "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTZkOTZkYzlmZGY4YmViMzBkNDA1NDUyNDJiNGJmNWE0NWI2NWY4MzU0MTBmZTU3Njg5OGMyYjJmMDQyMjQ0NSJ9fX0=",
+    "")
+private val teteBatisseur = ItemBuilder(Material.PLAYER_HEAD).customHead(
+    "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTdlNzgyYjQwOGY1NDU2Y2ZhZDBjNDNlOGM1MDFlZjllZmQwMTI4NjI5NzM2MGJlM2I4M2ZiMTZkYzljZDJhNSJ9fX0=",
+    "")
+private val teteVirtuose = ItemBuilder(Material.PLAYER_HEAD).customHead(
+    "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjQ3OTgwYzZkODZlYzA2ZDcyNDZhMmUxMzMzODE5MjQzNDAyNDk2YjRlYmRhZDJkNTRkMzUzNzAzNDJjNWFlYSJ9fX0=",
+    "")
 
 class RankMenu(previous: Menu? = null) :
 
@@ -88,7 +100,7 @@ class RankMenu(previous: Menu? = null) :
             .newline()
             .append("Monde 500 : ", NamedTextColor.GOLD).append("1", NamedTextColor.WHITE, TextDecoration.BOLD)
         return teteCreateur
-            .name("Créateur", NamedTextColor.YELLOW, TextDecoration.BOLD)
+            .name("Créateur", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
     }
@@ -107,7 +119,7 @@ class RankMenu(previous: Menu? = null) :
             .newline()
             .append("Monde 500 : ", NamedTextColor.GOLD).append("2", NamedTextColor.WHITE, TextDecoration.BOLD)
         return teteIngenieur
-            .name("Ingénieur", NamedTextColor.BLUE, TextDecoration.BOLD)
+            .name("Ingénieur", NamedTextColor.DARK_BLUE, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
     }
@@ -127,9 +139,9 @@ class RankMenu(previous: Menu? = null) :
             .append("Monde 500 : ", NamedTextColor.GOLD).append("3", NamedTextColor.WHITE, TextDecoration.BOLD)
             .newline()
             .append("Monde 1000 : ", NamedTextColor.GOLD).append("1", NamedTextColor.WHITE, TextDecoration.BOLD)
+            .newline().newline()
+            .append("Obtention de ", NamedTextColor.GREEN, TextDecoration.BOLD).append("VoxelSniper", NamedTextColor.DARK_AQUA, TextDecoration.BOLD)
         return teteBatisseur
-            .name("Bâtisseur", NamedTextColor.AQUA, TextDecoration.BOLD)
-        return ItemBuilder(teteBatisseur)
             .name("Bâtisseur", NamedTextColor.BLUE, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
@@ -160,10 +172,8 @@ class RankMenu(previous: Menu? = null) :
             .append("- Commande ", NamedTextColor.GOLD).append("/nick", NamedTextColor.WHITE, TextDecoration.BOLD)
             .newline()
             .append("- Et bien plus encore...", NamedTextColor.GOLD, TextDecoration.ITALIC)
-        return ItemBuilder(teteVirtuose)
-            .name("Virtuose", NamedTextColor.AQUA, TextDecoration.BOLD)
         return teteVirtuose
-            .name("Virtuose", NamedTextColor.RED, TextDecoration.BOLD)
+            .name("Virtuose", NamedTextColor.AQUA, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
     }
