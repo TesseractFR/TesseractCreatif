@@ -7,12 +7,12 @@ import onl.tesseract.commandBuilder.annotation.Argument
 import onl.tesseract.commandBuilder.annotation.Command
 import onl.tesseract.commandBuilder.annotation.CommandBody
 import onl.tesseract.commandBuilder.annotation.Env
+import onl.tesseract.core.event.ColoredChat
+import onl.tesseract.lib.command.argument.StringArg
+import onl.tesseract.lib.service.ServiceContainer
+import onl.tesseract.lib.util.append
 import onl.tesseract.nickname.NicknameService
 import onl.tesseract.rank.PlayerRankService
-import onl.tesseract.service.CreativeServices
-import onl.tesseract.tesseractlib.command.argument.StringArg
-import onl.tesseract.tesseractlib.event.ColoredChat
-import onl.tesseract.tesseractlib.util.append
 import org.bukkit.entity.Player
 
 @Command(
@@ -21,8 +21,8 @@ import org.bukkit.entity.Player
 )
 class NickCommand : CommandContext() {
 
-    private val nicknameService = CreativeServices[NicknameService::class.java]
-    private val rankService = CreativeServices[PlayerRankService::class.java]
+    private val nicknameService = ServiceContainer[NicknameService::class.java]
+    private val rankService = ServiceContainer[PlayerRankService::class.java]
 
     @CommandBody
     fun onCommand(@Env(key = "surnom") nickname: String?, sender: Player): Boolean {

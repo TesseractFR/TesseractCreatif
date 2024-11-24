@@ -1,11 +1,11 @@
 package onl.tesseract.nickname
 
 import net.kyori.adventure.text.Component
-import onl.tesseract.tesseractlib.event.ColoredChat
+import onl.tesseract.core.event.ColoredChat
+import onl.tesseract.lib.service.ServiceContainer.Companion.get
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
-import onl.tesseract.service.CreativeServices.Companion.get
 
 class NicknameListener : Listener {
 
