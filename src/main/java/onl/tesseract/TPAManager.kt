@@ -1,10 +1,10 @@
 package onl.tesseract
 
 import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.event.ClickEvent
 import net.kyori.adventure.text.format.NamedTextColor
+import onl.tesseract.lib.chat.ChatEntryService
+import onl.tesseract.lib.service.ServiceContainer
 import onl.tesseract.lib.util.ChatFormats
-import onl.tesseract.lib.util.append
 import onl.tesseract.lib.util.plus
 import onl.tesseract.util.DurationFormat.formatTime
 import org.bukkit.entity.Player
@@ -18,6 +18,7 @@ class TPAManager {
     private val requestsCooldowns = mutableMapOf<UUID, TimedBukkitTask>()
     private val teleportCooldownDuration = Duration.ofSeconds(30)
     private val requestsCooldownsDuration = Duration.ofMinutes(2)
+    private val chatEntryService: ChatEntryService = ServiceContainer[ChatEntryService::class.java]
 
     fun tpaRequest(sender: Player, dest: Player): Boolean {
         if (dest.name.isEmpty()) {
@@ -57,18 +58,7 @@ class TPAManager {
         dest.sendMessage(ChatFormats.CHAT + sender.name + " souhaite se téléporter vers votre position.")
 
         val acceptButton = Component.text("[Accepter]", NamedTextColor.GREEN)
-            .clickEvent(ClickEvent.runCommand("/command accept ${sender.uniqueId}"))
-
-        val denyButton = Component.text("[Refuser]", NamedTextColor.RED)
-            .clickEvent(ClickEvent.runCommand("/command deny ${sender.uniqueId}"))
-
-        val acceptDeny = acceptButton.append(" ").append(denyButton)
-        dest.sendMessage(acceptDeny)
-
-        TPlayer.get(dest).getChatCommand { response ->
-            requestsCooldowns[sender.uniqueId]?.cancel()
-            requestsCooldowns.remove(sender.uniqueId)
-            if (response.isNotEmpty() && response[0] == "accept") {
+            .clickEvent(chatEntryService.clickCommand(dest) {
                 dest.sendMessage(ChatFormats.CHAT_SUCCESS + "Demande acceptée.")
                 sender.sendMessage(ChatFormats.CHAT_SUCCESS + "Demande de téléportation acceptée. Préparez-vous à être téléporté...")
 
@@ -79,11 +69,17 @@ class TPAManager {
                         }
                     }.runTaskLater(it, 60)
                 }
-            } else if (response.isNotEmpty() && response[0] == "deny") {
+            })
+
+        val denyButton = Component.text("[Refuser]", NamedTextColor.RED)
+            .clickEvent(chatEntryService.clickCommand(dest) {
                 dest.sendMessage(ChatFormats.CHAT_ERROR + "Demande refusée.")
                 sender.sendMessage(ChatFormats.CHAT_ERROR + "Demande refusée.")
-            }
-        }
+                requestsCooldowns.remove(sender.uniqueId)
+            })
+
+        val acceptDeny = acceptButton.append(Component.text(" ")).append(denyButton)
+        dest.sendMessage(acceptDeny)
 
         val resetTask = object : TimedBukkitTask() {
             override fun run() {
