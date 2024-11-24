@@ -1,11 +1,11 @@
 package onl.tesseract.plot
 
 import net.milkbowl.vault.permission.Permission
-import onl.tesseract.plot.entity.PlotWorld
+import onl.tesseract.lib.service.ServiceContainer
 import onl.tesseract.plot.entity.PlayerPlotInfo
+import onl.tesseract.plot.entity.PlotWorld
 import onl.tesseract.plot.persistence.PlayerPlotInfoRepository
 import onl.tesseract.rank.PlayerRankService
-import onl.tesseract.service.CreativeServices
 import org.bukkit.OfflinePlayer
 import java.util.*
 
@@ -25,7 +25,7 @@ class PlayerPlotService(private val repository: PlayerPlotInfoRepository) {
     }
 
     fun getPlayerTotalPlot(uuid: UUID, plotWorld: PlotWorld): Int {
-        val playerRank = CreativeServices[PlayerRankService::class.java].getPlayerRank(uuid);
+        val playerRank = ServiceContainer[PlayerRankService::class.java].getPlayerRank(uuid);
         return getPlayerBonusPlot(uuid, plotWorld) + when (plotWorld) {
             PlotWorld.WORLD_100 -> playerRank.rankPlot.plot100;
             PlotWorld.WORLD_250 -> playerRank.rankPlot.plot250

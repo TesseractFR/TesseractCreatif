@@ -3,34 +3,50 @@ package onl.tesseract.menu.boutique
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
-import onl.tesseract.tesseractlib.menu.boutique.global.GlobalBoutiqueMenu
-import onl.tesseract.tesseractlib.player.TPlayer
-import onl.tesseract.tesseractlib.util.menu.InventoryMenu
+import onl.tesseract.core.boutique.menu.GlobalBoutiqueMenu
+import onl.tesseract.lib.menu.ItemBuilder
+import onl.tesseract.lib.menu.Menu
+import onl.tesseract.lib.menu.MenuSize
 import org.bukkit.Material
 import org.bukkit.entity.Player
 
-class BoutiqueMenu(val player: TPlayer, previous: InventoryMenu? = null) :
+class BoutiqueMenu(val player: Player, previous: Menu? = null) :
 
-    BoutiqueCoreMenu(27, Component.text("Boutique de Tesseract", NamedTextColor.BLUE, TextDecoration.BOLD), previous) {
+        BoutiqueCoreMenu(
+            MenuSize.Three,
+            Component.text("Boutique de Tesseract", NamedTextColor.BLUE, TextDecoration.BOLD),
+            previous) {
 
-    override fun open(viewer: Player) {
-        fill(Material.GRAY_STAINED_GLASS_PANE, " ")
+    override fun placeButtons(viewer: Player) {
+        fill(ItemBuilder(Material.GRAY_STAINED_GLASS_PANE).build())
 
         addButton(
-            12, Material.AMETHYST_CLUSTER, Component.text("Tous les serveurs", NamedTextColor.LIGHT_PURPLE) ,
-            Component.text("Cliquez pour afficher les cosmétiques disponibles sur tous les serveurs.", NamedTextColor.GRAY)
+            12, ItemBuilder(Material.AMETHYST_CLUSTER)
+                    .name(Component.text("Tous les serveurs", NamedTextColor.LIGHT_PURPLE))
+                    .lore()
+                    .append(
+                        "Cliquez pour afficher les cosmétiques disponibles sur tous les serveurs.",
+                        NamedTextColor.GRAY)
+                    .buildLore()
+                    .build()
         ) {
-            GlobalBoutiqueMenu(player, this).open(viewer)
+            GlobalBoutiqueMenu(player.uniqueId, this).open(viewer)
         }
         addButton(
-            14, Material.BRICKS, Component.text("Créatif", NamedTextColor.LIGHT_PURPLE),
-            Component.text("Cliquez pour afficher les achats disponibles uniquement sur le Créatif.", NamedTextColor.GRAY)
+            14, ItemBuilder(Material.BRICKS)
+                    .name(Component.text("Créatif", NamedTextColor.LIGHT_PURPLE))
+                    .lore()
+                    .append(
+                        Component.text(
+                            "Cliquez pour afficher les achats disponibles uniquement sur le Créatif.",
+                            NamedTextColor.GRAY))
+                    .buildLore()
+                    .build()
         ) {
             CreativeBoutiqueMenu(player, this).open(viewer)
         }
-        addBoutiqueButton(player, inventory.size - 5)
+        addBoutiqueButton(player, size.size - 5)
         addBackButton()
-        addQuitButton()
-        super.open(viewer)
+        addCloseButton()
     }
 }
