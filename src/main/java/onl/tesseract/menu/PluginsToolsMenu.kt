@@ -3,17 +3,15 @@ package onl.tesseract.menu
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
-import onl.tesseract.menu.boutique.RentPluginsMenu
-import onl.tesseract.tesseractlib.player.TPlayer
-import onl.tesseract.tesseractlib.util.ItemBuilder
-import onl.tesseract.tesseractlib.util.ItemLoreBuilder
-import onl.tesseract.tesseractlib.util.append
-import onl.tesseract.tesseractlib.util.menu.InventoryMenu
-import onl.tesseract.tesseractlib.util.menu.InventoryMenu.getCustomHead
+import onl.tesseract.lib.menu.Menu
+import onl.tesseract.lib.menu.MenuSize
+import onl.tesseract.lib.util.ItemBuilder
+import onl.tesseract.lib.util.ItemLoreBuilder
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
+class PluginsToolsMenu(previous: Menu? = null) :
 private val tetePlayerParticles: ItemStack = getCustomHead(
     "",
     "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDQ2MWQ5ZDA2YzBiZjRhN2FmNGIxNmZkMTI4MzFlMmJlMGNmNDJlNmU1NWU5YzBkMzExYTJhODk2NWEyM2IzNCJ9fX0=",
@@ -22,10 +20,15 @@ private val tetePlayerParticles: ItemStack = getCustomHead(
 
 class PluginsToolsMenu(previous: InventoryMenu? = null) :
 
-    InventoryMenu(27, Component.text("Outils/Plugins du serveur", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD), previous) {
+        Menu(
+            MenuSize.Three,
+            Component.text("Outils/Plugins du serveur", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD),
+            previous) {
 
-    override fun open(viewer: Player) {
-        fill(Material.GRAY_STAINED_GLASS_PANE, " ")
+    override fun placeButtons(viewer: Player) {
+        fill(
+            ItemBuilder(Material.GRAY_STAINED_GLASS_PANE).name(" ")
+                    .build())
 
         addButton(0, createSchematicImportItem()) {}
         addButton(2, createBuilderUtilitiesItem()) {}
@@ -50,8 +53,7 @@ class PluginsToolsMenu(previous: InventoryMenu? = null) :
         }
 
         addBackButton()
-        addQuitButton()
-        super.open(viewer)
+        addCloseButton()
     }
 
     private fun createSchematicImportItem(): ItemStack {

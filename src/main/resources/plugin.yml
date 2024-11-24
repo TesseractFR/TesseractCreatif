@@ -2,7 +2,7 @@ name: TesseractCreative
 version: '1.0-SNAPSHOT'
 main: onl.tesseract.Creatif
 api-version: '1.21'
-depend: [ Vault,LuckPerms, TesseractLib ]
+depend: [ Vault,LuckPerms, TesseractCore ]
 
 
 commands:
@@ -51,3 +51,7 @@ commands:
     aliases: home
     usage: "/home"
     description: Teleporte le joueur au home
+  scoreboard:
+    aliases: scoreboard
+    usage: "/scoreboard"
+    description: Commandes du scoreboard

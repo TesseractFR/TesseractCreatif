@@ -3,12 +3,11 @@ package onl.tesseract.menu
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
+import onl.tesseract.lib.menu.ItemBuilder
+import onl.tesseract.lib.menu.Menu
+import onl.tesseract.lib.menu.MenuSize
+import onl.tesseract.lib.util.ItemLoreBuilder
 import onl.tesseract.menu.boutique.CreativeBoutiqueMenu
-import onl.tesseract.tesseractlib.player.TPlayer
-import onl.tesseract.tesseractlib.util.ItemBuilder
-import onl.tesseract.tesseractlib.util.ItemLoreBuilder
-import onl.tesseract.tesseractlib.util.menu.InventoryMenu
-import onl.tesseract.tesseractlib.util.menu.InventoryMenu.getCustomHead
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
@@ -20,12 +19,14 @@ private val teteIngenieur = getCustomHead("", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVyb
 private val teteBatisseur = getCustomHead("", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTdlNzgyYjQwOGY1NDU2Y2ZhZDBjNDNlOGM1MDFlZjllZmQwMTI4NjI5NzM2MGJlM2I4M2ZiMTZkYzljZDJhNSJ9fX0=", "")
 private val teteVirtuose = getCustomHead("", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjQ3OTgwYzZkODZlYzA2ZDcyNDZhMmUxMzMzODE5MjQzNDAyNDk2YjRlYmRhZDJkNTRkMzUzNzAzNDJjNWFlYSJ9fX0=", "")
 
-class RankMenu(previous: InventoryMenu? = null) :
+class RankMenu(previous: Menu? = null) :
 
-    InventoryMenu(27, Component.text("Grades", NamedTextColor.DARK_GREEN, TextDecoration.BOLD), previous) {
+        Menu(MenuSize.Three, Component.text("Grades", NamedTextColor.DARK_GREEN, TextDecoration.BOLD), previous) {
 
-    override fun open(viewer: Player) {
-        fill(Material.GRAY_STAINED_GLASS_PANE, " ")
+    override fun placeButtons(viewer: Player) {
+        fill(
+            ItemBuilder(Material.GRAY_STAINED_GLASS_PANE).name(" ")
+                    .build())
 
         addButton(0, createApprentiItem()) {}
         addButton(11, createConcepteurItem()) {}
@@ -33,13 +34,11 @@ class RankMenu(previous: InventoryMenu? = null) :
         addButton(15, createIngenieurItem()) {}
         addButton(8, createBatisseurItem()) {}
         addButton(22, createVirtuoseItem()) {
-            CreativeBoutiqueMenu(TPlayer.get(viewer), this).open(viewer)
+            CreativeBoutiqueMenu(viewer, this).open(viewer)
         }
 
         addBackButton()
-        addQuitButton()
-
-        super.open(viewer)
+        addCloseButton()
     }
 
     private fun createApprentiItem(): ItemStack {
@@ -52,7 +51,7 @@ class RankMenu(previous: InventoryMenu? = null) :
             .append("Monde 100 : ", NamedTextColor.GOLD).append("1", NamedTextColor.WHITE, TextDecoration.BOLD)
             .newline()
             .append("Monde 250 : ", NamedTextColor.GOLD).append("1", NamedTextColor.WHITE, TextDecoration.BOLD)
-        return ItemBuilder(teteApprenti)
+        return teteApprenti
             .name("Apprenti", NamedTextColor.GREEN, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
@@ -69,7 +68,7 @@ class RankMenu(previous: InventoryMenu? = null) :
             .append("Monde 100 : ", NamedTextColor.GOLD).append("2", NamedTextColor.WHITE, TextDecoration.BOLD)
             .newline()
             .append("Monde 250 : ", NamedTextColor.GOLD).append("2", NamedTextColor.WHITE, TextDecoration.BOLD)
-          return ItemBuilder(teteConcepteur)
+        return teteConcepteur
             .name("Concepteur", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
@@ -88,8 +87,8 @@ class RankMenu(previous: InventoryMenu? = null) :
             .append("Monde 250 : ", NamedTextColor.GOLD).append("3", NamedTextColor.WHITE, TextDecoration.BOLD)
             .newline()
             .append("Monde 500 : ", NamedTextColor.GOLD).append("1", NamedTextColor.WHITE, TextDecoration.BOLD)
-           return ItemBuilder(teteCreateur)
-            .name("Créateur", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD)
+        return teteCreateur
+            .name("Créateur", NamedTextColor.YELLOW, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
     }
@@ -107,8 +106,8 @@ class RankMenu(previous: InventoryMenu? = null) :
             .append("Monde 250 : ", NamedTextColor.GOLD).append("4", NamedTextColor.WHITE, TextDecoration.BOLD)
             .newline()
             .append("Monde 500 : ", NamedTextColor.GOLD).append("2", NamedTextColor.WHITE, TextDecoration.BOLD)
-            return ItemBuilder(teteIngenieur)
-            .name("Ingénieur", NamedTextColor.DARK_BLUE, TextDecoration.BOLD)
+        return teteIngenieur
+            .name("Ingénieur", NamedTextColor.BLUE, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
     }
@@ -128,6 +127,8 @@ class RankMenu(previous: InventoryMenu? = null) :
             .append("Monde 500 : ", NamedTextColor.GOLD).append("3", NamedTextColor.WHITE, TextDecoration.BOLD)
             .newline()
             .append("Monde 1000 : ", NamedTextColor.GOLD).append("1", NamedTextColor.WHITE, TextDecoration.BOLD)
+        return teteBatisseur
+            .name("Bâtisseur", NamedTextColor.AQUA, TextDecoration.BOLD)
         return ItemBuilder(teteBatisseur)
             .name("Bâtisseur", NamedTextColor.BLUE, TextDecoration.BOLD)
             .lore(ilb.get())
@@ -161,6 +162,8 @@ class RankMenu(previous: InventoryMenu? = null) :
             .append("- Et bien plus encore...", NamedTextColor.GOLD, TextDecoration.ITALIC)
         return ItemBuilder(teteVirtuose)
             .name("Virtuose", NamedTextColor.AQUA, TextDecoration.BOLD)
+        return teteVirtuose
+            .name("Virtuose", NamedTextColor.RED, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
     }

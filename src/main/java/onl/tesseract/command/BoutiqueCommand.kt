@@ -4,7 +4,6 @@ import onl.tesseract.commandBuilder.CommandContext
 import onl.tesseract.commandBuilder.annotation.Command
 import onl.tesseract.commandBuilder.annotation.CommandBody
 import onl.tesseract.menu.boutique.BoutiqueMenu
-import onl.tesseract.tesseractlib.player.TPlayer
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 
@@ -13,7 +12,7 @@ class BoutiqueCommand : CommandContext() {
     @CommandBody
     fun onCommand(sender: CommandSender?): Boolean {
         if (sender is Player) {
-            BoutiqueMenu(TPlayer.get(sender)).open(sender)
+            BoutiqueMenu(sender).open(sender)
         }
 
         return true

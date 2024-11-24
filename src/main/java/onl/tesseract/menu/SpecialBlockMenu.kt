@@ -3,19 +3,25 @@ package onl.tesseract.menu
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
-import onl.tesseract.tesseractlib.util.ItemBuilder
-import onl.tesseract.tesseractlib.util.ItemLoreBuilder
-import onl.tesseract.tesseractlib.util.menu.InventoryMenu
+import onl.tesseract.lib.menu.Menu
+import onl.tesseract.lib.menu.MenuSize
+import onl.tesseract.lib.util.ItemBuilder
+import onl.tesseract.lib.util.ItemLoreBuilder
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
-class SpecialBlockMenu(val player: Player, previous: InventoryMenu? = null) :
+class SpecialBlockMenu(val player: Player, previous: Menu? = null) :
 
-    InventoryMenu(27, Component.text("Blocs spéciaux", NamedTextColor.DARK_AQUA, TextDecoration.BOLD), previous) {
+        Menu(
+            MenuSize.Three,
+            Component.text("Blocs spéciaux", NamedTextColor.DARK_AQUA, TextDecoration.BOLD),
+            previous) {
 
-    override fun open(viewer: Player) {
-        fill(Material.GRAY_STAINED_GLASS_PANE, " ")
+    override fun placeButtons(viewer: Player) {
+        fill(
+            ItemBuilder(Material.GRAY_STAINED_GLASS_PANE).name("")
+                    .build())
 
         addButton(0, createCommandBlockItem()) {
             player.inventory.addItem(ItemStack(Material.COMMAND_BLOCK))
@@ -54,8 +60,7 @@ class SpecialBlockMenu(val player: Player, previous: InventoryMenu? = null) :
         }
 
         addBackButton()
-        addQuitButton()
-        super.open(viewer)
+        addCloseButton()
     }
 
     private fun createCommandBlockItem(): ItemStack {
