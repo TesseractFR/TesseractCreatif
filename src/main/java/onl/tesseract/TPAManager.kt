@@ -3,10 +3,9 @@ package onl.tesseract
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.event.ClickEvent
 import net.kyori.adventure.text.format.NamedTextColor
-import onl.tesseract.tesseractlib.player.TPlayer
-import onl.tesseract.tesseractlib.util.ChatFormats
-import onl.tesseract.tesseractlib.util.append
-import onl.tesseract.tesseractlib.util.plus
+import onl.tesseract.lib.util.ChatFormats
+import onl.tesseract.lib.util.append
+import onl.tesseract.lib.util.plus
 import onl.tesseract.util.DurationFormat.formatTime
 import org.bukkit.entity.Player
 import org.bukkit.scheduler.BukkitRunnable

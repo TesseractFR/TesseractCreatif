@@ -6,7 +6,7 @@ import onl.tesseract.commandBuilder.annotation.Argument
 import onl.tesseract.commandBuilder.annotation.Command
 import onl.tesseract.commandBuilder.annotation.CommandBody
 import onl.tesseract.commandBuilder.annotation.Env
-import onl.tesseract.tesseractlib.command.argument.PlayerArg
+import onl.tesseract.lib.command.argument.PlayerArg
 import org.bukkit.entity.Player
 
 @Command(
