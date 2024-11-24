@@ -3,28 +3,43 @@ package onl.tesseract.menu
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
+import onl.tesseract.lib.menu.ItemBuilder
+import onl.tesseract.lib.menu.Menu
+import onl.tesseract.lib.menu.MenuSize
+import onl.tesseract.lib.util.ItemLoreBuilder
 import onl.tesseract.plot.entity.PlotWorld
-import onl.tesseract.tesseractlib.util.ItemBuilder
-import onl.tesseract.tesseractlib.util.ItemLoreBuilder
-import onl.tesseract.tesseractlib.util.menu.InventoryMenu
-import onl.tesseract.tesseractlib.util.menu.InventoryMenu.getCustomHead
 import onl.tesseract.world.WorldManager
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
-private val tete100 = getCustomHead("", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDFlNzhmZjQ3NjNlOWFkMWE5OThjNzI4ZjcxZmE1ZGJiZDYxNjRhMjdjYTFmMGU0MjMyYzQxZDc0MjA4MTgwYSJ9fX0=", "")
-private val tete250 = getCustomHead("", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDNlMWM1ZTY1ZTEzNTU5YmY2MGUxNTRmMTdmNmFmM2E4ZTU2MDhhNDk4N2VjZDFlMGZhZTc1MWM2ZjgyNzI2In19fQ==", "")
-private val tete500 = getCustomHead("", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGQ4NTlmN2IzY2RmZGFkNDcxODI4ODRlMTI3ZjQ2MWZlOGY5ZmM1MmY3ZDE1MDQyN2MxMTcwNzliMDkyNGUzIn19fQ==", "")
-private val tete1000 = getCustomHead("", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWU0ZGNmNzFiMGI2ODUyYjU0MWNkMjNhMzFiODg0NjlhZjU4NDI5YWQ1MjJmNTI4MjhmM2E4MGIzNjI5ZWYyIn19fQ==", "")
-private val teteEvent = getCustomHead("", "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmFhZDZmZmFmNmZiOWE4ZWVhOGYzZGJlYTZkZGYzNDcyYTBhNTQ2YjVlMTk0YmQ1NWI0MzNiZDlkMTU4OTMwIn19fQ==", "")
+private val tete100 = ItemBuilder(Material.PLAYER_HEAD).customHead(
+    "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDFlNzhmZjQ3NjNlOWFkMWE5OThjNzI4ZjcxZmE1ZGJiZDYxNjRhMjdjYTFmMGU0MjMyYzQxZDc0MjA4MTgwYSJ9fX0=",
+    "")
+private val tete250 = ItemBuilder(Material.PLAYER_HEAD).customHead(
+    "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDNlMWM1ZTY1ZTEzNTU5YmY2MGUxNTRmMTdmNmFmM2E4ZTU2MDhhNDk4N2VjZDFlMGZhZTc1MWM2ZjgyNzI2In19fQ==",
+    "")
+private val tete500 = ItemBuilder(Material.PLAYER_HEAD).customHead(
+    "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGQ4NTlmN2IzY2RmZGFkNDcxODI4ODRlMTI3ZjQ2MWZlOGY5ZmM1MmY3ZDE1MDQyN2MxMTcwNzliMDkyNGUzIn19fQ==",
+    "")
+private val tete1000 = ItemBuilder(Material.PLAYER_HEAD).customHead(
+    "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWU0ZGNmNzFiMGI2ODUyYjU0MWNkMjNhMzFiODg0NjlhZjU4NDI5YWQ1MjJmNTI4MjhmM2E4MGIzNjI5ZWYyIn19fQ==",
+    "")
+private val teteEvent = ItemBuilder(Material.PLAYER_HEAD).customHead(
+    "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmFhZDZmZmFmNmZiOWE4ZWVhOGYzZGJlYTZkZGYzNDcyYTBhNTQ2YjVlMTk0YmQ1NWI0MzNiZDlkMTU4OTMwIn19fQ==",
+    "")
 
-class TPWorldMenu(previous: InventoryMenu? = null) :
+class TPWorldMenu(previous: Menu? = null) :
 
-    InventoryMenu(27, Component.text("Menu des téléportations", NamedTextColor.BLUE, TextDecoration.BOLD), previous) {
+        Menu(
+            MenuSize.Three,
+            Component.text("Menu des téléportations", NamedTextColor.BLUE, TextDecoration.BOLD),
+            previous) {
 
-    override fun open(viewer: Player) {
-        fill(Material.GRAY_STAINED_GLASS_PANE, " ")
+    override fun placeButtons(viewer: Player) {
+        fill(
+            ItemBuilder(Material.GRAY_STAINED_GLASS_PANE).name("")
+                    .build())
 
         addButton(
             0, createWorld100Item()) {
@@ -51,8 +66,7 @@ class TPWorldMenu(previous: InventoryMenu? = null) :
         }
 
         addBackButton()
-        addQuitButton()
-        super.open(viewer)
+        addCloseButton()
     }
 
     private fun teleport(viewer: Player, plotWorld: PlotWorld) {
@@ -63,7 +77,7 @@ class TPWorldMenu(previous: InventoryMenu? = null) :
         val ilb = ItemLoreBuilder()
             .newline()
             .append("Cliquez pour vous téléporter dans le monde 100x100.", NamedTextColor.GRAY)
-        return ItemBuilder(tete100)
+        return tete100
             .name("Monde 100x100", NamedTextColor.AQUA, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
@@ -73,7 +87,7 @@ class TPWorldMenu(previous: InventoryMenu? = null) :
         val ilb = ItemLoreBuilder()
             .newline()
             .append("Cliquez pour vous téléporter dans le monde 250x250.", NamedTextColor.GRAY)
-        return ItemBuilder(tete250)
+        return tete250
             .name("Monde 250x250", NamedTextColor.YELLOW, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
@@ -83,7 +97,7 @@ class TPWorldMenu(previous: InventoryMenu? = null) :
         val ilb = ItemLoreBuilder()
             .newline()
             .append("Cliquez pour vous téléporter dans le monde 500x500.", NamedTextColor.GRAY)
-        return ItemBuilder(tete500)
+        return tete500
             .name("Monde 500x500", NamedTextColor.GOLD, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
@@ -93,7 +107,7 @@ class TPWorldMenu(previous: InventoryMenu? = null) :
         val ilb = ItemLoreBuilder()
             .newline()
             .append("Cliquez pour vous téléporter dans le monde 1000x1000.", NamedTextColor.GRAY)
-        return ItemBuilder(tete1000)
+        return tete1000
             .name("Monde 1000x1000", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
@@ -103,7 +117,7 @@ class TPWorldMenu(previous: InventoryMenu? = null) :
         val ilb = ItemLoreBuilder()
             .newline()
             .append("Cliquez pour vous téléporter dans le monde Event.", NamedTextColor.GRAY)
-        return ItemBuilder(teteEvent)
+        return teteEvent
             .name("Monde Event", NamedTextColor.RED, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()

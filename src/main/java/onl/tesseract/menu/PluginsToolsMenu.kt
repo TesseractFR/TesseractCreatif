@@ -3,20 +3,25 @@ package onl.tesseract.menu
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
-import onl.tesseract.tesseractlib.util.ItemBuilder
-import onl.tesseract.tesseractlib.util.ItemLoreBuilder
-import onl.tesseract.tesseractlib.util.append
-import onl.tesseract.tesseractlib.util.menu.InventoryMenu
+import onl.tesseract.lib.menu.Menu
+import onl.tesseract.lib.menu.MenuSize
+import onl.tesseract.lib.util.ItemBuilder
+import onl.tesseract.lib.util.ItemLoreBuilder
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
-class PluginsToolsMenu(previous: InventoryMenu? = null) :
+class PluginsToolsMenu(previous: Menu? = null) :
 
-    InventoryMenu(27, Component.text("Outils/Plugins du serveur", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD), previous) {
+        Menu(
+            MenuSize.Three,
+            Component.text("Outils/Plugins du serveur", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD),
+            previous) {
 
-    override fun open(viewer: Player) {
-        fill(Material.GRAY_STAINED_GLASS_PANE, " ")
+    override fun placeButtons(viewer: Player) {
+        fill(
+            ItemBuilder(Material.GRAY_STAINED_GLASS_PANE).name(" ")
+                    .build())
 
         addButton(0, createSchematicImportItem()) {}
         addButton(10, createFaweItem()) {}
@@ -29,8 +34,7 @@ class PluginsToolsMenu(previous: InventoryMenu? = null) :
         addButton(8, createGoPaintItem()) {}
 
         addBackButton()
-        addQuitButton()
-        super.open(viewer)
+        addCloseButton()
     }
 
     private fun createSchematicImportItem(): ItemStack {

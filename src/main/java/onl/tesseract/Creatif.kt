@@ -7,17 +7,21 @@ import onl.tesseract.command.*
 import onl.tesseract.command.home.DelhomeCommand
 import onl.tesseract.command.home.HomeCommand
 import onl.tesseract.command.home.SetHomeCommand
-import onl.tesseract.command.ScoreBoardCommands
-import onl.tesseract.player.CreativePlayer
-import onl.tesseract.player.CreativePlayerContainer
+import onl.tesseract.core.Config
+import onl.tesseract.home.HomeService
+import onl.tesseract.home.persistence.HomeHibernateRepository
+import onl.tesseract.lib.service.ServiceContainer
+import onl.tesseract.permpack.PlayerPermPackService
+import onl.tesseract.permpack.persistence.PlayerPermPackInfoHibernateRepository
+import onl.tesseract.player.PermissionService
+import onl.tesseract.plot.PlayerPlotService
+import onl.tesseract.plot.persistence.PlayerPlotInfoHibernateRepository
 import onl.tesseract.rank.PlayerRankService
+import onl.tesseract.rank.persistence.PlayerRankInfoHibernateRepository
 import onl.tesseract.scoreBoard.ScoreBoardCore
-import onl.tesseract.service.CreativeServices.Companion.get
-import onl.tesseract.service.CreativeServices.Companion.getInstance
-import onl.tesseract.tesseractlib.Config
-import onl.tesseract.tesseractlib.TesseractLib
+import onl.tesseract.timeplayed.PlayerTimePlayedService
 import onl.tesseract.timeplayed.PlayerTimePlayedTask
-import org.bukkit.Bukkit
+import onl.tesseract.timeplayed.persistence.PlayerTimePlayedHibernateRepository
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
@@ -28,8 +32,7 @@ class Creatif : JavaPlugin(), Listener {
         private set
     override fun onEnable() {
         instance = this
-        getInstance().registerDefaultServices()
-        TesseractLib.setPlayerContainer(CreativePlayerContainer())
+        registerDefaultServices()
         // Plugin startup logic
         if (!setupPermissions()) {
             System.err.println("Could not setup permissions")
@@ -40,6 +43,24 @@ class Creatif : JavaPlugin(), Listener {
         registerEvents()
         registerCommands()
         ScoreBoardCore.startScoreboard(this)
+    }
+
+    private fun registerDefaultServices() {
+        val serviceContainer = ServiceContainer.getInstance();
+        serviceContainer.registerService(
+            PlayerRankService::class.java,
+            PlayerRankService(PlayerRankInfoHibernateRepository()))
+        serviceContainer.registerService(
+            PlayerPlotService::class.java,
+            PlayerPlotService(PlayerPlotInfoHibernateRepository()))
+        serviceContainer.registerService(
+            PlayerTimePlayedService::class.java,
+            PlayerTimePlayedService(PlayerTimePlayedHibernateRepository()))
+        serviceContainer.registerService(
+            PlayerPermPackService::class.java,
+            PlayerPermPackService(PlayerPermPackInfoHibernateRepository()))
+        serviceContainer.registerService(HomeService::class.java, HomeService(HomeHibernateRepository()))
+        serviceContainer.registerService(PermissionService::class.java, PermissionService())
     }
 
     private fun registerEvents() {
@@ -72,26 +93,21 @@ class Creatif : JavaPlugin(), Listener {
 
     @EventHandler
     fun onJoin(event: PlayerJoinEvent) {
-        if (!event.player.hasPlayedBefore() || !playerContainer.exists(event.player.uniqueId)) {
-            event.player.teleport(Config.getInstance().firstSpawnLocation)
+        if (!event.player.hasPlayedBefore()) {
+            event.player.teleport(Config.invoke().firstSpawnLocation)
             event.joinMessage(
                 Component.text("Bienvenue ", NamedTextColor.GOLD)
                     .append(Component.text(event.player.name, NamedTextColor.GREEN))
                     .append(Component.text(" sur le Créatif !", NamedTextColor.GOLD))
             )
         } else {
-            val creativePlayer: CreativePlayer = playerContainer[event.player] ?: CreativePlayer(event.player)
-            val color = get(
-                PlayerRankService::class.java
-            ).getPlayerRank(event.player.uniqueId).color
-            creativePlayer.onJoin(event.player)
+            val color = ServiceContainer[PlayerRankService::class.java].getPlayerRank(event.player.uniqueId).color
             event.joinMessage(
                 Component.text("+ ", NamedTextColor.GREEN)
                     .append(Component.text(event.player.name, color))
                     .append(Component.text(" a rejoint le serveur.", NamedTextColor.GOLD))
             )
-            creativePlayer.updatePermission()
-            Bukkit.getServer().pluginManager.registerEvents(creativePlayer, this)
+            ServiceContainer[PermissionService::class.java].updatePermission(event.player.uniqueId)
         }
     }
 
@@ -110,7 +126,5 @@ class Creatif : JavaPlugin(), Listener {
         @JvmStatic
         var instance: Creatif? = null
             private set
-        val playerContainer: CreativePlayerContainer
-            get() = TesseractLib.getPlayerContainer() as CreativePlayerContainer
     }
 }

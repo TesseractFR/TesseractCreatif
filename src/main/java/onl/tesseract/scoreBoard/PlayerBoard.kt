@@ -1,8 +1,8 @@
 package onl.tesseract.scoreBoard
 
+import onl.tesseract.lib.service.ServiceContainer
 import onl.tesseract.rank.PlayerRankService
 import onl.tesseract.rank.entity.PlayerRank
-import onl.tesseract.service.CreativeServices
 import onl.tesseract.timeplayed.PlayerTimePlayedService
 import onl.tesseract.util.DurationFormat
 import org.bukkit.ChatColor
@@ -17,8 +17,8 @@ class PlayerBoard(player: Player?) : Board(player) {
     }
 
     private fun displayPlayerBoard(player: Player) {
-        val rankService = CreativeServices[PlayerRankService::class.java]
-        val timePlayedService = CreativeServices[PlayerTimePlayedService::class.java]
+        val rankService = ServiceContainer[PlayerRankService::class.java]
+        val timePlayedService = ServiceContainer[PlayerTimePlayedService::class.java]
         val rank = rankService.getPlayerRank(player.uniqueId)
         val timePlayed = timePlayedService.getPlayerTimePlayed(player.uniqueId)
         var score = 0
