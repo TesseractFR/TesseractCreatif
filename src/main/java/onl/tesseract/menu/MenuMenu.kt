@@ -93,7 +93,9 @@ class MenuMenu(val player: Player) :
         Menu(MenuSize.Six, Component.text("Menu du Créatif", NamedTextColor.RED, TextDecoration.BOLD)) {
 
     override fun placeButtons(viewer: Player) {
-        fill(ItemBuilder(Material.GRAY_STAINED_GLASS_PANE).build())
+        fill(
+            ItemBuilder(Material.GRAY_STAINED_GLASS_PANE).name("")
+                    .build())
         for (slot in listOf(2, 6, 10, 12, 14, 16, 18, 26, 28, 30, 32, 34, 38, 42)) {
             addButton(slot, createBlueStainedGlassPaneItemStack()) {}
         }
@@ -152,7 +154,7 @@ class MenuMenu(val player: Player) :
     }
 
     private fun createBlueStainedGlassPaneItemStack(): ItemStack {
-        return ItemBuilder(Material.BLUE_STAINED_GLASS_PANE)
+        return ItemBuilder(Material.BLUE_STAINED_GLASS_PANE).name("")
             .build()
     }
 
