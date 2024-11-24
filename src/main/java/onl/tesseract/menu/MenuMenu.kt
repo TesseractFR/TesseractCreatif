@@ -29,6 +29,7 @@ import org.bukkit.scheduler.BukkitRunnable
 
 private val teteGrades = ItemBuilder(Material.PLAYER_HEAD).customHead(
     "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTdlNzgyYjQwOGY1NDU2Y2ZhZDBjNDNlOGM1MDFlZjllZmQwMTI4NjI5NzM2MGJlM2I4M2ZiMTZkYzljZDJhNSJ9fX0=",
+
     ""
 )
 private val teteTPWorldMenu = ItemBuilder(Material.PLAYER_HEAD).customHead(
@@ -37,14 +38,17 @@ private val teteTPWorldMenu = ItemBuilder(Material.PLAYER_HEAD).customHead(
 )
 private val tetePlotMenu = ItemBuilder(Material.PLAYER_HEAD).customHead(
     "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTdmODJhY2ViOThmZTA2OWU4YzE2NmNlZDAwMjQyYTc2NjYwYmJlMDcwOTFjOTJjZGRlNTRjNmVkMTBkY2ZmOSJ9fX0=",
+
     ""
 )
 private val teteGenre = ItemBuilder(Material.PLAYER_HEAD).customHead(
     "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2EwOGQwZGFiYzQzNGEwOTNmMDk4YmFmNTA1YjE2NWMxNGNiZTk2NDU3M2VkOGU5ZTYxODUxNTg5MTc5NTcwIn19fQ==",
+
     ""
 )
 private val teteInstagram = ItemBuilder(Material.PLAYER_HEAD).customHead(
     "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTBkNDY0MTg2ZTFhNTBkZGFhMTRiZTIyNTk2MTFhNGU4NDU4NTE1YTUzNjdhOTM4OWE5Y2M3Yzg5Yzk0YTkzYiJ9fX0=",
+
     ""
 )
 private val teteTiktok = ItemBuilder(Material.PLAYER_HEAD).customHead(
@@ -57,14 +61,17 @@ private val teteFacebook = ItemBuilder(Material.PLAYER_HEAD).customHead(
 )
 private val teteDiscord = ItemBuilder(Material.PLAYER_HEAD).customHead(
     "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvM2I5NDg0M2QzNDBhYmFkYmQ2NDAxZWY0ZWM3NGRjZWM0YjY2OTY2MTA2NWJkMWEwMWY5YTU5MDVhODkxOWM3MiJ9fX0=",
+
     ""
 )
 private val teteYoutube = ItemBuilder(Material.PLAYER_HEAD).customHead(
     "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzQ4ODU0NWQ1N2M5ZWVkNTJjM2U1NDdlOTZjNDVkYWJiYjdjZjVmOThkNGM4ZmU2MWRjNmY2OWFiYTBhZWY5NiJ9fX0=",
+
     ""
 )
 private val teteTwitter = ItemBuilder(Material.PLAYER_HEAD).customHead(
     "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTFiN2EwYzIxMGU2Y2RmNWEzNWZkODE5N2U2ZTI0YTAzODMxNWJiZTNiZGNkMWJjYzM2MzBiZjI2ZjU5ZWM1YyJ9fX0=",
+
     ""
 )
 private val teteSiteWeb = ItemBuilder(Material.PLAYER_HEAD).customHead(
@@ -192,46 +199,46 @@ private fun createGradesItemStack(): ItemStack {
         .build()
 }
 
-    private fun createPluginsToolsItemStack(): ItemStack {
-        val ilb = ItemLoreBuilder()
-            .newline()
-            .append(
-                "Cliquez pour afficher les différents outils et plugins utilisés sur le serveur pour construire.",
-                NamedTextColor.GRAY
-            )
-        return ItemBuilder(Material.WOODEN_AXE)
-            .name("Outils/Plugins du serveur", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD)
-            .lore(ilb.get())
-            .build()
-    }
+private fun createPluginsToolsItemStack(): ItemStack {
+    val ilb = ItemLoreBuilder()
+        .newline()
+        .append(
+            "Cliquez pour afficher les différents outils et plugins utilisés sur le serveur pour construire.",
+            NamedTextColor.GRAY
+        )
+    return ItemBuilder(Material.WOODEN_AXE)
+        .name("Outils/Plugins du serveur", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD)
+        .lore(ilb.get())
+        .build()
+}
 
-    private fun createBuildGuideItemStack(): ItemStack {
-        val ilb = ItemLoreBuilder()
-            .newline()
-            .append(
-                "Cliquez pour recevoir le guide des commandes de build essentielles pour bien démarrer votre construction !",
-                NamedTextColor.GRAY
-            )
-        return ItemBuilder(Material.BOOK)
-            .name("Le Build pour les Nuls", NamedTextColor.RED, TextDecoration.BOLD)
-            .lore(ilb.get())
-            .build()
-    }
+private fun createBuildGuideItemStack(): ItemStack {
+    val ilb = ItemLoreBuilder()
+        .newline()
+        .append(
+            "Cliquez pour recevoir le guide des commandes de build essentielles pour bien démarrer votre construction !",
+            NamedTextColor.GRAY
+        )
+    return ItemBuilder(Material.BOOK)
+        .name("Le Build pour les Nuls", NamedTextColor.RED, TextDecoration.BOLD)
+        .lore(ilb.get())
+        .build()
+}
 
-    private fun createTPWorldMenuItemStack(): ItemStack {
-        return teteTPWorldMenu
-                .name("Téléportations dans les mondes", NamedTextColor.BLUE, TextDecoration.BOLD)
-                .lore()
-            .newline()
-            .append(
-                "Cliquez pour afficher les différents mondes disponibles et vous y téléporter.",
-                NamedTextColor.GRAY
+private fun createTPWorldMenuItemStack(): ItemStack {
+    return teteTPWorldMenu
+        .name("Téléportations dans les mondes", NamedTextColor.BLUE, TextDecoration.BOLD)
+        .lore()
+        .newline()
+        .append(
+            "Cliquez pour afficher les différents mondes disponibles et vous y téléporter.",
+            NamedTextColor.GRAY
             )
         .buildLore()
-                .build()
-    }
+        .build()
+}
 
-    fun createPlayerInfoItemStack(player: Player): ItemStack {
+ fun createPlayerInfoItemStack(player: Player): ItemStack {
     val playerRankService = ServiceContainer[PlayerRankService::class.java]
     val playerRank = playerRankService.getPlayerRank(player.uniqueId)
     val nbPlots = ServiceContainer[PlayerPlotService::class.java]
@@ -242,37 +249,39 @@ private fun createGradesItemStack(): ItemStack {
     val timePlayedService = ServiceContainer[PlayerTimePlayedService::class.java]
     val timePlayed = timePlayedService.getPlayerTimePlayed(player.uniqueId)
 
-        val ilb = ItemLoreBuilder()
-            .newline()
-            .append("Pseudo : ", NamedTextColor.GOLD).append(player.name, NamedTextColor.WHITE)
-            .newline()
-            .append("Genre : ", NamedTextColor.GOLD)
-            .append(ServiceContainer[TPlayerInfoService::class.java][player.uniqueId].genre.getName(),
-                    NamedTextColor.WHITE)
-            .newline().newline()
-            .append("Grade : ", NamedTextColor.GOLD).append(playerRank.name, playerRank.color, TextDecoration.BOLD)
-            .newline()
-            .append("Temps de jeu global : ", NamedTextColor.GOLD)
-            .newline()
-            .append(DurationFormat.formatTime(timePlayed), NamedTextColor.WHITE)
-            .newline().newline()
-            .append("Nombre de plots Monde 100 : ", NamedTextColor.GOLD)
-            .append(totalPlotsWorld100.toString(), NamedTextColor.WHITE, TextDecoration.BOLD)
-            .newline()
-            .append("Nombre de plots Monde 250 : ", NamedTextColor.GOLD)
-            .append(totalPlotsWorld250.toString(), NamedTextColor.WHITE, TextDecoration.BOLD)
-            .newline()
-            .append("Nombre de plots Monde 500 : ", NamedTextColor.GOLD)
-            .append(totalPlotsWorld500.toString(), NamedTextColor.WHITE, TextDecoration.BOLD)
-            .newline()
-            .append("Nombre de plots Monde 1000 : ", NamedTextColor.GOLD)
-            .append(totalPlotsWorld1000.toString(), NamedTextColor.WHITE, TextDecoration.BOLD)
-        return ItemBuilder(ServiceContainer[PlayerProfileService::class.java].getPlayerHead(player.uniqueId))
-            .name("Informations du joueur", NamedTextColor.YELLOW, TextDecoration.BOLD)
-            .lore(ilb.get())
-            .build()
+    val ilb = ItemLoreBuilder()
+        .newline()
+        .append("Pseudo : ", NamedTextColor.GOLD).append(player.name, NamedTextColor.WHITE)
+        .newline()
+        .append("Genre : ", NamedTextColor.GOLD)
+        .append(
+            ServiceContainer[TPlayerInfoService::class.java][player.uniqueId].genre.getName(),
+            NamedTextColor.WHITE
+        )
+        .newline().newline()
+        .append("Grade : ", NamedTextColor.GOLD).append(playerRank.name, playerRank.color, TextDecoration.BOLD)
+        .newline()
+        .append("Temps de jeu global : ", NamedTextColor.GOLD)
+        .newline()
+        .append(DurationFormat.formatTime(timePlayed), NamedTextColor.WHITE)
+        .newline().newline()
+        .append("Nombre de plots Monde 100 : ", NamedTextColor.GOLD)
+        .append(totalPlotsWorld100.toString(), NamedTextColor.WHITE, TextDecoration.BOLD)
+        .newline()
+        .append("Nombre de plots Monde 250 : ", NamedTextColor.GOLD)
+        .append(totalPlotsWorld250.toString(), NamedTextColor.WHITE, TextDecoration.BOLD)
+        .newline()
+        .append("Nombre de plots Monde 500 : ", NamedTextColor.GOLD)
+        .append(totalPlotsWorld500.toString(), NamedTextColor.WHITE, TextDecoration.BOLD)
+        .newline()
+        .append("Nombre de plots Monde 1000 : ", NamedTextColor.GOLD)
+        .append(totalPlotsWorld1000.toString(), NamedTextColor.WHITE, TextDecoration.BOLD)
+    return ItemBuilder(ServiceContainer[PlayerProfileService::class.java].getPlayerHead(player.uniqueId))
+        .name("Informations du joueur", NamedTextColor.YELLOW, TextDecoration.BOLD)
+        .lore(ilb.get())
+        .build()
 
-    }
+}
 
 private fun createPlotMenuItemStack(): ItemStack {
     return tetePlotMenu
