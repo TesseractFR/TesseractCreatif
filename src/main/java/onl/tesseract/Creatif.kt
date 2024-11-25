@@ -10,7 +10,9 @@ import onl.tesseract.command.home.SetHomeCommand
 import onl.tesseract.core.Config
 import onl.tesseract.home.HomeService
 import onl.tesseract.home.persistence.HomeHibernateRepository
+import onl.tesseract.lib.chat.ChatEntryService
 import onl.tesseract.lib.service.ServiceContainer
+import onl.tesseract.lib.task.TaskScheduler
 import onl.tesseract.permpack.PlayerPermPackService
 import onl.tesseract.permpack.persistence.PlayerPermPackInfoHibernateRepository
 import onl.tesseract.player.PermissionService
@@ -61,6 +63,10 @@ class Creatif : JavaPlugin(), Listener {
             PlayerPermPackService(PlayerPermPackInfoHibernateRepository()))
         serviceContainer.registerService(HomeService::class.java, HomeService(HomeHibernateRepository()))
         serviceContainer.registerService(PermissionService::class.java, PermissionService())
+
+        val chatEntryService = ChatEntryService(TaskScheduler(this))
+        serviceContainer.registerService(ChatEntryService::class.java, chatEntryService)
+        server.pluginManager.registerEvents(chatEntryService, this)
     }
 
     private fun registerEvents() {
@@ -84,6 +90,7 @@ class Creatif : JavaPlugin(), Listener {
         this.getCommand("home")?.setExecutor(homeCommand)
         this.getCommand("home")?.tabCompleter = homeCommand
         this.getCommand("scoreboard")?.setExecutor(ScoreBoardCommands())
+        this.getCommand("tpa")?.setExecutor(TPACommand())
     }
 
     override fun onDisable() {
