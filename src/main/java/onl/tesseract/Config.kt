@@ -18,7 +18,7 @@ data class Config(
     companion object {
 
         private fun load(): Config {
-            val file = File(onl.tesseract.tesseractlib.Config.getConfigFilepath())
+            val file = File("plugins/Tesseract/config.yml")
             val yaml = YamlConfiguration.loadConfiguration(file)
             return Config(
                 yaml.getString("creative_db_host")

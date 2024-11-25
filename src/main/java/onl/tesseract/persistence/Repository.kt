@@ -1,5 +1,7 @@
 package onl.tesseract.persistence
 
+import java.util.UUID
+
 /**
  * Abstract persistence layer to read and write entities from a data store
  */

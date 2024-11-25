@@ -3,42 +3,40 @@ package onl.tesseract.timeplayed
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
+import onl.tesseract.core.afk.AfkManager
+import onl.tesseract.core.persistence.hibernate.boutique.TPlayerInfoService
+import onl.tesseract.lib.service.ServiceContainer
+import onl.tesseract.lib.util.append
 import onl.tesseract.rank.PlayerRankService
 import onl.tesseract.rank.entity.PlayerRank
-import onl.tesseract.service.CreativeServices
-import onl.tesseract.tesseractlib.afk.AfkManager
-import onl.tesseract.tesseractlib.player.TPlayer
-import onl.tesseract.tesseractlib.util.append
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitRunnable
-import java.time.Duration
 
 /**
  * Task to update the player's time played, and auto-rank.
  */
 class PlayerTimePlayedTask(val period: Long) : BukkitRunnable() {
-    val afkManager: AfkManager = AfkManager.getINSTANCE();
+    private val afkManager: AfkManager = ServiceContainer[AfkManager::class.java]
     override fun run() {
         for(player in Bukkit.getOnlinePlayers()){
             if(!afkManager.isAfk(player)){
-                CreativeServices[PlayerTimePlayedService::class.java].addPlayerTimePlayed(player.uniqueId,period);
+                ServiceContainer[PlayerTimePlayedService::class.java].addPlayerTimePlayed(player.uniqueId, period)
                 checkUpdateRank(player)
             }
         }
     }
     private fun checkUpdateRank(player: Player){
         val uuid = player.uniqueId
-        val playerRank = CreativeServices[PlayerRankService::class.java].getPlayerRank(uuid)
-        val playedTime = CreativeServices[PlayerTimePlayedService::class.java].getPlayerTimePlayed(uuid)
-        val boughtTime = CreativeServices[PlayerTimePlayedService::class.java].getPlayerTimeBought(uuid)
+        val playerRankService = ServiceContainer[PlayerRankService::class.java]
+        val playerRank = playerRankService.getPlayerRank(uuid)
         if(playerRank < PlayerRank.BATISSEUR){
-            val nextRank = PlayerRank.entries[playerRank.ordinal+1]
-            val duration = playedTime + boughtTime
-            val duration2 = Duration.ofHours(nextRank.hoursRequired)
-            if(duration > duration2){
-                CreativeServices[PlayerRankService::class.java].setPlayerRank(uuid,nextRank)
+            val nextRank = playerRankService.getNextPlayerRank(uuid)
+            val playerTimePlayedService = ServiceContainer[PlayerTimePlayedService::class.java]
+            val timeForRankUp = playerTimePlayedService.getTimeBeforeRankUp(uuid, nextRank)
+            if(!timeForRankUp.isPositive){
+                playerRankService.setPlayerRank(uuid,nextRank)
                 val rankUpMessage = getRankUpMessage(player, nextRank)
                 Bukkit.broadcast(rankUpMessage)
             }
@@ -46,7 +44,7 @@ class PlayerTimePlayedTask(val period: Long) : BukkitRunnable() {
     }
 
     private fun getRankUpMessage(player: Player,nextRank: PlayerRank): Component {
-        val gender = TPlayer.get(player.uniqueId).gender;
+        val gender = ServiceContainer[TPlayerInfoService::class.java][player.uniqueId].genre
         val rankUpMessage = Component.text("---------------------------------------------", NamedTextColor.GOLD)
             .append("\nFélicitations à ", NamedTextColor.GOLD)
             .append(player.name, NamedTextColor.RED, TextDecoration.BOLD)
@@ -62,7 +60,7 @@ class PlayerTimePlayedTask(val period: Long) : BukkitRunnable() {
          * Start the task, period in seconds.
          */
         fun start(plugin: JavaPlugin,period: Long) {
-            PlayerTimePlayedTask(period).runTaskTimerAsynchronously(plugin,0,period*20L);
+            PlayerTimePlayedTask(period).runTaskTimerAsynchronously(plugin, 0, period * 20L)
         }
     }
 }
