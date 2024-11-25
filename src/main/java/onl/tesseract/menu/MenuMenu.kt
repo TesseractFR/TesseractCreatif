@@ -151,6 +151,7 @@ class MenuMenu(val player: Player) :
             viewer.closeInventory()
             viewer.sendMessage(messageWebsite)
         }
+        addCloseButton()
     }
 
     private fun createBlueStainedGlassPaneItemStack(): ItemStack {

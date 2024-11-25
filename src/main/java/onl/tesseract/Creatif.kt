@@ -12,7 +12,9 @@ import onl.tesseract.nickname.NicknameListener
 import onl.tesseract.core.Config
 import onl.tesseract.home.HomeService
 import onl.tesseract.home.persistence.HomeHibernateRepository
+import onl.tesseract.lib.chat.ChatEntryService
 import onl.tesseract.lib.service.ServiceContainer
+import onl.tesseract.lib.task.TaskScheduler
 import onl.tesseract.lib.util.append
 import onl.tesseract.nickname.NicknameService
 import onl.tesseract.nickname.persistence.NicknameHibernateRepository
@@ -69,6 +71,10 @@ class Creatif : JavaPlugin(), Listener {
         serviceContainer.registerService(
             NicknameService::class.java,
             NicknameService(NicknameHibernateRepository()))
+
+        val chatEntryService = ChatEntryService(TaskScheduler(this))
+        serviceContainer.registerService(ChatEntryService::class.java, chatEntryService)
+        server.pluginManager.registerEvents(chatEntryService, this)
     }
 
     private fun registerEvents() {
@@ -93,6 +99,7 @@ class Creatif : JavaPlugin(), Listener {
         this.getCommand("home")?.setExecutor(homeCommand)
         this.getCommand("home")?.tabCompleter = homeCommand
         this.getCommand("scoreboard")?.setExecutor(ScoreBoardCommands())
+        this.getCommand("tpa")?.setExecutor(TPACommand())
         this.getCommand("nick")?.setExecutor(NickCommand())
     }
 
