@@ -7,12 +7,17 @@ import onl.tesseract.command.*
 import onl.tesseract.command.home.DelhomeCommand
 import onl.tesseract.command.home.HomeCommand
 import onl.tesseract.command.home.SetHomeCommand
+import onl.tesseract.command.ScoreBoardCommands
+import onl.tesseract.nickname.NicknameListener
 import onl.tesseract.core.Config
 import onl.tesseract.home.HomeService
 import onl.tesseract.home.persistence.HomeHibernateRepository
 import onl.tesseract.lib.chat.ChatEntryService
 import onl.tesseract.lib.service.ServiceContainer
 import onl.tesseract.lib.task.TaskScheduler
+import onl.tesseract.lib.util.append
+import onl.tesseract.nickname.NicknameService
+import onl.tesseract.nickname.persistence.NicknameHibernateRepository
 import onl.tesseract.permpack.PlayerPermPackService
 import onl.tesseract.permpack.persistence.PlayerPermPackInfoHibernateRepository
 import onl.tesseract.player.PermissionService
@@ -63,6 +68,9 @@ class Creatif : JavaPlugin(), Listener {
             PlayerPermPackService(PlayerPermPackInfoHibernateRepository()))
         serviceContainer.registerService(HomeService::class.java, HomeService(HomeHibernateRepository()))
         serviceContainer.registerService(PermissionService::class.java, PermissionService())
+        serviceContainer.registerService(
+            NicknameService::class.java,
+            NicknameService(NicknameHibernateRepository()))
 
         val chatEntryService = ChatEntryService(TaskScheduler(this))
         serviceContainer.registerService(ChatEntryService::class.java, chatEntryService)
@@ -72,6 +80,7 @@ class Creatif : JavaPlugin(), Listener {
     private fun registerEvents() {
         val pluginManager = server.pluginManager
         pluginManager.registerEvents(this, this)
+        pluginManager.registerEvents(NicknameListener(), this)
     }
 
     private fun registerCommands() {
@@ -91,6 +100,7 @@ class Creatif : JavaPlugin(), Listener {
         this.getCommand("home")?.tabCompleter = homeCommand
         this.getCommand("scoreboard")?.setExecutor(ScoreBoardCommands())
         this.getCommand("tpa")?.setExecutor(TPACommand())
+        this.getCommand("nick")?.setExecutor(NickCommand())
     }
 
     override fun onDisable() {
@@ -103,15 +113,15 @@ class Creatif : JavaPlugin(), Listener {
             event.player.teleport(Config.invoke().firstSpawnLocation)
             event.joinMessage(
                 Component.text("Bienvenue ", NamedTextColor.GOLD)
-                    .append(Component.text(event.player.name, NamedTextColor.GREEN))
-                    .append(Component.text(" sur le Créatif !", NamedTextColor.GOLD))
+                    .append(event.player.name, NamedTextColor.GREEN)
+                    .append(" sur le Créatif !", NamedTextColor.GOLD)
             )
         } else {
             val color = ServiceContainer[PlayerRankService::class.java].getPlayerRank(event.player.uniqueId).color
             event.joinMessage(
                 Component.text("+ ", NamedTextColor.GREEN)
-                    .append(Component.text(event.player.name, color))
-                    .append(Component.text(" a rejoint le serveur.", NamedTextColor.GOLD))
+                    .append(event.player.name, color)
+                    .append(" a rejoint le serveur.", NamedTextColor.GOLD)
             )
             ServiceContainer[PermissionService::class.java].updatePermission(event.player.uniqueId)
         }
