@@ -6,18 +6,18 @@ import onl.tesseract.command.argument.TimeStringArg
 import onl.tesseract.commandBuilder.CommandContext
 import onl.tesseract.commandBuilder.annotation.Argument
 import onl.tesseract.commandBuilder.annotation.Command
-import onl.tesseract.service.CreativeServices
-import onl.tesseract.tesseractlib.command.argument.IntegerCommandArgument
+import onl.tesseract.lib.command.argument.IntegerCommandArgument
+import onl.tesseract.lib.command.argument.PlayerArg
+import onl.tesseract.lib.service.ServiceContainer
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
-import onl.tesseract.tesseractlib.command.argument.PlayerArg
 import onl.tesseract.timeplayed.PlayerTimePlayedService
 import java.time.Duration
 
 @Command(name = "time")
 class TimeCommand : CommandContext() {
 
-    private val timePlayed = CreativeServices[PlayerTimePlayedService::class.java]
+    private val timePlayed = ServiceContainer[PlayerTimePlayedService::class.java]
 
     @Command
     fun setPlayedTime(
