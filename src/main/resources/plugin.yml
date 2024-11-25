@@ -61,3 +61,11 @@ commands:
     description: Commandes staff
     permission: tesseract.staff
 
+  nick:
+    aliases: nick
+    usage: "/nick"
+    description: Mettre un surnom au joueur
+  tpa:
+    aliases: tpa
+    usage: "/tpa"
+    description: Se tp à un joueur
