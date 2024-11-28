@@ -13,4 +13,4 @@ import onl.tesseract.commandBuilder.annotation.Perm
         TimeCommand::class
     ]
 )
-class Staff : CommandContext()
+class StaffCommand : CommandContext()

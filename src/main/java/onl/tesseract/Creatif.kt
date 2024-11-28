@@ -4,12 +4,10 @@ import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.milkbowl.vault.permission.Permission
 import onl.tesseract.command.*
-import onl.tesseract.command.staff.StaffCommand
 import onl.tesseract.command.home.DelhomeCommand
 import onl.tesseract.command.home.HomeCommand
 import onl.tesseract.command.home.SetHomeCommand
-import onl.tesseract.command.ScoreBoardCommands
-import onl.tesseract.nickname.NicknameListener
+import onl.tesseract.command.staff.StaffCommand
 import onl.tesseract.core.Config
 import onl.tesseract.home.HomeService
 import onl.tesseract.home.persistence.HomeHibernateRepository
@@ -17,6 +15,7 @@ import onl.tesseract.lib.chat.ChatEntryService
 import onl.tesseract.lib.service.ServiceContainer
 import onl.tesseract.lib.task.TaskScheduler
 import onl.tesseract.lib.util.append
+import onl.tesseract.nickname.NicknameListener
 import onl.tesseract.nickname.NicknameService
 import onl.tesseract.nickname.persistence.NicknameHibernateRepository
 import onl.tesseract.permpack.PlayerPermPackService
@@ -91,7 +90,11 @@ class Creatif : JavaPlugin(), Listener {
         this.getCommand("blocks")?.setExecutor(SpecialBlockMenuCommand())
         this.getCommand("outils")?.setExecutor(PluginsToolsMenuCommand())
         this.getCommand("commandes")?.setExecutor(CommandsBookCommand())
-        this.getCommand("staff")?.setExecutor(Staff())
+        val staffCommand = StaffCommand()
+        this.getCommand("staff")
+                ?.setExecutor(staffCommand)
+        this.getCommand("staff")
+                ?.setExecutor(staffCommand)
         this.getCommand("boutique")?.setExecutor(BoutiqueCommand())
         this.getCommand("sethome")?.setExecutor(SetHomeCommand())
         val delhomeCommand  = DelhomeCommand()
@@ -103,7 +106,6 @@ class Creatif : JavaPlugin(), Listener {
         this.getCommand("scoreboard")?.setExecutor(ScoreBoardCommands())
         this.getCommand("tpa")?.setExecutor(TPACommand())
         this.getCommand("nick")?.setExecutor(NickCommand())
-        this.getCommand("staff")?.setExecutor(StaffCommand())
     }
 
     override fun onDisable() {
