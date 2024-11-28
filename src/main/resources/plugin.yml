@@ -35,7 +35,6 @@ commands:
     aliases: commandes
     usage: "/commandes"
     description: Reçois un livre guide des commandes de build basiques
-
   boutique:
     aliases: boutique
     usage: "/boutique"
@@ -61,7 +60,6 @@ commands:
     usage: "/staff"
     description: Commandes staff
     permission: tesseract.staff
-
   nick:
     aliases: nick
     usage: "/nick"
