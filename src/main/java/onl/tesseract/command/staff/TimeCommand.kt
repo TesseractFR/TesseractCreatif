@@ -9,10 +9,12 @@ import onl.tesseract.commandBuilder.annotation.Command
 import onl.tesseract.lib.command.argument.IntegerCommandArgument
 import onl.tesseract.lib.command.argument.PlayerArg
 import onl.tesseract.lib.service.ServiceContainer
+import onl.tesseract.timeplayed.PlayerTimePlayedService
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
-import onl.tesseract.timeplayed.PlayerTimePlayedService
 import java.time.Duration
+
+private const val MSG_UNIT_INVALID_TIME = "Unité de temps invalide. Utilisez day, month, second, minute, hour."
 
 @Command(name = "time")
 class TimeCommand : CommandContext() {
@@ -31,7 +33,7 @@ class TimeCommand : CommandContext() {
             timePlayed.setPlayerTimePlayed(player.uniqueId, totalSeconds.toLong())
             sender.sendMessage(Component.text("Le temps de jeu de ${player.name} a été défini à $value $unit(s).", NamedTextColor.YELLOW))
         } else {
-            sender.sendMessage(Component.text("Unité de temps invalide. Utilisez day, month, second, minute, hour.", NamedTextColor.RED))
+            sender.sendMessage(Component.text(MSG_UNIT_INVALID_TIME, NamedTextColor.RED))
         }
     }
 
@@ -47,7 +49,7 @@ class TimeCommand : CommandContext() {
             timePlayed.addPlayerTimePlayed(player.uniqueId, totalSeconds.toLong())
             sender.sendMessage(Component.text("Le temps de jeu de ${player.name} a été augmenté de $value $unit(s).", NamedTextColor.YELLOW))
         } else {
-            sender.sendMessage(Component.text("Unité de temps invalide. Utilisez day, month, second, minute, hour.", NamedTextColor.RED))
+            sender.sendMessage(Component.text(MSG_UNIT_INVALID_TIME, NamedTextColor.RED))
         }
     }
 
@@ -68,7 +70,7 @@ class TimeCommand : CommandContext() {
                 sender.sendMessage(Component.text("Le temps de jeu de ${player.name} a été réduit de $value $unit(s).", NamedTextColor.YELLOW))
             }
         } else {
-            sender.sendMessage(Component.text("Unité de temps invalide. Utilisez day, month, second, minute, hour.", NamedTextColor.RED))
+            sender.sendMessage(Component.text(MSG_UNIT_INVALID_TIME, NamedTextColor.RED))
         }
     }
 
