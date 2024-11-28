@@ -55,6 +55,11 @@ commands:
     aliases: scoreboard
     usage: "/scoreboard"
     description: Commandes du scoreboard
+  staff:
+    aliases: staff
+    usage: "/staff"
+    description: Commandes staff
+    permission: tesseract.staff
   nick:
     aliases: nick
     usage: "/nick"
