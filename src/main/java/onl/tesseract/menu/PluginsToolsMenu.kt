@@ -5,11 +5,17 @@ import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
 import onl.tesseract.lib.menu.Menu
 import onl.tesseract.lib.menu.MenuSize
-import onl.tesseract.lib.util.ItemBuilder
+import onl.tesseract.lib.menu.ItemBuilder
 import onl.tesseract.lib.util.ItemLoreBuilder
+import onl.tesseract.menu.boutique.RentPluginsMenu
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
+
+private val tetePlayerParticles = ItemBuilder(Material.PLAYER_HEAD).customHead(
+    "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDQ2MWQ5ZDA2YzBiZjRhN2FmNGIxNmZkMTI4MzFlMmJlMGNmNDJlNmU1NWU5YzBkMzExYTJhODk2NWEyM2IzNCJ9fX0=",
+    " "
+)
 
 class PluginsToolsMenu(previous: Menu? = null) :
 
@@ -24,14 +30,26 @@ class PluginsToolsMenu(previous: Menu? = null) :
                     .build())
 
         addButton(0, createSchematicImportItem()) {}
-        addButton(10, createFaweItem()) {}
         addButton(2, createBuilderUtilitiesItem()) {}
-        addButton(12, createArmorStandToolsItem()) {}
         addButton(4, createHdbItem()) {}
-        addButton(14, createVoxelSniperItem()) {}
-        addButton(6, createArceonItem()) {}
-        addButton(16, createGoBrushItem()) {}
+        addButton(6, createArceonItem()) {
+            RentPluginsMenu(viewer, this).open(viewer)
+        }
         addButton(8, createGoPaintItem()) {}
+        addButton(10, createFaweItem()) {}
+        addButton(12, createArmorStandToolsItem()) {}
+        addButton(13, createMetaBrushItem()) {
+            RentPluginsMenu(viewer, this).open(viewer)
+        }
+        addButton(14, createVoxelSniperItem()) {}
+        addButton(16, createGoBrushItem()) {}
+        addButton(20, createAxiomItem()) {}
+        addButton(22, createPlayerParticlesItem()) {
+            RentPluginsMenu(viewer, this).open(viewer)
+        }
+        addButton(24, createDisplayEntitiesItem()) {
+            RentPluginsMenu(viewer, this).open(viewer)
+        }
 
         addBackButton()
         addCloseButton()
@@ -90,6 +108,10 @@ class PluginsToolsMenu(previous: Menu? = null) :
     private fun createVoxelSniperItem(): ItemStack {
         val ilb = ItemLoreBuilder()
             .newline()
+            .append("Grade disponible à partir du rang ", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD)
+            .append("BÂTISSEUR ", NamedTextColor.BLUE, TextDecoration.BOLD)
+            .append("!", NamedTextColor.LIGHT_PURPLE)
+            .newline().newline()
             .append("Libérez votre créativité avec les outils et pinceaux puissants de VoxelSniper. Façonnez des montagnes, sculptez des grottes et peignez des mondes avec une grande finesse.", NamedTextColor.GRAY)
             .append(" Transformez des blocs en chefs-d'œuvre impressionnants qui émerveilleront les autres !", NamedTextColor.GRAY)
         return ItemBuilder(Material.ARROW)
@@ -101,6 +123,10 @@ class PluginsToolsMenu(previous: Menu? = null) :
     private fun createArceonItem(): ItemStack {
         val ilb = ItemLoreBuilder()
             .newline()
+            .append("Grade PAYANT !", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD)
+            .newline()
+            .append(" (Clique pour ouvrir la boutique)", NamedTextColor.DARK_PURPLE, TextDecoration.ITALIC)
+            .newline().newline()
             .append("Arceon ajoute des options intéressantes à WorldEdit, ", NamedTextColor.GRAY)
             .append("en incluant des fonctionnalités plus complexes pour créer des structures précises en quelques commandes assez simples.", NamedTextColor.GRAY)
         return ItemBuilder(Material.PAPER)
@@ -144,4 +170,59 @@ class PluginsToolsMenu(previous: Menu? = null) :
             .lore(ilb.get())
             .build()
     }
+
+    private fun createMetaBrushItem(): ItemStack {
+        val ilb = ItemLoreBuilder()
+            .newline()
+            .append("Grade PAYANT !", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD)
+            .newline()
+            .append(" (Clique pour ouvrir la boutique)", NamedTextColor.DARK_PURPLE, TextDecoration.ITALIC)
+            .newline().newline()
+            .append("Metabrush permet d'ajouter des commandes puissantes pour améliorer vos capacités de construction.", NamedTextColor.GRAY)
+            .append(" Ce plugin est parfait pour les constructions techniques avancées.", NamedTextColor.GRAY)
+        return ItemBuilder(Material.BRUSH)
+            .name("Metabrush", NamedTextColor.RED, TextDecoration.BOLD)
+            .lore(ilb.get())
+            .build()
+    }
+
+    private fun createAxiomItem(): ItemStack {
+        val ilb = ItemLoreBuilder()
+            .newline()
+            .append("Axiom est un plugin d'interface facile à utiliser, conçu pour faciliter le processus de construction.", NamedTextColor.GRAY)
+            .append(" Il permet de réaliser des constructions rapidement et de manière intuitive.", NamedTextColor.GRAY)
+        return ItemBuilder(Material.ENDER_PEARL)
+            .name("Axiom", NamedTextColor.BLUE, TextDecoration.BOLD)
+            .lore(ilb.get())
+            .build()
+    }
+
+    private fun createPlayerParticlesItem(): ItemStack {
+        val ilb = ItemLoreBuilder()
+            .newline()
+            .append("Grade PAYANT !", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD)
+            .newline()
+            .append(" (Clique pour ouvrir la boutique)", NamedTextColor.DARK_PURPLE, TextDecoration.ITALIC)
+            .newline().newline()
+            .append("PlayerParticles permet d'ajouter des particules personnalisées à vos constructions.", NamedTextColor.GRAY)
+        return tetePlayerParticles
+            .name("PlayerParticles", NamedTextColor.DARK_GREEN, TextDecoration.BOLD)
+            .lore(ilb.get())
+            .build()
+    }
+
+    private fun createDisplayEntitiesItem(): ItemStack {
+        val ilb = ItemLoreBuilder()
+            .newline()
+            .append("Grade PAYANT !", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD)
+            .newline()
+            .append(" (Clique pour ouvrir la boutique)", NamedTextColor.DARK_PURPLE, TextDecoration.ITALIC)
+            .newline().newline()
+            .append("Display Entities permet de créer des détails impressionnants avec moins de lag que les ASTs.", NamedTextColor.GRAY)
+        return ItemBuilder(Material.ARMOR_STAND)
+            .name("Display Entities", NamedTextColor.YELLOW, TextDecoration.BOLD)
+            .lore(ilb.get())
+            .build()
+    }
+
 }

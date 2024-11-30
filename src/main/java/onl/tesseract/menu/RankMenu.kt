@@ -100,7 +100,7 @@ class RankMenu(previous: Menu? = null) :
             .newline()
             .append("Monde 500 : ", NamedTextColor.GOLD).append("1", NamedTextColor.WHITE, TextDecoration.BOLD)
         return teteCreateur
-            .name("Créateur", NamedTextColor.YELLOW, TextDecoration.BOLD)
+            .name("Créateur", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
     }
@@ -119,7 +119,7 @@ class RankMenu(previous: Menu? = null) :
             .newline()
             .append("Monde 500 : ", NamedTextColor.GOLD).append("2", NamedTextColor.WHITE, TextDecoration.BOLD)
         return teteIngenieur
-            .name("Ingénieur", NamedTextColor.BLUE, TextDecoration.BOLD)
+            .name("Ingénieur", NamedTextColor.DARK_BLUE, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
     }
@@ -139,8 +139,10 @@ class RankMenu(previous: Menu? = null) :
             .append("Monde 500 : ", NamedTextColor.GOLD).append("3", NamedTextColor.WHITE, TextDecoration.BOLD)
             .newline()
             .append("Monde 1000 : ", NamedTextColor.GOLD).append("1", NamedTextColor.WHITE, TextDecoration.BOLD)
+            .newline().newline()
+            .append("Obtention de ", NamedTextColor.GREEN, TextDecoration.BOLD).append("VoxelSniper", NamedTextColor.DARK_AQUA, TextDecoration.BOLD)
         return teteBatisseur
-            .name("Bâtisseur", NamedTextColor.AQUA, TextDecoration.BOLD)
+            .name("Bâtisseur", NamedTextColor.BLUE, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
     }
@@ -171,7 +173,7 @@ class RankMenu(previous: Menu? = null) :
             .newline()
             .append("- Et bien plus encore...", NamedTextColor.GOLD, TextDecoration.ITALIC)
         return teteVirtuose
-            .name("Virtuose", NamedTextColor.RED, TextDecoration.BOLD)
+            .name("Virtuose", NamedTextColor.AQUA, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
     }
