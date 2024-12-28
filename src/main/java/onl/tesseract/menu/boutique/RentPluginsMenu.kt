@@ -42,7 +42,8 @@ class RentPluginsMenu(private val player: Player, previous: Menu) :
                     .build())
 
         val packService = ServiceContainer[PlayerPermPackService::class.java]
-        addButton(0, getArceonItemStack()
+        addButton(
+            1, getArceonItemStack()
         ) {
             confirmBuyLysDor(player, 200, "Confirmer l'achat d'un mois d'Arceon pour 200 lys d'or")
             {
@@ -54,7 +55,7 @@ class RentPluginsMenu(private val player: Player, previous: Menu) :
         }
 
         addButton(
-            1, getPlayerParticlesItemStack()
+            7, getPlayerParticlesItemStack()
         ) {
             confirmBuyLysDor(player, 200, "Confirmer l'achat d'un mois de PlayerParticles pour 200 lys d'or")
             {
@@ -66,7 +67,7 @@ class RentPluginsMenu(private val player: Player, previous: Menu) :
         }
 
         addButton(
-            2, getMetaBrushItemStack()
+            12, getMetaBrushItemStack()
         ) {confirmBuyLysDor(player, 200, "Confirmer l'achat d'un mois de MetaBrush pour 200 lys d'or")
         {
             packService.addTimeLeftMetaBrush(player.uniqueId, Duration.ofDays(30))
@@ -77,7 +78,7 @@ class RentPluginsMenu(private val player: Player, previous: Menu) :
         }
 
         addButton(
-            3, getDisplayEntitiesItemStack()
+            14, getDisplayEntitiesItemStack()
         ) {confirmBuyLysDor(player, 200, "Confirmer l'achat d'un mois de DisplayEntities pour 200 lys d'or")
         {
             packService.addTimeLeftDisplayEntity(player.uniqueId, Duration.ofDays(30))
