@@ -10,12 +10,12 @@ import onl.tesseract.lib.menu.MenuSize
 import org.bukkit.Material
 import org.bukkit.entity.Player
 
-class BoutiqueMenu(val player: Player, previous: Menu? = null) :
+class BoutiqueMenu(player: Player, previous: Menu? = null) :
 
         BoutiqueCoreMenu(
             MenuSize.Three,
             Component.text("Boutique de Tesseract", NamedTextColor.BLUE, TextDecoration.BOLD),
-            previous) {
+            previous, player) {
 
     override fun placeButtons(viewer: Player) {
         fill(ItemBuilder(Material.GRAY_STAINED_GLASS_PANE).build())

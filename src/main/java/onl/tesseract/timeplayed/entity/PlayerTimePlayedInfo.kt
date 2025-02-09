@@ -9,7 +9,7 @@ import java.util.*
 
 @Table(name = "t_player_time_played")
 @Entity
-class PlayerTimePlayedInfo (
+class PlayerTimePlayedInfo(
     @Id
     @Column(updatable = false, nullable = false, columnDefinition = "VARCHAR(36)", unique = true)
     @JdbcTypeCode(
@@ -23,7 +23,13 @@ class PlayerTimePlayedInfo (
 
     @Column(nullable = false)
     @Convert(converter = DurationConverter::class)
-    var timeBougth: Duration = Duration.ZERO
+    var timeBougth: Duration = Duration.ZERO,
+
+    @Column(nullable = false)
+    var temporalLys: Int = 0,
+
+    @Convert(converter = DurationConverter::class)
+    var nextMoneyDuration: Duration = Duration.ofMinutes(10),
 
     )
 

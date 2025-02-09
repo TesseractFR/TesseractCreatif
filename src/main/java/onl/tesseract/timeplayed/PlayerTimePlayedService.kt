@@ -5,7 +5,6 @@ import onl.tesseract.timeplayed.entity.PlayerTimePlayedInfo
 import onl.tesseract.timeplayed.persistence.PlayerTimePlayedRepository
 import java.time.Duration
 import java.util.*
-import kotlin.math.floor
 
 /**
  * Service to interact with player's time played.
@@ -38,6 +37,7 @@ class PlayerTimePlayedService(private val repository: PlayerTimePlayedRepository
         repository.save(playerTimePlayedInfo)
     }
 
+
     fun getPlayerTotalTime(player: UUID): Duration {
         var playerTimePlayedInfo = getOrCreatePlayerTimePlayedInfo(player);
         return playerTimePlayedInfo.timePlayed.plus(playerTimePlayedInfo.timeBougth);
@@ -51,5 +51,26 @@ class PlayerTimePlayedService(private val repository: PlayerTimePlayedRepository
         return repository.getById(player)?: PlayerTimePlayedInfo(player);
     }
 
+    fun getNextMoneyDuration(player: UUID): Duration {
+        var playerTimePlayedInfo = getOrCreatePlayerTimePlayedInfo(player);
+        return playerTimePlayedInfo.nextMoneyDuration;
+    }
+
+    fun setNextMoneyDuration(player: UUID, duration: Duration) {
+        val playerTimePlayedInfo = getOrCreatePlayerTimePlayedInfo(player);
+        playerTimePlayedInfo.nextMoneyDuration = duration;
+        repository.save(playerTimePlayedInfo)
+    }
+
+    fun addTemporalLys(player: UUID, amount: Int) {
+        val playerTimePlayedInfo = getOrCreatePlayerTimePlayedInfo(player);
+        playerTimePlayedInfo.temporalLys += amount;
+        repository.save(playerTimePlayedInfo)
+    }
+
+    fun getTemporalLys(player: UUID): Int {
+        val playerTimePlayedInfo = getOrCreatePlayerTimePlayedInfo(player);
+        return playerTimePlayedInfo.temporalLys;
+    }
 
 }

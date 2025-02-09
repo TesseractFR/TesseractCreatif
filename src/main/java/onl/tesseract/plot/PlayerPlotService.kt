@@ -7,6 +7,7 @@ import onl.tesseract.plot.entity.PlotWorld
 import onl.tesseract.plot.persistence.PlayerPlotInfoRepository
 import onl.tesseract.rank.PlayerRankService
 import org.bukkit.OfflinePlayer
+import org.bukkit.entity.Player
 import java.util.*
 
 /**
@@ -43,13 +44,31 @@ class PlayerPlotService(private val repository: PlayerPlotInfoRepository) {
     }
 
     private fun resetPlotWorldPermission(permission: Permission,player: OfflinePlayer,plotWorld: PlotWorld) {
+
+        val playerTotalPlot = getPlayerTotalPlot(player.uniqueId, plotWorld)
+        for (i in 0 until playerTotalPlot) {
+            permission.playerRemove(
+                plotWorld.world, player,
+                "plots.plot.$i")
+        }
         permission.playerAdd(
             plotWorld.world, player,
-            "plots.plot." + getPlayerTotalPlot(player.uniqueId,plotWorld),
-        )
+            "plots.plot.$playerTotalPlot")
     }
 
     private fun getOrCreatePlayerPlotInfo(player: UUID): PlayerPlotInfo {
         return repository.getById(player) ?: PlayerPlotInfo(player)
+    }
+
+    fun addPlot(player: Player, plotWorld: PlotWorld) {
+        val plotInfo = getOrCreatePlayerPlotInfo(player.uniqueId)
+        when (plotWorld) {
+            PlotWorld.WORLD_100 -> plotInfo.nbPlot100 += 1;
+            PlotWorld.WORLD_250 -> plotInfo.nbPlot250 += 1;
+            PlotWorld.WORLD_500 -> plotInfo.nbPlot500 += 1;
+            PlotWorld.WORLD_1000 -> plotInfo.nbPlot1000 += 1;
+            PlotWorld.WORLD_EVENT -> throw IllegalArgumentException();
+        }
+        repository.save(plotInfo)
     }
 }

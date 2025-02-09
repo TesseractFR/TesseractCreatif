@@ -9,7 +9,7 @@ import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import java.time.Duration
 
-class PlayerBoard(player: Player?) : Board(player) {
+class PlayerRankBoard(player: Player?) : Board(player) {
 
     override fun initScoreBoard(player: Player) {
         displayPlayerBoard(player)

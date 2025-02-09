@@ -1,5 +1,8 @@
 package onl.tesseract.scoreBoard
 
+import onl.tesseract.lib.service.ServiceContainer
+import onl.tesseract.rank.PlayerRankService
+import onl.tesseract.rank.entity.PlayerRank
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
@@ -20,7 +23,12 @@ object ScoreBoardCore {
 
     fun updatePlayerBoard(player: Player) {
         require(player.isOnline) { "Player ${player.name} is not online" }
-        PlayerBoard(player)
+        if (ServiceContainer[PlayerRankService::class.java].getPlayerRank(player.uniqueId) < PlayerRank.BATISSEUR) {
+            PlayerRankBoard(player)
+        } else {
+            PlayerTimeMoneyBoard(player)
+        }
+
 
         //TODO : AJOUTER LES IF/ELSE AVEC MONDES CLASSIQUES ET EVENT
     }

@@ -28,11 +28,11 @@ private const val PRIX_TEXT = "Prix : "
 
 private const val PRIX_VALEUR_TEXT = "200 lys d'or / mois"
 
-class RentPluginsMenu(private val player: Player, previous: Menu) :
+class RentPluginsMenu(player: Player, previous: Menu) :
     BoutiqueCoreMenu(
         MenuSize.Three,
         Component.text("Louer des plugins et outils", DARK_GREEN, TextDecoration.BOLD),
-        previous
+        previous, player
     ) {
 
 

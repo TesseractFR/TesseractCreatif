@@ -13,27 +13,47 @@ import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
 import org.bukkit.scheduler.BukkitRunnable
+import java.time.Duration
 
 /**
  * Task to update the player's time played, and auto-rank.
  */
 class PlayerTimePlayedTask(val period: Long) : BukkitRunnable() {
     private val afkManager: AfkManager = ServiceContainer[AfkManager::class.java]
+    private val playerTimePlayedService = ServiceContainer[PlayerTimePlayedService::class.java]
+    private val playerRankService = ServiceContainer[PlayerRankService::class.java]
+
+    private val TIME_TEMPORAL_LYS = 10L;
+
     override fun run() {
         for(player in Bukkit.getOnlinePlayers()){
             if(!afkManager.isAfk(player)){
-                ServiceContainer[PlayerTimePlayedService::class.java].addPlayerTimePlayed(player.uniqueId, period)
+                playerTimePlayedService.addPlayerTimePlayed(player.uniqueId, period)
                 checkUpdateRank(player)
+                checkUpdateTimeMoney(player);
             }
         }
     }
+
+    private fun checkUpdateTimeMoney(player: Player) {
+        val playerRank = playerRankService.getPlayerRank(player.uniqueId)
+        if (playerRank < PlayerRank.BATISSEUR) {
+            return
+        }
+        var nextDuration = playerTimePlayedService.getNextMoneyDuration(player.uniqueId)
+        nextDuration = nextDuration.minusSeconds(period)
+        if (!nextDuration.isPositive) {
+            nextDuration = Duration.ofMinutes(TIME_TEMPORAL_LYS);
+            playerTimePlayedService.addTemporalLys(player.uniqueId, 1)
+        }
+        playerTimePlayedService.setNextMoneyDuration(player.uniqueId, nextDuration)
+    }
+
     private fun checkUpdateRank(player: Player){
         val uuid = player.uniqueId
-        val playerRankService = ServiceContainer[PlayerRankService::class.java]
         val playerRank = playerRankService.getPlayerRank(uuid)
         if(playerRank < PlayerRank.BATISSEUR){
             val nextRank = playerRankService.getNextPlayerRank(uuid)
-            val playerTimePlayedService = ServiceContainer[PlayerTimePlayedService::class.java]
             val timeForRankUp = playerTimePlayedService.getTimeBeforeRankUp(uuid, nextRank)
             if(!timeForRankUp.isPositive){
                 playerRankService.setPlayerRank(uuid,nextRank)

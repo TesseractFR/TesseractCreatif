@@ -11,20 +11,31 @@ import onl.tesseract.lib.menu.MenuSize
 import onl.tesseract.lib.service.ServiceContainer
 import onl.tesseract.lib.util.ChatFormats
 import onl.tesseract.lib.util.append
+import onl.tesseract.timeplayed.PlayerTimePlayedService
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import java.util.*
 import java.util.function.Consumer
 
-abstract class BoutiqueCoreMenu(size: MenuSize, name: Component, previous: Menu?) : Menu(size, name, previous) {
+abstract class BoutiqueCoreMenu(size: MenuSize, name: Component, previous: Menu?, val player: Player) :
+        Menu(size, name, previous) {
+
+    val boutiqueService: BoutiqueService = ServiceContainer[BoutiqueService::class.java]
+
+    override fun placeButtons(viewer: Player) {
+        fill(
+            ItemBuilder(Material.GRAY_STAINED_GLASS_PANE).name(" ")
+                    .build())
+        addBoutiqueButton(player, size.size - 5)
+    }
 
     fun addBoutiqueButton(player: Player, slot: Int) {
         val uuid = player.uniqueId
-        val playerBoutiqueInfo = ServiceContainer[BoutiqueService::class.java].getPlayerBoutiqueInfo(uuid)
+        val playerBoutiqueInfo = boutiqueService.getPlayerBoutiqueInfo(uuid)
         addButton(
             slot, ItemBuilder(Material.RAW_GOLD)
+                    .name("Monnaies", GOLD)
                     .lore()
-                    .newline()
                     .append("Vous avez ", GRAY)
                     .append(playerBoutiqueInfo.shopPoints.toString(), DARK_AQUA)
                     .append(" Points boutique.", GRAY)
@@ -65,7 +76,7 @@ abstract class BoutiqueCoreMenu(size: MenuSize, name: Component, previous: Menu?
     }
 
     protected fun getMarketCurrency(uuid: UUID): Int {
-        return ServiceContainer[BoutiqueService::class.java].getPlayerBoutiqueInfo(uuid).marketCurrency
+        return boutiqueService.getPlayerBoutiqueInfo(uuid).marketCurrency
     }
 
     protected fun withdrawMarketCurrency(uuid: UUID, amount: Int) {
@@ -75,6 +86,49 @@ abstract class BoutiqueCoreMenu(size: MenuSize, name: Component, previous: Menu?
         require(getMarketCurrency(uuid) > amount) {
             "Player don't have enough MarketCurrency!"
         }
-        ServiceContainer[BoutiqueService::class.java].addMarketCurrency(uuid, -amount);
+        boutiqueService.addMarketCurrency(uuid, -amount);
+    }
+
+    protected fun confirmBuyLysTemporel(player: Player, price: Int, message: Component, consumer: Consumer<Int>) {
+        if (getTemporalLys(player.uniqueId) < price) {
+            player.sendMessage(ChatFormats.SHOP_ADMIN.append("Vous n'avez pas suffisamment de lys temporel. Nécessite : $price"))
+            return
+        }
+        ServiceContainer[MenuService::class.java].openConfirmationMenu(
+            player, message, this
+        ) {
+            withdrawLysTemporel(player.uniqueId, price)
+            consumer.accept(price)
+        }
+    }
+
+    protected fun confirmBuyShopPoint(player: Player, price: Int, message: Component, consumer: Consumer<Int>) {
+        if (getShopPoint(player.uniqueId) < price) {
+            player.sendMessage(ChatFormats.SHOP_ADMIN.append("Vous n'avez pas suffisamment de point boutique. Nécessite : $price"))
+            return
+        }
+        ServiceContainer[MenuService::class.java].openConfirmationMenu(
+            player, message, this
+        ) {
+            withdrawShopPoint(player.uniqueId, price)
+            consumer.accept(price)
+        }
+    }
+
+    private fun getTemporalLys(uniqueId: UUID): Int {
+        return ServiceContainer[PlayerTimePlayedService::class.java].getTemporalLys(uniqueId);
+    }
+
+    private fun getShopPoint(uniqueId: UUID): Int {
+        return ServiceContainer[BoutiqueService::class.java].getPlayerBoutiqueInfo(uniqueId).shopPoints;
+    }
+
+    private fun withdrawLysTemporel(uniqueId: UUID, price: Int) {
+        return ServiceContainer[PlayerTimePlayedService::class.java].addTemporalLys(uniqueId, -price)
+    }
+
+    private fun withdrawShopPoint(uniqueId: UUID, price: Int) {
+        ServiceContainer[BoutiqueService::class.java].addShopPoint(uniqueId, -price)
     }
 }
+

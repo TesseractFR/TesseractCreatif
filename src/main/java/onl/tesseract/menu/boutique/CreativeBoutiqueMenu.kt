@@ -2,20 +2,32 @@ package onl.tesseract.menu.boutique
 
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
+import net.kyori.adventure.text.format.NamedTextColor.GOLD
+import net.kyori.adventure.text.format.NamedTextColor.GRAY
 import net.kyori.adventure.text.format.TextDecoration
 import onl.tesseract.lib.menu.ItemBuilder
 import onl.tesseract.lib.menu.Menu
 import onl.tesseract.lib.menu.MenuSize
+import onl.tesseract.lib.service.ServiceContainer
+import onl.tesseract.lib.util.ChatFormats
+import onl.tesseract.lib.util.append
+import onl.tesseract.player.PermissionService
+import onl.tesseract.rank.PlayerRankService
+import onl.tesseract.rank.entity.PlayerRank
 import org.bukkit.Material
 import org.bukkit.entity.Player
+import org.bukkit.inventory.ItemFlag
 
-class CreativeBoutiqueMenu(val player: Player, previous: Menu) :
-        Menu(MenuSize.Three, Component.text("Boutique du Créatif", NamedTextColor.RED, TextDecoration.BOLD), previous) {
+class CreativeBoutiqueMenu(player: Player, previous: Menu) :
+        BoutiqueCoreMenu(
+            MenuSize.Three,
+            Component.text("Boutique du Créatif", NamedTextColor.RED, TextDecoration.BOLD),
+            previous,
+            player) {
 
     override fun placeButtons(viewer: Player) {
-        fill(
-            ItemBuilder(Material.GRAY_STAINED_GLASS_PANE).name(" ")
-                    .build())
+        super.placeButtons(viewer)
+
 
         for (slot in listOf(1, 4, 7, 9, 12, 14, 17, 20, 24)) {
             addButton(
@@ -26,41 +38,38 @@ class CreativeBoutiqueMenu(val player: Player, previous: Menu) :
 
         addButton(
             10, teteAchatPlots
-                    .name("Achat de plots", NamedTextColor.GOLD, TextDecoration.BOLD)
+                    .name("Achat de plots", GOLD, TextDecoration.BOLD)
                     .lore()
                     .newline()
-                    .append("AJOUTER DESCRIPTION", NamedTextColor.GRAY, TextDecoration.ITALIC)
+                    .append("Acquérez des plots supplémentaires", GRAY, TextDecoration.ITALIC)
                     .buildLore()
                     .build()
-        ) { }
+        ) {
+            PlotMenu(player, this).open(viewer);
+        }
+        addVirtuose()
 
-        addButton(
-            3, teteVirtuose
-                    .name("Grade VIRTUOSE", NamedTextColor.AQUA, TextDecoration.BOLD)
-                    .lore()
-                    .newline()
-                    .append("AJOUTER DESCRIPTION", NamedTextColor.GRAY, TextDecoration.ITALIC)
-                    .buildLore()
-                    .build()
-        ) { }
 
         addButton(
             5, teteRankUp
                     .name("Monter en grade", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD)
                     .lore()
                     .newline()
-                    .append("AJOUTER DESCRIPTION", NamedTextColor.GRAY, TextDecoration.ITALIC)
+                    .append("Accélérez votre progression", GRAY, TextDecoration.ITALIC)
                     .buildLore()
                     .build()
-        ) { }
+        ) {
+            RankMenu(player, this).open(viewer)
+        }
 
         addButton(
             16, ItemBuilder(Material.WOODEN_AXE)
                     .name("Location de plugins et outils", NamedTextColor.DARK_GREEN, TextDecoration.BOLD)
                     .lore()
                     .newline()
-                    .append("Louer l'accès à des plugins sur-puissant", NamedTextColor.GRAY, TextDecoration.ITALIC)
+                    .append("Louer l'accès à des plugins sur-puissant", GRAY, TextDecoration.ITALIC)
                     .buildLore()
+                    .flags(ItemFlag.HIDE_ATTRIBUTES)
                     .build()
         ) {
             RentPluginsMenu(player, this).open(viewer)
@@ -68,6 +77,34 @@ class CreativeBoutiqueMenu(val player: Player, previous: Menu) :
 
         addBackButton()
         addCloseButton()
+    }
+
+    private fun addVirtuose() {
+        val rankService = ServiceContainer[PlayerRankService::class.java]
+        if (rankService.getPlayerRank(player.uniqueId) == PlayerRank.VIRTUOSE) {
+            addButton(
+                3, teteVirtuose
+                        .name("Grade VIRTUOSE", NamedTextColor.AQUA, TextDecoration.BOLD)
+                        .lore()
+                        .newline()
+                        .newline()
+                        .append("Déjà possédé", GRAY)
+                        .buildLore()
+                        .build()) {}
+        } else {
+            addButton(
+                3, virtuoseItem
+            ) {
+                confirmBuyLysDor(player, 2500, "Confirmer l'achat du grade Virtuose pour 2500 lys d'or")
+                {
+                    ServiceContainer[PlayerRankService::class.java].setPlayerRank(player.uniqueId, PlayerRank.VIRTUOSE)
+                    player.sendMessage(ChatFormats.SHOP_ADMIN.append("Vous venez d'acheter le grade Virtuose", GOLD))
+                    ServiceContainer[PermissionService::class.java].updatePermission(player.uniqueId)
+                    this.close()
+                }
+            }
+        }
+
     }
 
     companion object {
