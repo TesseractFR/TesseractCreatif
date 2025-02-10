@@ -31,14 +31,14 @@ abstract class BoutiqueCoreMenu(size: MenuSize, name: Component, previous: Menu?
 
     fun addBoutiqueButton(player: Player, slot: Int) {
         val uuid = player.uniqueId
-        val playerBoutiqueInfo = boutiqueService.getPlayerBoutiqueInfo(uuid)
+        val temporalLys = ServiceContainer[PlayerTimePlayedService::class.java].getTemporalLys(uuid)
         addButton(
             slot, ItemBuilder(Material.RAW_GOLD)
                     .name("Monnaies", GOLD)
                     .lore()
                     .append("Vous avez ", GRAY)
-                    .append(playerBoutiqueInfo.shopPoints.toString(), DARK_AQUA)
-                    .append(" Points boutique.", GRAY)
+                    .append("$temporalLys", DARK_AQUA)
+                    .append(" Lys temporel.", GRAY)
                     .newline()
                     .append("Vous avez ", GRAY)
                     .append(getMarketCurrency(uuid).toString(), DARK_AQUA)
@@ -102,19 +102,6 @@ abstract class BoutiqueCoreMenu(size: MenuSize, name: Component, previous: Menu?
         }
     }
 
-    protected fun confirmBuyShopPoint(player: Player, price: Int, message: Component, consumer: Consumer<Int>) {
-        if (getShopPoint(player.uniqueId) < price) {
-            player.sendMessage(ChatFormats.SHOP_ADMIN.append("Vous n'avez pas suffisamment de point boutique. Nécessite : $price"))
-            return
-        }
-        ServiceContainer[MenuService::class.java].openConfirmationMenu(
-            player, message, this
-        ) {
-            withdrawShopPoint(player.uniqueId, price)
-            consumer.accept(price)
-        }
-    }
-
     private fun getTemporalLys(uniqueId: UUID): Int {
         return ServiceContainer[PlayerTimePlayedService::class.java].getTemporalLys(uniqueId);
     }
@@ -125,10 +112,6 @@ abstract class BoutiqueCoreMenu(size: MenuSize, name: Component, previous: Menu?
 
     private fun withdrawLysTemporel(uniqueId: UUID, price: Int) {
         return ServiceContainer[PlayerTimePlayedService::class.java].addTemporalLys(uniqueId, -price)
-    }
-
-    private fun withdrawShopPoint(uniqueId: UUID, price: Int) {
-        ServiceContainer[BoutiqueService::class.java].addShopPoint(uniqueId, -price)
     }
 }
 

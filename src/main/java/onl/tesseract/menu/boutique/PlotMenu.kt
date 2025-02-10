@@ -60,21 +60,15 @@ class PlotMenu(player: Player, previous: Menu? = null) : BoutiqueCoreMenu(
                     .newline()
                     .append("--- Clic droit ---", NamedTextColor.LIGHT_PURPLE)
                     .newline()
-                    .append("Acheter en points boutique", NamedTextColor.AQUA)
-                    .newline()
-                    .append("---Shift Clic droit ---", NamedTextColor.LIGHT_PURPLE)
-                    .newline()
-                    .append("Acheter en points boutique", NamedTextColor.AQUA)
+                    .append("Acheter en lys temporel", NamedTextColor.AQUA)
 
                     .buildLore()
                     .build()) { event ->
             run {
-                if (event.isShiftClick && event.isRightClick) {
+                if (event.isRightClick) {
                     buyPlotLysTemporel(plotType)
                 } else if (event.isLeftClick) {
                     buyPlotLysDor(plotType)
-                } else {
-                    buyPlotShopPoint(plotType)
                 }
             }
         }
@@ -104,16 +98,5 @@ class PlotMenu(player: Player, previous: Menu? = null) : BoutiqueCoreMenu(
         }
     }
 
-    private fun buyPlotShopPoint(plotType: PlotType) {
-        confirmBuyShopPoint(
-            player,
-            plotType.price,
-            Component.text("Confirmer l'achat d'un plot ${plotType.price} pour ${plotType.price} point boutique.")) {
-            ServiceContainer[PlayerPlotService::class.java].addPlot(
-                player,
-                plotType.plotWorld)
-            ServiceContainer[PermissionService::class.java].updatePermission(player.uniqueId)
-        }
-    }
 
 }
