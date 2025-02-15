@@ -20,7 +20,7 @@ enum class PlayerRank(
     val hoursRequired: Long,
 ) : Rank{
     APPRENTI(
-        "apprenti",
+        "default",
         serv.getById("APPRENTI"),
         NamedTextColor.GREEN,
         HeadConstante.teteApprenti,
