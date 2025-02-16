@@ -1,12 +1,14 @@
 package onl.tesseract.menu
 
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.event.ClickEvent
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
 import onl.tesseract.lib.menu.Menu
 import onl.tesseract.lib.menu.MenuSize
 import onl.tesseract.lib.menu.ItemBuilder
 import onl.tesseract.lib.util.ItemLoreBuilder
+import onl.tesseract.lib.util.append
 import onl.tesseract.menu.boutique.RentPluginsMenu
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -29,7 +31,10 @@ class PluginsToolsMenu(previous: Menu? = null) :
             ItemBuilder(Material.GRAY_STAINED_GLASS_PANE).name(" ")
                     .build())
 
-        addButton(0, createSchematicImportItem()) {}
+        addButton(0, createSchematicImportItem()) {
+            viewer.closeInventory()
+            viewer.sendMessage(messageSchematicImport)
+        }
         addButton(2, createBuilderUtilitiesItem()) {}
         addButton(4, createHdbItem()) {}
         addButton(6, createArceonItem()) {
@@ -37,17 +42,14 @@ class PluginsToolsMenu(previous: Menu? = null) :
         }
         addButton(8, createGoPaintItem()) {}
         addButton(10, createFaweItem()) {}
-        addButton(12, createArmorStandToolsItem()) {}
-        addButton(13, createMetaBrushItem()) {
-            RentPluginsMenu(viewer, this).open(viewer)
-        }
+        addButton(12, createEasyArmorStandsItem()) {}
         addButton(14, createVoxelSniperItem()) {}
         addButton(16, createGoBrushItem()) {}
-        addButton(20, createAxiomItem()) {}
-        addButton(22, createPlayerParticlesItem()) {
+        addButton(20, createMetaBrushItem()) {
             RentPluginsMenu(viewer, this).open(viewer)
         }
-        addButton(24, createDisplayEntitiesItem()) {
+        // addButton(22, createAxiomItem()) {}
+        addButton(24, createEzEditsItem()) {
             RentPluginsMenu(viewer, this).open(viewer)
         }
 
@@ -55,11 +57,18 @@ class PluginsToolsMenu(previous: Menu? = null) :
         addCloseButton()
     }
 
+    private val messageSchematicImport: Component = Component.text("---------------------\n", NamedTextColor.RED)
+        .append("FAWE Schematic Import", NamedTextColor.RED, TextDecoration.BOLD)
+        .append("\n---------------------", NamedTextColor.RED)
+        .clickEvent(ClickEvent.openUrl("https://schematic.tesseract.onl/"))
+
     private fun createSchematicImportItem(): ItemStack {
         val ilb = ItemLoreBuilder()
             .newline()
             .append("Ce plugin vous permet de copier des constructions d'un monde à un autre facilement.", NamedTextColor.GRAY)
-            .append(" Cliquez pour vous rediriger vers le site permettant l'import de schématics.", NamedTextColor.GRAY)
+            .append(" Cliquez", NamedTextColor.RED)
+            .append(" pour vous rediriger vers le site permettant l'import de schématics.", NamedTextColor.GRAY)
+
         return ItemBuilder(Material.BOOK)
             .name("Schematic Import", NamedTextColor.RED, TextDecoration.BOLD)
             .lore(ilb.get())
@@ -92,15 +101,15 @@ class PluginsToolsMenu(previous: Menu? = null) :
             .build()
     }
 
-    private fun createArmorStandToolsItem(): ItemStack {
+    private fun createEasyArmorStandsItem(): ItemStack {
         val ilb = ItemLoreBuilder()
             .newline()
-            .append("AST est là pour vous aider à personnaliser vos armorstands.", NamedTextColor.GRAY)
-            .append(" Amusez-vous à les déplacer et les manipuler comme vous le souhaitez ! Pour ouvrir le menu, faites ", NamedTextColor.GRAY)
-            .append("/ast", NamedTextColor.RED)
-            .append(".", NamedTextColor.GRAY)
+            .append("Placez, positionnez et habillez des porte-armures avec une interface facile à utiliser.", NamedTextColor.GRAY)
+            .append(" Il vous suffit de faire un", NamedTextColor.GRAY)
+            .append(" clic droit", NamedTextColor.RED)
+            .append(" sur un porte-armure pour l'éditer !", NamedTextColor.GRAY)
         return ItemBuilder(Material.ARMOR_STAND)
-            .name("ArmorStand Tools (AST)", NamedTextColor.DARK_GREEN, TextDecoration.BOLD)
+            .name("Easy Armor Stands (EAT)", NamedTextColor.DARK_GREEN, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
     }
@@ -197,30 +206,17 @@ class PluginsToolsMenu(previous: Menu? = null) :
             .build()
     }
 
-    private fun createPlayerParticlesItem(): ItemStack {
+    private fun createEzEditsItem(): ItemStack {
         val ilb = ItemLoreBuilder()
             .newline()
             .append("Grade PAYANT !", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD)
             .newline()
             .append(" (Clique pour ouvrir la boutique)", NamedTextColor.DARK_PURPLE, TextDecoration.ITALIC)
             .newline().newline()
-            .append("PlayerParticles permet d'ajouter des particules personnalisées à vos constructions.", NamedTextColor.GRAY)
-        return tetePlayerParticles
-            .name("PlayerParticles", NamedTextColor.DARK_GREEN, TextDecoration.BOLD)
-            .lore(ilb.get())
-            .build()
-    }
-
-    private fun createDisplayEntitiesItem(): ItemStack {
-        val ilb = ItemLoreBuilder()
-            .newline()
-            .append("Grade PAYANT !", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD)
-            .newline()
-            .append(" (Clique pour ouvrir la boutique)", NamedTextColor.DARK_PURPLE, TextDecoration.ITALIC)
-            .newline().newline()
-            .append("Display Entities permet de créer des détails impressionnants avec moins de lag que les ASTs.", NamedTextColor.GRAY)
-        return ItemBuilder(Material.ARMOR_STAND)
-            .name("Display Entities", NamedTextColor.YELLOW, TextDecoration.BOLD)
+            .append("EzEdits est une extension de WE/FAWE qui ajoute de nombreuses nouvelles commandes,", NamedTextColor.GRAY)
+            .append(" motifs, masques et outils pour vous aider à réaliser des créations incroyables !", NamedTextColor.GRAY)
+        return ItemBuilder(Material.CLOCK)
+            .name("EzEdits", NamedTextColor.GOLD, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
     }
