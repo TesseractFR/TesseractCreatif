@@ -91,7 +91,7 @@ abstract class BoutiqueCoreMenu(size: MenuSize, name: Component, previous: Menu?
 
     protected fun confirmBuyLysTemporel(player: Player, price: Int, message: Component, consumer: Consumer<Int>) {
         if (getTemporalLys(player.uniqueId) < price) {
-            player.sendMessage(ChatFormats.SHOP_ADMIN.append("Vous n'avez pas suffisamment de lys temporel. Nécessite : $price"))
+            player.sendMessage(ChatFormats.SHOP_ADMIN.append("Vous n'avez pas suffisamment de lys temporels. Nécessite : $price"))
             return
         }
         ServiceContainer[MenuService::class.java].openConfirmationMenu(
