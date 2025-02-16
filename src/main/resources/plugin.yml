@@ -68,3 +68,7 @@ commands:
     aliases: tpa
     usage: "/tpa"
     description: Se tp à un joueur
+  speed:
+    aliases: speed
+    usage: "/speed"
+    description: Permet de modifier sa speed

@@ -88,6 +88,8 @@ class Creatif : JavaPlugin(), Listener {
         this.getCommand("mondes")?.setExecutor(WorldsMenuCommand())
         this.getCommand("grades")?.setExecutor(RankMenuCommand())
         this.getCommand("blocks")?.setExecutor(SpecialBlockMenuCommand())
+        this.getCommand("speed")
+                ?.setExecutor(SpeedCommand())
         this.getCommand("outils")?.setExecutor(PluginsToolsMenuCommand())
         this.getCommand("commandes")?.setExecutor(CommandsBookCommand())
         val staffCommand = StaffCommand()
