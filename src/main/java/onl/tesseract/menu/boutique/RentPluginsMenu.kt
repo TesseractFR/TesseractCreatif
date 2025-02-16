@@ -43,7 +43,7 @@ class RentPluginsMenu(player: Player, previous: Menu) :
 
         val packService = ServiceContainer[PlayerPermPackService::class.java]
         addButton(
-            1, getArceonItemStack()
+            4, getArceonItemStack()
         ) {
             confirmBuyLysDor(player, 200, "Confirmer l'achat d'un mois d'Arceon pour 200 lys d'or")
             {
@@ -55,19 +55,19 @@ class RentPluginsMenu(player: Player, previous: Menu) :
         }
 
         addButton(
-            7, getPlayerParticlesItemStack()
+            11, getEzeditItemStack()
         ) {
-            confirmBuyLysDor(player, 200, "Confirmer l'achat d'un mois de PlayerParticles pour 200 lys d'or")
+            confirmBuyLysDor(player, 200, "Confirmer l'achat d'un mois de Ezedits pour 200 lys d'or")
             {
-                packService.addTimeLeftPlayerParticule(player.uniqueId, Duration.ofDays(30))
-                player.sendMessage(ChatFormats.SHOP_ADMIN.append("Vous venez d'acheter les permissions PlayerParticles",GOLD))
+                packService.addTimeLeftEzedit(player.uniqueId, Duration.ofDays(30))
+                player.sendMessage(ChatFormats.SHOP_ADMIN.append("Vous venez d'acheter les permissions Ezedits", GOLD))
                 ServiceContainer[PermissionService::class.java].updatePermission(player.uniqueId)
                 this.close()
             }
         }
 
         addButton(
-            12, getMetaBrushItemStack()
+            15, getMetaBrushItemStack()
         ) {confirmBuyLysDor(player, 200, "Confirmer l'achat d'un mois de MetaBrush pour 200 lys d'or")
         {
             packService.addTimeLeftMetaBrush(player.uniqueId, Duration.ofDays(30))
@@ -77,15 +77,7 @@ class RentPluginsMenu(player: Player, previous: Menu) :
         }
         }
 
-        addButton(
-            14, getDisplayEntitiesItemStack()
-        ) {confirmBuyLysDor(player, 200, "Confirmer l'achat d'un mois de DisplayEntities pour 200 lys d'or")
-        {
-            packService.addTimeLeftDisplayEntity(player.uniqueId, Duration.ofDays(30))
-            player.sendMessage(ChatFormats.SHOP_ADMIN.append("Vous venez d'acheter les permissions DisplayEntities",GOLD))
-            ServiceContainer[PermissionService::class.java].updatePermission(player.uniqueId)
-            this.close()
-        } }
+
 
         addBackButton()
         addCloseButton()
@@ -124,36 +116,19 @@ class RentPluginsMenu(player: Player, previous: Menu) :
                 .build()
     }
 
-    private fun getPlayerParticlesItemStack(): ItemStack {
+    private fun getEzeditItemStack(): ItemStack {
         val ilb = ItemLoreBuilder().newline()
-                .append("Offre l'accès au plugin PlayerParticles",LIGHT_PURPLE)
+                .append("Offre l'accès au plugin Ezedits", LIGHT_PURPLE)
                 .newline()
                 .append(PRIX_TEXT, GRAY)
                 .newline()
                 .append(PRIX_VALEUR_TEXT, GOLD, TextDecoration.ITALIC)
         val packService = ServiceContainer[PlayerPermPackService::class.java]
-        val timeLeft = packService.getTimeLeftPlayerParticule(player.uniqueId)
+        val timeLeft = packService.getTimeLeftEzedit(player.uniqueId)
 
         addExpirationDate(timeLeft, ilb)
-        return tetePlayerParticles
-                .name("PlayerParticles", LIGHT_PURPLE, TextDecoration.BOLD)
-                .lore(ilb.get())
-                .build()
-    }
-
-    private fun getDisplayEntitiesItemStack(): ItemStack {
-        val ilb = ItemLoreBuilder().newline()
-                .append("Offre l'accès au plugin DisplayEntities",LIGHT_PURPLE)
-                .newline()
-                .append(PRIX_TEXT, GRAY)
-                .newline()
-                .append(PRIX_VALEUR_TEXT, GOLD, TextDecoration.ITALIC)
-        val packService = ServiceContainer[PlayerPermPackService::class.java]
-        val timeLeft = packService.getTimeLeftDisplayEntity(player.uniqueId)
-
-        addExpirationDate(timeLeft, ilb)
-        return ItemBuilder(Material.ARMOR_STAND)
-                .name(Component.text("DisplayEntities", DARK_RED, TextDecoration.BOLD))
+        return ItemBuilder(Material.CLOCK)
+                .name("Ezedits", LIGHT_PURPLE, TextDecoration.BOLD)
                 .lore(ilb.get())
                 .build()
     }

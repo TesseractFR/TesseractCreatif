@@ -42,23 +42,23 @@ class PlayerPermPackService(private val repository: PlayerPermPackInfoRepository
         return Duration.between(Instant.now(),arceonInstant)
     }
 
-    fun addTimeLeftPlayerParticule(uuid: UUID, duration: Duration) {
+    fun addTimeLeftEzedit(uuid: UUID, duration: Duration) {
         val playerPermPackInfo = getOrCreatePlayerPermPackInfo(uuid)
-        var playerParticuleInstant = playerPermPackInfo.playerParticlesExpirationDate
-        if(playerParticuleInstant == null || playerParticuleInstant <= Instant.now()){
-            playerParticuleInstant = Instant.now()
+        var ezeditInstant = playerPermPackInfo.ezeditExpirationDate
+        if (ezeditInstant == null || ezeditInstant <= Instant.now()) {
+            ezeditInstant = Instant.now()
         }
-        playerPermPackInfo.playerParticlesExpirationDate = playerParticuleInstant!!.plus(duration)
+        playerPermPackInfo.ezeditExpirationDate = ezeditInstant!!.plus(duration)
         repository.save(playerPermPackInfo)
     }
 
-    fun getTimeLeftPlayerParticule(uuid: UUID): Duration {
+    fun getTimeLeftEzedit(uuid: UUID): Duration {
         val playerPermPackInfo = getOrCreatePlayerPermPackInfo(uuid)
-        var playerParticuleInstant = playerPermPackInfo.playerParticlesExpirationDate
-        if(playerParticuleInstant == null || playerParticuleInstant <= Instant.now()){
-            playerParticuleInstant = Instant.now()
+        var ezeditInstant = playerPermPackInfo.ezeditExpirationDate
+        if (ezeditInstant == null || ezeditInstant <= Instant.now()) {
+            ezeditInstant = Instant.now()
         }
-        return Duration.between(Instant.now(),playerParticuleInstant)
+        return Duration.between(Instant.now(), ezeditInstant)
     }
 
 
@@ -80,24 +80,6 @@ class PlayerPermPackService(private val repository: PlayerPermPackInfoRepository
         return Duration.between(Instant.now(),metaBrushInstant)
     }
 
-    fun addTimeLeftDisplayEntity(uuid: UUID, duration: Duration) {
-        val playerPermPackInfo = getOrCreatePlayerPermPackInfo(uuid)
-        var displayEntityInstant = playerPermPackInfo.displayEntitiesExpirationDate
-        if(displayEntityInstant == null || displayEntityInstant <= Instant.now()){
-            displayEntityInstant = Instant.now()
-        }
-        playerPermPackInfo.displayEntitiesExpirationDate = displayEntityInstant!!.plus(duration)
-        repository.save(playerPermPackInfo)
-    }
-
-    fun getTimeLeftDisplayEntity(uuid: UUID): Duration {
-        val playerPermPackInfo = getOrCreatePlayerPermPackInfo(uuid)
-        var displayEntityInstant = playerPermPackInfo.displayEntitiesExpirationDate
-        if(displayEntityInstant == null || displayEntityInstant <= Instant.now()){
-           displayEntityInstant = Instant.now()
-        }
-        return Duration.between(Instant.now(),displayEntityInstant)
-    }
     private fun getOrCreatePlayerPermPackInfo(player: UUID) : PlayerPermPackInfo {
         return repository.getById(player)?: PlayerPermPackInfo(player);
     }
