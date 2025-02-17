@@ -41,7 +41,7 @@ class CreativeBoutiqueMenu(player: Player, previous: Menu) :
                     .name("Achat de plots", GOLD, TextDecoration.BOLD)
                     .lore()
                     .newline()
-                    .append("Acquérez des plots supplémentaires", GRAY, TextDecoration.ITALIC)
+                    .append("Acquérez des plots supplémentaires !", GRAY, TextDecoration.ITALIC)
                     .buildLore()
                     .build()
         ) {
@@ -55,7 +55,7 @@ class CreativeBoutiqueMenu(player: Player, previous: Menu) :
                     .name("Monter en grade", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD)
                     .lore()
                     .newline()
-                    .append("Accélérez votre progression", GRAY, TextDecoration.ITALIC)
+                    .append("Accélérez votre progression !", GRAY, TextDecoration.ITALIC)
                     .buildLore()
                     .build()
         ) {
@@ -67,7 +67,7 @@ class CreativeBoutiqueMenu(player: Player, previous: Menu) :
                     .name("Location de plugins et outils", NamedTextColor.DARK_GREEN, TextDecoration.BOLD)
                     .lore()
                     .newline()
-                    .append("Louer l'accès à des plugins sur-puissant", GRAY, TextDecoration.ITALIC)
+                    .append("Louer l'accès à des plugins sur-puissants !", GRAY, TextDecoration.ITALIC)
                     .buildLore()
                     .flags(ItemFlag.HIDE_ATTRIBUTES)
                     .build()
