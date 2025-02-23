@@ -12,16 +12,16 @@ private val serv = ServiceContainer[TitleService::class.java]
 @Getter
 enum class StaffRank(override val permGroup: String, override val title: Title, override val color: TextColor) : Rank
     {
-        GUIDE("Guide", serv.getById("GUIDE"), NamedTextColor.YELLOW),
-    ANIMATEUR(
-        "Animateur", serv.getById("BUILDER"),
+        GUIDE("guide", serv.getById("GUIDE"), NamedTextColor.YELLOW),
+        BUILDER(
+            "builder", serv.getById("BUILDER"),
         TextColor.fromHexString("#0088FF")!!
     ),
-    MEDIATEUR(
-        "Médiateur", serv.getById("ARCHITECTE"),
+        ARCHITECTE(
+            "architecte", serv.getById("ARCHITECTE"),
         TextColor.fromHexString("#F7DC6F")!!
     ),
-        MODERATEUR("Modérateur", serv.getById("MODERATEUR"), NamedTextColor.GOLD),
-        ADMINISTRATEUR("Administrateur", serv.getById("ADMINISTRATEUR"), NamedTextColor.RED);
+        MODERATEUR("moderateur", serv.getById("MODERATEUR"), NamedTextColor.GOLD),
+        ADMINISTRATEUR("administrateur", serv.getById("ADMINISTRATEUR"), NamedTextColor.RED);
 
 }
