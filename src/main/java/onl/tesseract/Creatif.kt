@@ -81,6 +81,7 @@ class Creatif : JavaPlugin(), Listener {
         val pluginManager = server.pluginManager
         pluginManager.registerEvents(this, this)
         pluginManager.registerEvents(NicknameListener(), this)
+        pluginManager.registerEvents(ColoredChatListener(), this)
     }
 
     private fun registerCommands() {
