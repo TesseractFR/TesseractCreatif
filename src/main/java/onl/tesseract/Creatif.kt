@@ -121,10 +121,6 @@ class Creatif : JavaPlugin(), Listener {
 
     @EventHandler
     fun onJoin(event: PlayerJoinEvent) {
-        val rankService = ServiceContainer[PlayerRankService::class.java]
-        val staffRank = rankService.getStaffRank(event.player.uniqueId)
-        val color = staffRank?.color ?: rankService.getPlayerRank(event.player.uniqueId).color
-
         if (!event.player.hasPlayedBefore()) {
             event.player.teleport(Config.invoke().firstSpawnLocation)
             event.joinMessage(
@@ -133,6 +129,9 @@ class Creatif : JavaPlugin(), Listener {
                     .append(" sur le Créatif !", NamedTextColor.GOLD)
             )
         } else {
+            val rankService = ServiceContainer[PlayerRankService::class.java]
+            val staffRank = rankService.getStaffRank(event.player.uniqueId)
+            val color = staffRank?.color ?: rankService.getPlayerRank(event.player.uniqueId).color
             event.joinMessage(
                 Component.text("+ ", NamedTextColor.GREEN)
                     .append(event.player.name, color)
