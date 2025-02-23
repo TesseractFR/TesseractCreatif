@@ -111,6 +111,8 @@ class MenuMenu(val player: Player) :
 
     Menu(MenuSize.Six, Component.text("Menu du Créatif", NamedTextColor.RED, TextDecoration.BOLD)) {
 
+    private var infoUpdateTask: BukkitRunnable? = null
+
     override fun placeButtons(viewer: Player) {
         fill(
             ItemBuilder(Material.GRAY_STAINED_GLASS_PANE).name("")
@@ -133,15 +135,8 @@ class MenuMenu(val player: Player) :
             TPWorldMenu(this).open(viewer)
         }
 
-        Creatif.instance?.let {
-            object : BukkitRunnable() {
-                override fun run() {
-                    for (player in Bukkit.getOnlinePlayers()) {
-                        addButton(22, createPlayerInfoItemStack(player)) { }
-                    }
-                }
-            }.runTaskTimer(it, 0L, 20L)
-        }
+        startUpdatingPlayerInfo(viewer)
+
         addButton(23, Creatif.instance!!, async = { createPlotMenuItemStack() }) { }
         addButton(25, Creatif.instance!!, async = { createGenreSelectionItemStack() }) {
             GenderMenu(player, this).open(viewer)
@@ -180,6 +175,20 @@ class MenuMenu(val player: Player) :
             viewer.closeInventory()
             viewer.sendMessage(messageWebsite)
         }
+    }
+
+    private fun startUpdatingPlayerInfo(player: Player) {
+        infoUpdateTask = object : BukkitRunnable() {
+            override fun run() {
+                addButton(22, createPlayerInfoItemStack(player)) { }
+            }
+        }
+        infoUpdateTask?.runTaskTimer(Creatif.instance!!, 0L, 20L)
+    }
+
+    private fun onClose(viewer: Player) {
+        infoUpdateTask?.cancel()
+        infoUpdateTask = null
     }
 }
 
