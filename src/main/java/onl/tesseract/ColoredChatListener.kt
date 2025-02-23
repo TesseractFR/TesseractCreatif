@@ -17,18 +17,20 @@ class ColoredChatListener : Listener {
 
     @EventHandler
     fun onPlayerChat(event: AsyncChatEvent) {
-        val player = event.player
-        val playerRank = rankService.getPlayerRank(player.uniqueId)
-        val gender = ServiceContainer[TPlayerInfoService::class.java][player.uniqueId].genre
+        val playerRank = rankService.getPlayerRank(event.player.uniqueId)
+        val staffRank = rankService.getStaffRank(event.player.uniqueId)
+        val color = staffRank?.color ?: playerRank.color
+        val titleDisplay = staffRank?.title ?: playerRank.title
+
+        val gender = ServiceContainer[TPlayerInfoService::class.java][event.player.uniqueId].genre
 
         val prefix = Component.text()
-            .append(Component.text("[${playerRank.title.getDisplayName(gender)}] ", playerRank.color, TextDecoration.BOLD))
-            .append(Component.text(player.name, playerRank.color))
+            .append(Component.text("[${titleDisplay.getDisplayName(gender)}] ", color, TextDecoration.BOLD))
+            .append(Component.text(event.player.name, color))
             .append(Component.text(" : ", NamedTextColor.WHITE))
             .build()
 
         val coloredMessage = ColoredChat.colorComponent(event.message())
-
         val finalMessage = prefix.append(coloredMessage)
 
         event.renderer { _, _, _, _ -> finalMessage }
