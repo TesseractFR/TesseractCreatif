@@ -26,9 +26,11 @@ class PermissionService {
         }
         val playerRankService = ServiceContainer[PlayerRankService::class.java]
         val playerRank = playerRankService.getPlayerRank(uuid)
-        val staffRank = playerRankService.getStaffRank(uuid)!!
+        val staffRank = playerRankService.getStaffRank(uuid)
         permissions.playerAddGroup(null, player, playerRank.permGroup)
-        permissions.playerAddGroup(null, player, staffRank.permGroup)
+        if (staffRank != null) {
+            permissions.playerAddGroup(null, player, staffRank.permGroup)
+        }
         Arrays.stream(PlayerRank.entries.toTypedArray())
                 .filter { it: Rank -> it != playerRank }
                 .forEach(playerUnrankConsumer)
