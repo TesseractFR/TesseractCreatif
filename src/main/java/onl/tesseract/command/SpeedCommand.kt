@@ -17,16 +17,18 @@ import kotlin.math.min
     args = [Argument(value = "speed", clazz = SpeedCommandArgument::class)])
 class SpeedCommand : CommandContext() {
 
-    private val defaultValue: Float = 0.1F
+    private val defaultFlySpeed: Float = 0.1f
 
     @CommandBody
     fun onCommand(@Env(key = "speed") speed: Float, sender: Player): Boolean {
 
-        val speedRatio: Float = (defaultValue * max(0f, min(speed, 100f)))
-        sender.registerAttribute(Attribute.GENERIC_FLYING_SPEED)
-        sender.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED)!!.baseValue = speedRatio.toDouble()
-        sender.getAttribute(Attribute.GENERIC_FLYING_SPEED)!!.baseValue = speedRatio.toDouble()
+        val normalizedSpeed = max(0.1f, min(speed, 10f))
+
+        sender.walkSpeed = (0.2f + (normalizedSpeed - 1f) * (1.0f - 0.2f) / 9f).coerceAtMost(1.0f)
+        sender.flySpeed = (defaultFlySpeed * normalizedSpeed).coerceAtMost(1.0f)
+
+        sender.sendMessage("§aVotre vitesse a été réglée à $speed.")
+
         return true
     }
-
 }
