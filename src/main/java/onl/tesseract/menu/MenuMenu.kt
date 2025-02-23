@@ -256,6 +256,7 @@ private fun createTPWorldMenuItemStack(): ItemStack {
     val totalPlotsWorld1000 = nbPlots.getPlayerTotalPlot(player.uniqueId, PlotWorld.WORLD_1000)
     val timePlayedService = ServiceContainer[PlayerTimePlayedService::class.java]
     val timePlayed = timePlayedService.getPlayerTimePlayed(player.uniqueId)
+     val gender = ServiceContainer[TPlayerInfoService::class.java][player.uniqueId].genre
 
     val ilb = ItemLoreBuilder()
         .newline()
@@ -267,7 +268,7 @@ private fun createTPWorldMenuItemStack(): ItemStack {
             NamedTextColor.WHITE
         )
         .newline().newline()
-        .append("Grade : ", NamedTextColor.GOLD).append(playerRank.name, playerRank.color, TextDecoration.BOLD)
+        .append("Grade : ", NamedTextColor.GOLD).append(playerRank.title.getDisplayName(gender).uppercase(), playerRank.color, TextDecoration.BOLD)
         .newline()
         .append("Temps de jeu global : ", NamedTextColor.GOLD)
         .newline()
