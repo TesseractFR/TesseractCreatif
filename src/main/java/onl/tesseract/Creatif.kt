@@ -3,6 +3,7 @@ package onl.tesseract
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.milkbowl.vault.permission.Permission
+import onl.tesseract.chat.ColoredChatListener
 import onl.tesseract.command.*
 import onl.tesseract.command.home.DelhomeCommand
 import onl.tesseract.command.home.HomeCommand
