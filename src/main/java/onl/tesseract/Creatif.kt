@@ -9,6 +9,8 @@ import onl.tesseract.command.home.HomeCommand
 import onl.tesseract.command.home.SetHomeCommand
 import onl.tesseract.command.staff.StaffCommand
 import onl.tesseract.core.Config
+import onl.tesseract.core.TesseractCorePlugin
+import onl.tesseract.core.TesseractCorePlugin.Companion
 import onl.tesseract.home.HomeService
 import onl.tesseract.home.persistence.HomeHibernateRepository
 import onl.tesseract.lib.chat.ChatEntryService
@@ -108,6 +110,7 @@ class Creatif : JavaPlugin(), Listener {
         this.getCommand("scoreboard")?.setExecutor(ScoreBoardCommands())
         this.getCommand("tpa")?.setExecutor(TPACommand())
         this.getCommand("nick")?.setExecutor(NickCommand())
+        this.getCommand("top")?.setExecutor(TopCommand())
     }
 
     override fun onDisable() {

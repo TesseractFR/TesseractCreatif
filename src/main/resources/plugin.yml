@@ -72,3 +72,7 @@ commands:
     aliases: speed
     usage: "/speed"
     description: Permet de modifier sa speed
+  top:
+    aliases: top
+    usage: "/top"
+    description: Permet de se tp au point le plus haut
