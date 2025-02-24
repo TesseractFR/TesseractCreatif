@@ -10,8 +10,7 @@ import onl.tesseract.command.home.HomeCommand
 import onl.tesseract.command.home.SetHomeCommand
 import onl.tesseract.command.staff.StaffCommand
 import onl.tesseract.core.Config
-import onl.tesseract.core.TesseractCorePlugin
-import onl.tesseract.core.TesseractCorePlugin.Companion
+import onl.tesseract.core.event.ColoredChat
 import onl.tesseract.home.HomeService
 import onl.tesseract.home.persistence.HomeHibernateRepository
 import onl.tesseract.lib.chat.ChatEntryService
@@ -121,6 +120,17 @@ class Creatif : JavaPlugin(), Listener {
 
     @EventHandler
     fun onJoin(event: PlayerJoinEvent) {
+        val nicknameService = ServiceContainer[NicknameService::class.java]
+        val nickname = nicknameService.getNickname(event.player.uniqueId)
+        val displayNameComponent = if (nickname != null) {
+            ColoredChat.colorComponent(Component.text(nickname))
+        } else {
+            val rankService = ServiceContainer[PlayerRankService::class.java]
+            val color = rankService.getStaffRank(event.player.uniqueId)?.color
+                    ?: rankService.getPlayerRank(event.player.uniqueId).color
+            Component.text(event.player.name, color)
+        }
+
         if (!event.player.hasPlayedBefore()) {
             event.player.teleport(Config.invoke().firstSpawnLocation)
             event.joinMessage(
@@ -129,10 +139,9 @@ class Creatif : JavaPlugin(), Listener {
                     .append(" sur le Créatif !", NamedTextColor.GOLD)
             )
         } else {
-            val color = ServiceContainer[PlayerRankService::class.java].getPlayerRank(event.player.uniqueId).color
             event.joinMessage(
                 Component.text("+ ", NamedTextColor.GREEN)
-                    .append(event.player.name, color)
+                    .append(displayNameComponent)
                     .append(" a rejoint le serveur.", NamedTextColor.GOLD)
             )
             ServiceContainer[PermissionService::class.java].updatePermission(event.player.uniqueId)
