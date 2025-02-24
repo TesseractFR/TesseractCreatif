@@ -121,15 +121,13 @@ class Creatif : JavaPlugin(), Listener {
     @EventHandler
     fun onJoin(event: PlayerJoinEvent) {
         val nicknameService = ServiceContainer[NicknameService::class.java]
-        val rankService = ServiceContainer[PlayerRankService::class.java]
-
-        val staffRank = rankService.getStaffRank(event.player.uniqueId)
-        val playerRank = rankService.getPlayerRank(event.player.uniqueId)
-        val color = staffRank?.color ?: playerRank.color
         val nickname = nicknameService.getNickname(event.player.uniqueId)
         val displayNameComponent = if (nickname != null) {
             ColoredChat.colorComponent(Component.text(nickname))
         } else {
+            val rankService = ServiceContainer[PlayerRankService::class.java]
+            val color = rankService.getStaffRank(event.player.uniqueId)?.color
+                    ?: rankService.getPlayerRank(event.player.uniqueId).color
             Component.text(event.player.name, color)
         }
 
