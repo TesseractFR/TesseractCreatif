@@ -1,5 +1,6 @@
 package onl.tesseract.scoreBoard
 
+import onl.tesseract.core.persistence.hibernate.boutique.TPlayerInfoService
 import onl.tesseract.lib.service.ServiceContainer
 import onl.tesseract.rank.PlayerRankService
 import onl.tesseract.rank.entity.PlayerRank
@@ -26,7 +27,7 @@ class PlayerRankBoard(player: Player?) : Board(player) {
         score = displayCurrentWorld(player, score)
         addOrUpdateScore(" ", score++)
         score = displayTimeNextRank(rank, rankService, player, timePlayedService, score)
-        score = displayActualRank(rank, score)
+        score = displayActualRank(rank, player, score)
         addOrUpdateScore("  ", score++)
         score = displayTimePlayed(timePlayed, score)
         addOrUpdateScore("   ", score++)
@@ -46,9 +47,10 @@ class PlayerRankBoard(player: Player?) : Board(player) {
             val nextRank = rankService.getNextPlayerRank(player.uniqueId)
             val remainingTime = timePlayedService.getTimeBeforeRankUp(player.uniqueId, nextRank)
             val remainingTimeFormatted = DurationFormat.formatTime(remainingTime)
+            val nextRankGender = ServiceContainer[TPlayerInfoService::class.java][player.uniqueId].genre
 
             addOrUpdateScore("${ChatColor.YELLOW}${remainingTimeFormatted}", score1++)
-            addOrUpdateScore("${nextRank.color.toChatColor()}${nextRank}", score1++)
+            addOrUpdateScore("${nextRank.color.toChatColor()}${nextRank.title.getDisplayName(nextRankGender).uppercase()}", score1++)
             addOrUpdateScore("${ChatColor.GOLD}${ChatColor.ITALIC}${ChatColor.BOLD}- Grade suivant -", score1++)
             addOrUpdateScore("    ", score1++)
         }
@@ -68,8 +70,9 @@ class PlayerRankBoard(player: Player?) : Board(player) {
         return score + 2
     }
 
-    private fun displayActualRank(rank: PlayerRank, score: Int): Int {
-        addOrUpdateScore("${rank.color.toChatColor()}${rank}", score)
+    private fun displayActualRank(rank: PlayerRank, player: Player, score: Int): Int {
+        val currentGender = ServiceContainer[TPlayerInfoService::class.java][player.uniqueId].genre
+        addOrUpdateScore("${rank.color.toChatColor()}${rank.title.getDisplayName(currentGender).uppercase()}", score)
         addOrUpdateScore("${ChatColor.GOLD}${ChatColor.ITALIC}${ChatColor.BOLD}- Grade actuel -", score + 1)
         return score + 2
     }
