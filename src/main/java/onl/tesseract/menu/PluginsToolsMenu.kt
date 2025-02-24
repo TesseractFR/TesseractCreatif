@@ -104,12 +104,13 @@ class PluginsToolsMenu(previous: Menu? = null) :
     private fun createEasyArmorStandsItem(): ItemStack {
         val ilb = ItemLoreBuilder()
             .newline()
-            .append("Placez, positionnez et habillez des porte-armures avec une interface facile à utiliser.", NamedTextColor.GRAY)
-            .append(" Il vous suffit de faire un", NamedTextColor.GRAY)
-            .append(" clic droit", NamedTextColor.RED)
-            .append(" sur un porte-armure pour l'éditer !", NamedTextColor.GRAY)
+            .append("Placez, positionnez et habillez des porte-armures avec une interface facile à utiliser. Faites", NamedTextColor.GRAY)
+            .append(" /eas give", NamedTextColor.RED)
+            .append(" pour recevoir le bâton, puis", NamedTextColor.GRAY)
+            .append(" clic gauche", NamedTextColor.RED)
+            .append(" pour ouvrir l'interface.", NamedTextColor.GRAY)
         return ItemBuilder(Material.ARMOR_STAND)
-            .name("Easy Armor Stands (EAT)", NamedTextColor.DARK_GREEN, TextDecoration.BOLD)
+            .name("Easy Armor Stands (EAS)", NamedTextColor.DARK_GREEN, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
     }
