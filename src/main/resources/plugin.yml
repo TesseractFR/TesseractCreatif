@@ -64,6 +64,7 @@ commands:
     aliases: nick
     usage: "/nick"
     description: Mettre un surnom au joueur
+    permission: tesseract.creatif.nick
   tpa:
     aliases: tpa
     usage: "/tpa"
