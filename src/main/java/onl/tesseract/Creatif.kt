@@ -11,6 +11,7 @@ import onl.tesseract.command.home.SetHomeCommand
 import onl.tesseract.command.staff.StaffCommand
 import onl.tesseract.core.Config
 import onl.tesseract.core.event.ColoredChat
+import onl.tesseract.core.command.BackCommand
 import onl.tesseract.home.HomeService
 import onl.tesseract.home.persistence.HomeHibernateRepository
 import onl.tesseract.lib.chat.ChatEntryService
@@ -83,6 +84,7 @@ class Creatif : JavaPlugin(), Listener {
         val pluginManager = server.pluginManager
         pluginManager.registerEvents(this, this)
         pluginManager.registerEvents(NicknameListener(), this)
+        pluginManager.registerEvents(BackCommand(), this)
         pluginManager.registerEvents(ColoredChatListener(), this)
     }
 
@@ -112,6 +114,7 @@ class Creatif : JavaPlugin(), Listener {
         this.getCommand("tpa")?.setExecutor(TPACommand())
         this.getCommand("nick")?.setExecutor(NickCommand())
         this.getCommand("top")?.setExecutor(TopCommand())
+        this.getCommand("back")?.setExecutor(BackCommand())
     }
 
     override fun onDisable() {
