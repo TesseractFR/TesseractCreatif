@@ -32,7 +32,7 @@ class RankMenu(player: Player, previous: Menu? = null) :
         createRankButton(15, BoutiqueRank.INGENIEUR, actualRank)
         createRankButton(7, BoutiqueRank.BATISSEUR, actualRank)
         addButton(4, virtuoseItem) {
-            confirmBuyLysDor(player, 2500, "Confirmer l'achat du grade Virtuose pour 2500 lys d'or")
+            confirmBuyLysDor(player, 2400, "Confirmer l'achat du grade Virtuose pour 2400 lys d'or")
             {
                 ServiceContainer[PlayerRankService::class.java].setPlayerRank(player.uniqueId, PlayerRank.VIRTUOSE)
                 player.sendMessage(ChatFormats.SHOP_ADMIN.append("Vous venez d'acheter le grade Virtuose", GOLD))
