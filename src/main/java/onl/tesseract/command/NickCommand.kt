@@ -10,9 +10,7 @@ import onl.tesseract.commandBuilder.annotation.Env
 import onl.tesseract.core.event.ColoredChat
 import onl.tesseract.lib.command.argument.StringArg
 import onl.tesseract.lib.service.ServiceContainer
-import onl.tesseract.lib.util.append
 import onl.tesseract.nickname.NicknameService
-import onl.tesseract.rank.PlayerRankService
 import org.bukkit.entity.Player
 
 @Command(
@@ -22,12 +20,10 @@ import org.bukkit.entity.Player
 class NickCommand : CommandContext() {
 
     private val nicknameService = ServiceContainer[NicknameService::class.java]
-    private val rankService = ServiceContainer[PlayerRankService::class.java]
 
     @CommandBody
     fun onCommand(@Env(key = "surnom") nickname: String?, sender: Player): Boolean {
         val currentNickname = nicknameService.getNickname(sender.uniqueId)
-        val rank = rankService.getPlayerRank(sender.uniqueId)
 
         if (nickname.isNullOrBlank()) {
             if (currentNickname == null) {
@@ -45,7 +41,7 @@ class NickCommand : CommandContext() {
             val coloredNickname = ColoredChat.colorMessage(nickname)
             sender.sendMessage(
                 Component.text("Votre surnom est maintenant : ", NamedTextColor.GREEN)
-                    .append(coloredNickname, rank.color)
+                        .append(coloredNickname)
             )
         }
         return true
