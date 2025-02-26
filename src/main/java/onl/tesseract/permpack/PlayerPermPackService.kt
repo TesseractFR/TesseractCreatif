@@ -18,8 +18,14 @@ class PlayerPermPackService(private val repository: PlayerPermPackInfoRepository
         for (permPack: PermPack in PermPack.entries) {
             permission.playerRemoveGroup(player, permPack.groupPerm)
         }
-        if(!getTimeLeftArceon(player.uniqueId).isZero){
-            permission.playerAddGroup(player,PermPack.ARCEON.groupPerm)
+        if (getTimeLeftArceon(player.uniqueId).isPositive) {
+            permission.playerAddGroup(null, player, PermPack.ARCEON.groupPerm)
+        }
+        if (getTimeLeftMetaBrush(player.uniqueId).isPositive) {
+            permission.playerAddGroup(null, player, PermPack.META_BRUSH.groupPerm)
+        }
+        if (getTimeLeftEzedit(player.uniqueId).isPositive) {
+            permission.playerAddGroup(null, player, PermPack.EZEDIT.groupPerm)
         }
     }
 
