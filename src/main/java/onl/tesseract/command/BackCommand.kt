@@ -8,9 +8,9 @@ import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
-import org.bukkit.event.player.PlayerTeleportEvent
 import org.bukkit.event.player.PlayerQuitEvent
-import java.util.UUID
+import org.bukkit.event.player.PlayerTeleportEvent
+import java.util.*
 
 @Command
 class BackCommand : CommandContext(), Listener {
@@ -35,9 +35,7 @@ class BackCommand : CommandContext(), Listener {
 
     @EventHandler
     fun onPlayerTeleport(event: PlayerTeleportEvent) {
-        if (event.player.hasPermission("back.use")) {
             lastLocations[event.player.uniqueId] = event.from
-        }
     }
 
     @EventHandler
