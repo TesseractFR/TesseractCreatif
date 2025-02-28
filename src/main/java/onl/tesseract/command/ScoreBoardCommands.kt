@@ -10,16 +10,12 @@ import org.bukkit.entity.Player
 class ScoreBoardCommands : CommandContext() {
 
     @Command(name = "afficher")
-    fun enableScoreBoard(sender: CommandSender) {
-        if (sender is Player) {
-            ScoreBoardCore.showScoreboard(sender)
-        }
+    fun enableScoreBoard(sender: Player) {
+        ScoreBoardCore.showScoreboard(sender)
     }
 
     @Command(name = "masquer")
-    fun disableScoreBoard(sender: CommandSender) {
-        if (sender is Player) {
-            ScoreBoardCore.hideScoreboard(sender)
-        }
+    fun disableScoreBoard(sender: Player) {
+        ScoreBoardCore.hideScoreboard(sender)
     }
 }

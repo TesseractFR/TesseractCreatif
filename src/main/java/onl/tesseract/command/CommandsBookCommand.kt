@@ -10,10 +10,8 @@ import org.bukkit.entity.Player
 @Command
 class CommandsBookCommand : CommandContext() {
     @CommandBody
-    fun onCommand(sender: CommandSender?): Boolean {
-        if (sender is Player) {
-            getInstance().giveGuideBook(sender)
-        }
+    fun onCommand(sender: Player): Boolean {
+        getInstance().giveGuideBook(sender)
         return true
     }
 }

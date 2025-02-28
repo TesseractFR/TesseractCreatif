@@ -10,11 +10,8 @@ import org.bukkit.entity.Player
 @Command
 class RankMenuCommand : CommandContext() {
     @CommandBody
-    fun onCommand(sender: CommandSender?): Boolean {
-        if (sender is Player) {
-            RankMenu().open(sender)
-        }
-
+    fun onCommand(sender: Player): Boolean {
+        RankMenu().open(sender)
         return true
     }
 }

@@ -115,6 +115,7 @@ class Creatif : JavaPlugin(), Listener {
         this.getCommand("nick")?.setExecutor(NickCommand())
         this.getCommand("top")?.setExecutor(TopCommand())
         this.getCommand("back")?.setExecutor(BackCommand())
+        this.getCommand("spawn")?.setExecutor(SpawnCommand())
     }
 
     override fun onDisable() {

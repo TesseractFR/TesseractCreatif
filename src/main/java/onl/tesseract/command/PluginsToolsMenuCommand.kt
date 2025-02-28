@@ -10,11 +10,8 @@ import org.bukkit.entity.Player
 @Command
 class PluginsToolsMenuCommand : CommandContext() {
     @CommandBody
-    fun onCommand(sender: CommandSender?): Boolean {
-        if (sender is Player) {
-            PluginsToolsMenu().open(sender)
-        }
-
+    fun onCommand(sender: Player): Boolean {
+        PluginsToolsMenu().open(sender)
         return true
     }
 }
