@@ -10,8 +10,8 @@ import onl.tesseract.command.home.HomeCommand
 import onl.tesseract.command.home.SetHomeCommand
 import onl.tesseract.command.staff.StaffCommand
 import onl.tesseract.core.Config
-import onl.tesseract.core.event.ColoredChat
 import onl.tesseract.core.command.BackCommand
+import onl.tesseract.core.event.ColoredChat
 import onl.tesseract.home.HomeService
 import onl.tesseract.home.persistence.HomeHibernateRepository
 import onl.tesseract.lib.chat.ChatEntryService
@@ -112,6 +112,8 @@ class Creatif : JavaPlugin(), Listener {
         this.getCommand("home")?.tabCompleter = homeCommand
         this.getCommand("scoreboard")?.setExecutor(ScoreBoardCommands())
         this.getCommand("tpa")?.setExecutor(TPACommand())
+        this.getCommand("tp")
+                ?.setExecutor(TPCommand())
         this.getCommand("nick")?.setExecutor(NickCommand())
         this.getCommand("top")?.setExecutor(TopCommand())
         this.getCommand("back")?.setExecutor(BackCommand())
