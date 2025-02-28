@@ -20,17 +20,11 @@ class BackCommand : CommandContext(), Listener {
     }
 
     @CommandBody
-    fun onCommand(sender: CommandSender?): Boolean {
-        if (sender is Player) {
-            val lastLocation = lastLocations[sender.uniqueId]
-            if (lastLocation != null) {
-                sender.teleport(lastLocation)
-                sender.sendMessage("§aTéléporté(e) à la dernière position !")
-            } else {
-                sender.sendMessage("§cAucune position précédente enregistrée.")
-            }
-        }
-        return true
+    fun onCommand(sender: Player) {
+        lastLocations[sender.uniqueId]?.let {
+            sender.teleport(it)
+            sender.sendMessage("§aTéléporté(e) à la dernière position !")
+        } ?: sender.sendMessage("§cAucune position précédente enregistrée.")
     }
 
     @EventHandler

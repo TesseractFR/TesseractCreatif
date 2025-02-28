@@ -10,10 +10,8 @@ import org.bukkit.entity.Player
 @Command
 class MenuCommand : CommandContext() {
     @CommandBody
-    fun onCommand(sender: CommandSender?): Boolean {
-        if (sender is Player) {
-            MenuMenu(sender).open(sender)
-        }
+    fun onCommand(sender: Player): Boolean {
+        MenuMenu(sender).open(sender)
         return true
     }
 }
