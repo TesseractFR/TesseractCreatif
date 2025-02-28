@@ -122,6 +122,7 @@ class Creatif : JavaPlugin(), Listener {
         this.getCommand("nick")?.setExecutor(NickCommand())
         this.getCommand("top")?.setExecutor(TopCommand())
         this.getCommand("back")?.setExecutor(BackCommand())
+        this.getCommand("spawn")?.setExecutor(SpawnCommand())
         this.getCommand("give")
                 ?.setExecutor(GiveCommand())
         this.getCommand("gamemode")?.setExecutor(GamemodeCommand())
