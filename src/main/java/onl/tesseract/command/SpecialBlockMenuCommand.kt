@@ -10,11 +10,8 @@ import org.bukkit.entity.Player
 @Command
 class SpecialBlockMenuCommand : CommandContext() {
     @CommandBody
-    fun onCommand(sender: CommandSender?): Boolean {
-        if (sender is Player) {
-            SpecialBlockMenu(sender).open(sender)
-        }
-
+    fun onCommand(sender: Player): Boolean {
+        SpecialBlockMenu(sender).open(sender)
         return true
     }
 }
