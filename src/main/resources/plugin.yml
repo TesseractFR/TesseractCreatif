@@ -85,3 +85,6 @@ commands:
   tp:
     usage: "/tp"
     permission: tesseract.creatif.tp
+  give:
+    usage: "/give"
+    permission: tesseract.creatif.give
