@@ -85,3 +85,7 @@ commands:
   tp:
     usage: "/tp"
     permission: tesseract.creatif.tp
+  ec:
+    aliases: ec
+    usage: "/ec"
+    permission: tesseract.creatif.ec
