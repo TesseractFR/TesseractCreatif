@@ -12,7 +12,7 @@ class ECCommand : CommandContext() {
 
     @CommandBody
     fun onCommand(sender: Player) {
-        if (!sender.hasPermission("tesseract.creatif.ec.use")) {
+        if (!sender.hasPermission("tesseract.creatif.ec")) {
             sender.sendMessage(Component.text("Vous n'avez pas la permission d'ouvrir l'EnderChest.", NamedTextColor.RED))
             return
         }
