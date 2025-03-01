@@ -85,3 +85,8 @@ commands:
   tp:
     usage: "/tp"
     permission: tesseract.creatif.tp
+  hat:
+    aliases: hat
+    usage: "/hat"
+    permission: tesseract.creatif.hat
+    description: Mettre sur la tête l'objet en main
