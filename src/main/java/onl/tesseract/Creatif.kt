@@ -126,6 +126,7 @@ class Creatif : JavaPlugin(), Listener {
                 ?.setExecutor(GiveCommand())
         this.getCommand("gamemode")?.setExecutor(GamemodeCommand())
         this.getCommand("hat")?.setExecutor(HatCommand())
+        this.getCommand("ec")?.setExecutor(ECCommand())
     }
 
     override fun onDisable() {
