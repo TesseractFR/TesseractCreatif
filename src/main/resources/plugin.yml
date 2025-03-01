@@ -91,3 +91,8 @@ commands:
   gamemode:
     usage: "/gamemode"
     permission: tesseract.creatif.gamemode
+  hat:
+    aliases: hat
+    usage: "/hat"
+    permission: tesseract.creatif.hat
+    description: Mettre sur la tête l'objet en main
