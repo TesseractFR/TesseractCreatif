@@ -88,3 +88,6 @@ commands:
   give:
     usage: "/give"
     permission: tesseract.creatif.give
+  gamemode:
+    usage: "/gamemode"
+    permission: tesseract.creatif.gamemode
