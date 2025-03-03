@@ -2,6 +2,7 @@ package onl.tesseract.chat
 
 import io.papermc.paper.event.player.AsyncChatEvent
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.event.HoverEvent
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
 import onl.tesseract.core.event.ColoredChat
@@ -20,19 +21,30 @@ class ColoredChatListener : Listener {
 
     @EventHandler
     fun onPlayerChat(event: AsyncChatEvent) {
-        val playerRank = rankService.getPlayerRank(event.player.uniqueId)
-        val staffRank = rankService.getStaffRank(event.player.uniqueId)
+        val player = event.player
+        val playerRank = rankService.getPlayerRank(player.uniqueId)
+        val staffRank = rankService.getStaffRank(player.uniqueId)
         val color = staffRank?.color ?: playerRank.color
         val titleDisplay = staffRank?.title ?: playerRank.title
 
-        val gender = tPlayerInfoService[event.player.uniqueId].genre
-        val nickname = nicknameService.getNickname(event.player.uniqueId)
+        val gender = tPlayerInfoService[player.uniqueId].genre
+        val nickname = nicknameService.getNickname(player.uniqueId)
+
+        val hoverText = Component.text()
+            .append(Component.text("Pseudo: ", NamedTextColor.GRAY))
+            .append(Component.text(player.name, NamedTextColor.WHITE))
+            .append(Component.newline())
+            .append(Component.text("Grade: ", NamedTextColor.GOLD))
+            .append(Component.text(playerRank.name, playerRank.color))
+            .append(Component.newline())
+            .append(Component.text("Cliquez pour envoyer un message privé.", NamedTextColor.GRAY))
+            .build()
 
         val displayNameComponent = if (nickname != null) {
-            ColoredChat.colorComponent(Component.text(nickname))
+            ColoredChat.colorComponent(Component.text(nickname, color))
         } else {
-            Component.text(event.player.name, color)
-        }
+            Component.text(player.name, color)
+        }.hoverEvent(HoverEvent.showText(hoverText))
 
         val prefix = Component.text()
             .append(Component.text("[${titleDisplay.getDisplayName(gender)}] ", color, TextDecoration.BOLD))
