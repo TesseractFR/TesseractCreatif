@@ -20,7 +20,8 @@ import java.util.regex.Pattern
 
 class CreativePlayerTag : PlayerTag {
 
-    private val mentionPattern = Pattern.compile(".*?(@|j#)(\\S+).*")
+    // Correction du pattern pour mieux détecter les mentions
+    private val mentionPattern = Pattern.compile(".* ?((@|j#)(\\S+)).*")
 
     override fun getMatcher(component: TextComponent): Matcher {
         return mentionPattern.matcher(component.content())
@@ -30,34 +31,30 @@ class CreativePlayerTag : PlayerTag {
         val matcher = mentionPattern.matcher(component.content())
         var modifiedComponent: TextComponent = component // Copie mutable
 
-        while (matcher.find()) {
-            val pseudo = matcher.group(2) // Récupération du pseudo mentionné
+        if (matcher.matches()) {
+            val pseudo = matcher.group(3) // Récupération du pseudo mentionné
             val offlinePlayer = Bukkit.getOfflinePlayer(pseudo)
             val mentionedUUID = offlinePlayer.uniqueId
 
             if (!offlinePlayer.hasPlayedBefore()) {
                 // Si le joueur n'existe pas, garder le texte brut
-                val same = Component.text(pseudo).style(component.style())
-                modifiedComponent = Util.replace(modifiedComponent, matcher.start(1), matcher.end(1), same)
-            } else {
-                // Appliquer le formatage de la mention avec grade + couleur
-                val mentionComponent = getComponent(mentionedUUID)
-
-                // Si le joueur est en ligne, lui envoyer un son de notification
-                if (offlinePlayer.isOnline) {
-                    offlinePlayer.player?.playSound(offlinePlayer.player!!.location, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 5f, 1f)
-                }
-
-                modifiedComponent = modifiedComponent.replaceText { builder ->
-                    builder.match(mentionPattern).replacement { matchResult ->
-                        getComponent(mentionedUUID)
-                    }
-                } as TextComponent
+                val same = Component.text(matcher.group(3)).style(component.style())
+                return Util.replace(modifiedComponent, matcher.start(1), matcher.end(1), same)
             }
+            return apply(modifiedComponent, mentionedUUID, matcher.toMatchResult())
         }
         return modifiedComponent
     }
 
+    private fun apply(component: TextComponent, uuid: UUID, result: MatchResult): TextComponent {
+        val offlinePlayer = Bukkit.getOfflinePlayer(uuid)
+
+        if (offlinePlayer.isOnline) {
+            offlinePlayer.player?.playSound(offlinePlayer.player!!.location, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 5f, 1f)
+        }
+
+        return Util.replace(component, result.start(1), result.end(1), getComponent(uuid))
+    }
 
     override fun hover(obj: UUID): TextComponent {
         val rankService = ServiceContainer[PlayerRankService::class.java]
@@ -71,16 +68,21 @@ class CreativePlayerTag : PlayerTag {
     override fun getComponent(obj: UUID): TextComponent {
         val offlinePlayer = Bukkit.getOfflinePlayer(obj)
         val rankService = ServiceContainer[PlayerRankService::class.java]
-        val playerRank = rankService.getPlayerRank(obj)
-        val color = playerRank.color
+        val color = rankService.getStaffRank(obj)?.color
+            ?: rankService.getPlayerRank(obj).color
 
-        // Récupérer le nom du joueur et appliquer le format du grade
+        // ✅ On affiche seulement le pseudo sans le grade
         val playerName = offlinePlayer.name ?: "Inconnu"
-        val rankPrefix = Component.text("[${playerRank.name}] ", color, TextDecoration.BOLD)
         val playerMention = Component.text(playerName, color, TextDecoration.BOLD)
 
-        return rankPrefix.append(playerMention)
+        val finalMention = playerMention
             .hoverEvent(HoverEvent.showText(hover(obj)))
             .clickEvent(ClickEvent.suggestCommand("/msg $playerName "))
+
+        // 🔥 DEBUG : Vérification dans les logs
+        Bukkit.getLogger().info("Mention colorée générée (sans grade): $finalMention")
+
+        return finalMention
     }
+
 }

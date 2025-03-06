@@ -10,6 +10,7 @@ import onl.tesseract.core.persistence.hibernate.boutique.TPlayerInfoService
 import onl.tesseract.lib.service.ServiceContainer
 import onl.tesseract.nickname.NicknameService
 import onl.tesseract.rank.PlayerRankService
+import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 
@@ -52,9 +53,15 @@ class ColoredChatListener : Listener {
             .append(Component.text(" : ", NamedTextColor.WHITE))
             .build()
 
-        val coloredMessage = ColoredChat.colorComponent(event.message())
-        val finalMessage = prefix.append(coloredMessage)
+        // ✅ Gère uniquement l'affichage du [Grade] Pseudo :
+        event.renderer { _, _, _, _ ->
+            Component.text()
+                .append(prefix)
+                .append(event.message()) // Ajoute le message du joueur
+                .build()
+        }
 
-        event.renderer { _, _, _, _ -> finalMessage }
     }
+
+
 }
