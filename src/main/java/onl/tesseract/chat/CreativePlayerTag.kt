@@ -1,15 +1,10 @@
-package onl.tesseract.chat.tags
+package onl.tesseract.chat
 
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.TextComponent
-import net.kyori.adventure.text.event.ClickEvent
-import net.kyori.adventure.text.event.HoverEvent
 import net.kyori.adventure.text.format.TextDecoration
-import onl.tesseract.chat.PlayerTagHover
 import onl.tesseract.lib.chat.tag.PlayerTag
 import onl.tesseract.lib.util.Util
-import onl.tesseract.rank.PlayerRankService
-import onl.tesseract.lib.service.ServiceContainer
 import org.bukkit.Bukkit
 import org.bukkit.Sound
 import org.bukkit.entity.Player
@@ -20,7 +15,6 @@ import java.util.regex.Pattern
 class CreativePlayerTag : PlayerTag {
 
     private val mentionPattern = Pattern.compile(".* ?((@|j#)(\\S+)).*")
-    private val rankService: PlayerRankService = ServiceContainer[PlayerRankService::class.java]
 
     override fun getMatcher(component: TextComponent): Matcher = mentionPattern.matcher(component.content())
 
