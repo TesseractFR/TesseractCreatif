@@ -2,6 +2,8 @@ package onl.tesseract.chat
 
 import io.papermc.paper.event.player.AsyncChatEvent
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.event.ClickEvent
+import net.kyori.adventure.text.event.HoverEvent
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
 import onl.tesseract.core.event.ColoredChat
@@ -20,19 +22,19 @@ class ColoredChatListener : Listener {
 
     @EventHandler
     fun onPlayerChat(event: AsyncChatEvent) {
-        val playerRank = rankService.getPlayerRank(event.player.uniqueId)
-        val staffRank = rankService.getStaffRank(event.player.uniqueId)
+        val player = event.player
+        val playerRank = rankService.getPlayerRank(player.uniqueId)
+        val staffRank = rankService.getStaffRank(player.uniqueId)
         val color = staffRank?.color ?: playerRank.color
         val titleDisplay = staffRank?.title ?: playerRank.title
 
-        val gender = tPlayerInfoService[event.player.uniqueId].genre
-        val nickname = nicknameService.getNickname(event.player.uniqueId)
+        val gender = tPlayerInfoService[player.uniqueId].genre
+        val nickname = nicknameService.getNickname(player.uniqueId)
 
-        val displayNameComponent = if (nickname != null) {
-            ColoredChat.colorComponent(Component.text(nickname))
-        } else {
-            Component.text(event.player.name, color)
-        }
+        val displayNameComponent = nickname?.let {
+            val coloredNickname = ColoredChat.colorComponent(Component.text(it))
+            PlayerTagHover.getOnClickComponent(player.uniqueId, coloredNickname)
+        } ?: PlayerTagHover.getOnClickComponent(player.uniqueId)
 
         val prefix = Component.text()
             .append(Component.text("[${titleDisplay.getDisplayName(gender)}] ", color, TextDecoration.BOLD))
@@ -40,9 +42,11 @@ class ColoredChatListener : Listener {
             .append(Component.text(" : ", NamedTextColor.WHITE))
             .build()
 
-        val coloredMessage = ColoredChat.colorComponent(event.message())
-        val finalMessage = prefix.append(coloredMessage)
-
-        event.renderer { _, _, _, _ -> finalMessage }
+        event.renderer { _, _, _, _ ->
+            Component.text()
+                .append(prefix)
+                .append(event.message())
+                .build()
+        }
     }
 }

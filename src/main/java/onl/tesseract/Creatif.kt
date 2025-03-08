@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.milkbowl.vault.permission.Permission
 import onl.tesseract.chat.ColoredChatListener
+import onl.tesseract.chat.CreativePlayerTag
 import onl.tesseract.command.*
 import onl.tesseract.command.home.DelhomeCommand
 import onl.tesseract.command.home.HomeCommand
@@ -15,6 +16,7 @@ import onl.tesseract.core.event.ColoredChat
 import onl.tesseract.home.HomeService
 import onl.tesseract.home.persistence.HomeHibernateRepository
 import onl.tesseract.lib.chat.ChatEntryService
+import onl.tesseract.lib.chat.tag.Tag
 import onl.tesseract.lib.service.ServiceContainer
 import onl.tesseract.lib.task.TaskScheduler
 import onl.tesseract.lib.util.append
@@ -53,6 +55,7 @@ class Creatif : JavaPlugin(), Listener {
         registerEvents()
         registerCommands()
         ScoreBoardCore.startScoreboard(this)
+        Tag.registerTag(CreativePlayerTag())
     }
 
     private fun registerDefaultServices() {
