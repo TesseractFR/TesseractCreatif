@@ -31,13 +31,10 @@ class ColoredChatListener : Listener {
         val gender = tPlayerInfoService[player.uniqueId].genre
         val nickname = nicknameService.getNickname(player.uniqueId)
 
-        val displayNameComponent = if (nickname != null) {
-            val coloredNickname = ColoredChat.colorComponent(Component.text(nickname))
-            coloredNickname.hoverEvent(HoverEvent.showText { PlayerTagHover.getHoverComponent(player.uniqueId) })
-                .clickEvent(ClickEvent.suggestCommand("/msg ${player.name} "))
-        } else {
-            PlayerTagHover.getOnClickComponent(player.uniqueId)
-        }
+        val displayNameComponent = nickname?.let {
+            val coloredNickname = ColoredChat.colorComponent(Component.text(it))
+            PlayerTagHover.getOnClickComponent(player.uniqueId, coloredNickname)
+        } ?: PlayerTagHover.getOnClickComponent(player.uniqueId)
 
         val prefix = Component.text()
             .append(Component.text("[${titleDisplay.getDisplayName(gender)}] ", color, TextDecoration.BOLD))

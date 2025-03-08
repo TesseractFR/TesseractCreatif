@@ -46,18 +46,17 @@ object PlayerTagHover {
         return hoverText.build()
     }
 
-    fun getOnClickComponent(uuid: UUID, nickname: String? = null, bold: TextDecoration? = null): TextComponent {
+    fun getOnClickComponent(uuid: UUID, displayComponent: Component? = null): TextComponent {
         val offlinePlayer = Bukkit.getOfflinePlayer(uuid)
         val color = rankService.getStaffRank(uuid)?.color ?: rankService.getPlayerRank(uuid).color
         val playerName = offlinePlayer.name ?: "Inconnu"
 
-        val displayName = nickname ?: playerName
+        val finalComponent = (displayComponent ?: Component.text(playerName, color)) as TextComponent
 
-        val textComponent = Component.text(displayName, color)
+        val textComponent = finalComponent
             .hoverEvent(HoverEvent.showText { getHoverComponent(uuid) })
             .clickEvent(ClickEvent.suggestCommand("/msg $playerName "))
 
-        return if (bold != null) textComponent.decorate(bold) else textComponent
+        return textComponent
     }
-
 }

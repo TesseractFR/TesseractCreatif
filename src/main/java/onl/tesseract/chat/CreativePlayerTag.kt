@@ -4,7 +4,9 @@ import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.TextComponent
 import net.kyori.adventure.text.format.TextDecoration
 import onl.tesseract.lib.chat.tag.PlayerTag
+import onl.tesseract.lib.service.ServiceContainer
 import onl.tesseract.lib.util.Util
+import onl.tesseract.rank.PlayerRankService
 import org.bukkit.Bukkit
 import org.bukkit.Sound
 import org.bukkit.entity.Player
@@ -15,6 +17,7 @@ import java.util.regex.Pattern
 class CreativePlayerTag : PlayerTag {
 
     private val mentionPattern = Pattern.compile(".* ?((@|j#)(\\S+)).*")
+    private val rankService: PlayerRankService = ServiceContainer[PlayerRankService::class.java]
 
     override fun getMatcher(component: TextComponent): Matcher = mentionPattern.matcher(component.content())
 
@@ -41,7 +44,9 @@ class CreativePlayerTag : PlayerTag {
         val offlinePlayer = Bukkit.getOfflinePlayer(obj)
         val playerName = offlinePlayer.name ?: "Inconnu"
 
-        return PlayerTagHover.getOnClickComponent(obj, playerName, bold = TextDecoration.BOLD)
+        val color = rankService.getStaffRank(obj)?.color ?: rankService.getPlayerRank(obj).color
+        return PlayerTagHover.getOnClickComponent(obj, Component.text(playerName, color, TextDecoration.BOLD))
     }
+
 
 }
