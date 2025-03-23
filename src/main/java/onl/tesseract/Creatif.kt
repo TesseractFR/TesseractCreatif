@@ -37,7 +37,9 @@ import onl.tesseract.timeplayed.persistence.PlayerTimePlayedHibernateRepository
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerJoinEvent
+import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.plugin.java.JavaPlugin
+import java.util.*
 
 class Creatif : JavaPlugin(), Listener {
     var permissions: Permission? = null
@@ -131,24 +133,15 @@ class Creatif : JavaPlugin(), Listener {
 
     @EventHandler
     fun onJoin(event: PlayerJoinEvent) {
+        val displayNameComponent = getFormattedDisplayName(event.player.uniqueId, event.player.name)
         if (!event.player.hasPlayedBefore()) {
             event.player.teleport(Config.invoke().firstSpawnLocation)
             event.joinMessage(
                 Component.text("Bienvenue ", NamedTextColor.GOLD)
-                        .append(event.player.name, NamedTextColor.GREEN)
+                        .append(displayNameComponent)
                         .append(" sur le Créatif !", NamedTextColor.GOLD)
             )
         } else {
-            val nicknameService = ServiceContainer[NicknameService::class.java]
-            val nickname = nicknameService.getNickname(event.player.uniqueId)
-            val displayNameComponent = if (nickname != null) {
-                ColoredChat.colorComponent(Component.text(nickname))
-            } else {
-                val rankService = ServiceContainer[PlayerRankService::class.java]
-                val color = rankService.getStaffRank(event.player.uniqueId)?.color
-                        ?: rankService.getPlayerRank(event.player.uniqueId).color
-                Component.text(event.player.name, color)
-            }
             event.joinMessage(
                 Component.text("+ ", NamedTextColor.GREEN)
                         .append(displayNameComponent)
@@ -157,6 +150,30 @@ class Creatif : JavaPlugin(), Listener {
         }
         ServiceContainer[PermissionService::class.java].updatePermission(event.player.uniqueId)
     }
+
+    @EventHandler
+    fun onQuit(event: PlayerQuitEvent) {
+        val displayNameComponent = getFormattedDisplayName(event.player.uniqueId, event.player.name)
+        event.quitMessage(
+            Component.text("- ", NamedTextColor.RED)
+                .append(displayNameComponent)
+                .append(" s'est déconnecté.", NamedTextColor.GOLD)
+        )
+    }
+
+    private fun getFormattedDisplayName(uuid: UUID, playerName: String): Component {
+        val nicknameService = ServiceContainer[NicknameService::class.java]
+        val nickname = nicknameService.getNickname(uuid)
+        return if (nickname != null) {
+            ColoredChat.colorComponent(Component.text(nickname))
+        } else {
+            val rankService = ServiceContainer[PlayerRankService::class.java]
+            val color = rankService.getStaffRank(uuid)?.color
+                ?: rankService.getPlayerRank(uuid).color
+            Component.text(playerName, color)
+        }
+    }
+
 
     private fun setupPermissions(): Boolean {
         val rsp = server.servicesManager.getRegistration(
