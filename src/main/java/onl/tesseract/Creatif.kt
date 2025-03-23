@@ -127,32 +127,31 @@ class Creatif : JavaPlugin(), Listener {
 
     @EventHandler
     fun onJoin(event: PlayerJoinEvent) {
-        val nicknameService = ServiceContainer[NicknameService::class.java]
-        val nickname = nicknameService.getNickname(event.player.uniqueId)
-        val displayNameComponent = if (nickname != null) {
-            ColoredChat.colorComponent(Component.text(nickname))
-        } else {
-            val rankService = ServiceContainer[PlayerRankService::class.java]
-            val color = rankService.getStaffRank(event.player.uniqueId)?.color
-                    ?: rankService.getPlayerRank(event.player.uniqueId).color
-            Component.text(event.player.name, color)
-        }
-
         if (!event.player.hasPlayedBefore()) {
             event.player.teleport(Config.invoke().firstSpawnLocation)
             event.joinMessage(
                 Component.text("Bienvenue ", NamedTextColor.GOLD)
-                    .append(event.player.name, NamedTextColor.GREEN)
-                    .append(" sur le Créatif !", NamedTextColor.GOLD)
+                        .append(event.player.name, NamedTextColor.GREEN)
+                        .append(" sur le Créatif !", NamedTextColor.GOLD)
             )
         } else {
+            val nicknameService = ServiceContainer[NicknameService::class.java]
+            val nickname = nicknameService.getNickname(event.player.uniqueId)
+            val displayNameComponent = if (nickname != null) {
+                ColoredChat.colorComponent(Component.text(nickname))
+            } else {
+                val rankService = ServiceContainer[PlayerRankService::class.java]
+                val color = rankService.getStaffRank(event.player.uniqueId)?.color
+                        ?: rankService.getPlayerRank(event.player.uniqueId).color
+                Component.text(event.player.name, color)
+            }
             event.joinMessage(
                 Component.text("+ ", NamedTextColor.GREEN)
-                    .append(displayNameComponent)
-                    .append(" a rejoint le serveur.", NamedTextColor.GOLD)
+                        .append(displayNameComponent)
+                        .append(" a rejoint le serveur.", NamedTextColor.GOLD)
             )
-            ServiceContainer[PermissionService::class.java].updatePermission(event.player.uniqueId)
         }
+        ServiceContainer[PermissionService::class.java].updatePermission(event.player.uniqueId)
     }
 
     private fun setupPermissions(): Boolean {
