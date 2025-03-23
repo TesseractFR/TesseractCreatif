@@ -59,6 +59,10 @@ class SpecialBlockMenu(val player: Player, previous: Menu? = null) :
             player.inventory.addItem(ItemStack(Material.LIGHT))
         }
 
+        addButton(22, createDebugStickItem()) {
+            player.inventory.addItem(ItemStack(Material.DEBUG_STICK))
+        }
+
         addBackButton()
         addCloseButton()
     }
@@ -131,6 +135,14 @@ class SpecialBlockMenu(val player: Player, previous: Menu? = null) :
         val ilb = ItemLoreBuilder()
         return ItemBuilder(Material.LIGHT)
             .name("Lumière", NamedTextColor.YELLOW, TextDecoration.BOLD)
+            .lore(ilb.get())
+            .build()
+    }
+
+    private fun createDebugStickItem(): ItemStack {
+        val ilb = ItemLoreBuilder()
+        return ItemBuilder(Material.DEBUG_STICK)
+                .name("Debug Stick", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
     }

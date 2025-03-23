@@ -19,7 +19,7 @@ enum class StaffRank(override val permGroup: String, override val title: Title, 
     ),
         ARCHITECTE(
             "architecte", serv.getById("ARCHITECTE"),
-        TextColor.fromHexString("#F7DC6F")!!
+        TextColor.fromHexString("#A815FD")!!
     ),
         MODERATEUR("moderateur", serv.getById("MODERATEUR"), NamedTextColor.GOLD),
         ADMINISTRATEUR("administrateur", serv.getById("ADMINISTRATEUR"), NamedTextColor.RED);
