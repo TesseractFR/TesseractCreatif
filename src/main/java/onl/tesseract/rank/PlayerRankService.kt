@@ -18,6 +18,7 @@ class PlayerRankService(private val repository: PlayerRankInfoRepository){
         rankInfo.playerRank = playerRank
         ServiceContainer[PermissionService::class.java].updatePermission(player)
         repository.save(rankInfo);
+        ServiceContainer[PermissionService::class.java].updatePermission(player)
     }
 
     fun getPlayerRank(player: UUID) : PlayerRank {
