@@ -1,9 +1,11 @@
 package onl.tesseract.rank
 
-import onl.tesseract.rank.persistence.PlayerRankInfoRepository
+import onl.tesseract.lib.service.ServiceContainer
+import onl.tesseract.player.PermissionService
 import onl.tesseract.rank.entity.PlayerRank
 import onl.tesseract.rank.entity.PlayerRankInfo
 import onl.tesseract.rank.entity.StaffRank
+import onl.tesseract.rank.persistence.PlayerRankInfoRepository
 import java.util.*
 
 /**
@@ -14,6 +16,7 @@ class PlayerRankService(private val repository: PlayerRankInfoRepository){
     fun setPlayerRank(player : UUID, playerRank: PlayerRank){
         val rankInfo = getOrCreatePlayerRankInfo(player)
         rankInfo.playerRank = playerRank
+        ServiceContainer[PermissionService::class.java].updatePermission(player)
         repository.save(rankInfo);
     }
 
