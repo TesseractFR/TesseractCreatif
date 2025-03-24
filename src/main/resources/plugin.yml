@@ -77,7 +77,6 @@ commands:
     aliases: top
     usage: "/top"
     description: Permet de se tp au point le plus haut
-
   back:
     aliases: back
     usage: "/back"
@@ -100,3 +99,7 @@ commands:
     aliases: ec
     usage: "/ec"
     permission: tesseract.creatif.ec
+  spawn:
+    aliases: spawn
+    usage: "/spawn"
+    description: Se tp au spawn Crea

@@ -10,11 +10,8 @@ import org.bukkit.entity.Player
 @Command
 class BoutiqueCommand : CommandContext() {
     @CommandBody
-    fun onCommand(sender: CommandSender?): Boolean {
-        if (sender is Player) {
-            BoutiqueMenu(sender).open(sender)
-        }
-
+    fun onCommand(sender: Player): Boolean {
+        BoutiqueMenu(sender).open(sender)
         return true
     }
 }

@@ -3,15 +3,14 @@ package onl.tesseract.command
 import onl.tesseract.commandBuilder.CommandContext
 import onl.tesseract.commandBuilder.annotation.Command
 import onl.tesseract.commandBuilder.annotation.CommandBody
-import onl.tesseract.menu.MenuMenu
-import org.bukkit.command.CommandSender
+import onl.tesseract.core.Config
 import org.bukkit.entity.Player
 
-@Command
-class MenuCommand : CommandContext() {
+@Command(name = "spawn", playerOnly = true)
+class SpawnCommand : CommandContext() {
+
     @CommandBody
-    fun onCommand(sender: Player): Boolean {
-        MenuMenu(sender).open(sender)
-        return true
+    fun onCommand(sender: Player) {
+        sender.teleport(Config.invoke().firstSpawnLocation)
     }
 }

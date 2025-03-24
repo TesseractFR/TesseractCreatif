@@ -10,13 +10,9 @@ import org.bukkit.entity.Player
 @Command
 class TopCommand : CommandContext() {
     @CommandBody
-    fun onCommand(sender: CommandSender?): Boolean {
-        if (sender is Player) {
-            val world = sender.world
-            val currentLocation = sender.location
-
-            val highestY = world.getHighestBlockYAt(currentLocation)
-            val topLocation = currentLocation.clone().apply {
+    fun onCommand(sender: Player) {
+            val highestY = sender.world.getHighestBlockYAt(sender.location)
+            val topLocation = sender.location.clone().apply {
                 y = highestY.toDouble()
                 x = blockX + 0.5
                 z = blockZ + 0.5
@@ -24,14 +20,10 @@ class TopCommand : CommandContext() {
                 if (block.type != Material.AIR) {
                     y += 1.0
                 }
-
-                pitch = currentLocation.pitch
-                yaw = currentLocation.yaw
+                pitch = sender.location.pitch
+                yaw = sender.location.yaw
             }
-
             sender.teleport(topLocation)
             sender.sendMessage("§aTéléporté(e) au point le plus haut !")
-        }
-        return true
     }
 }
