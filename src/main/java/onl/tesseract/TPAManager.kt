@@ -1,9 +1,9 @@
 package onl.tesseract
 
 import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
 import onl.tesseract.lib.chat.ChatEntryService
 import onl.tesseract.lib.service.ServiceContainer
+import onl.tesseract.lib.translation.LanguageManager
 import onl.tesseract.lib.util.ChatFormats
 import onl.tesseract.lib.util.plus
 import onl.tesseract.util.DurationFormat.formatTime
@@ -22,7 +22,7 @@ class TPAManager {
 
     fun tpaRequest(sender: Player, dest: Player): Boolean {
         if (dest.name.isEmpty()) {
-            sender.sendMessage(ChatFormats.CHAT_ERROR + "Veuillez spécifier un joueur pour la téléportation.")
+            sender.sendMessage(ChatFormats.CHAT_ERROR + LanguageManager["creative.tpa_manager.no_player", sender])
             return false
         }
 
@@ -30,7 +30,7 @@ class TPAManager {
         if (lastTeleport != null && Duration.between(lastTeleport, Instant.now()).seconds < teleportCooldownDuration.seconds) {
             val duration = teleportCooldownDuration.minus(Duration.between(lastTeleport, Instant.now()))
             val durationFormatted = formatTime(duration)
-            sender.sendMessage(ChatFormats.CHAT_ERROR + "Vous devez attendre encore $durationFormatted avant une nouvelle téléportation.")
+            sender.sendMessage(ChatFormats.CHAT_ERROR + LanguageManager["creative.tpa_manager.on_cooldown", mapOf("duration" to durationFormatted), sender])
             return true
         }
 
@@ -40,7 +40,7 @@ class TPAManager {
             if (lastRequest != null && Duration.between(lastRequest, Instant.now()) < requestsCooldownsDuration) {
                 val remainingTime = requestsCooldownsDuration.minus(Duration.between(lastRequest, Instant.now()))
                 val remainingTimeFormatted = formatTime(remainingTime)
-                sender.sendMessage(ChatFormats.CHAT_ERROR + "Vous avec une demande en attente, vous devez attendre encore $remainingTimeFormatted avant de refaire une demande.")
+                sender.sendMessage(ChatFormats.CHAT_ERROR + LanguageManager["creative.tpa_manager.on_cooldown", mapOf("duration" to remainingTimeFormatted), sender])
                 return true
             }
         }
@@ -54,13 +54,13 @@ class TPAManager {
     }
 
     private fun askTeleport(sender: Player, dest: Player) {
-        sender.sendMessage(ChatFormats.CHAT + " Demande envoyée !")
-        dest.sendMessage(ChatFormats.CHAT + sender.name + " souhaite se téléporter vers votre position.")
+        sender.sendMessage(ChatFormats.CHAT + LanguageManager["creative.tpa_manager.send", sender])
+        dest.sendMessage(ChatFormats.CHAT + LanguageManager["creative.tpa_manager.ask", mapOf("player" to dest.displayName()), dest])
 
-        val acceptButton = Component.text("[Accepter]", NamedTextColor.GREEN)
+        val acceptButton = LanguageManager["lib.chat.accept", dest]
             .clickEvent(chatEntryService.clickCommand(dest) {
-                dest.sendMessage(ChatFormats.CHAT_SUCCESS + "Demande acceptée.")
-                sender.sendMessage(ChatFormats.CHAT_SUCCESS + "Demande de téléportation acceptée. Préparez-vous à être téléporté...")
+                dest.sendMessage(ChatFormats.CHAT_SUCCESS + LanguageManager["creative.tpa_manager.dest_accept", dest])
+                sender.sendMessage(ChatFormats.CHAT_SUCCESS + LanguageManager["creative.tpa_manager.src_accept", sender])
 
                 Creatif.instance?.let {
                     object : BukkitRunnable() {
@@ -71,7 +71,7 @@ class TPAManager {
                 }
             })
 
-        val denyButton = Component.text("[Refuser]", NamedTextColor.RED)
+        val denyButton = LanguageManager["lib.chat.decline", dest]
             .clickEvent(chatEntryService.clickCommand(dest) {
                 dest.sendMessage(ChatFormats.CHAT_ERROR + "Demande refusée.")
                 sender.sendMessage(ChatFormats.CHAT_ERROR + "Demande refusée.")
@@ -95,7 +95,7 @@ class TPAManager {
         sender.teleport(dest.location)
         requestsCooldowns.remove(sender.uniqueId)
         teleportCooldowns[sender.uniqueId] = Instant.now()
-        sender.sendMessage(ChatFormats.CHAT_SUCCESS + "Vous avez été téléporté avec succès ! Vous devrez attendre 30s avant une nouvelle téléportation.")
+        sender.sendMessage(ChatFormats.CHAT_SUCCESS + LanguageManager["creative.tpa_manager.done", dest])
     }
 
     private open class TimedBukkitTask : BukkitRunnable() {
