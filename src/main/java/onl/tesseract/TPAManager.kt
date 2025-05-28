@@ -21,65 +21,83 @@ class TPAManager {
     private val chatEntryService: ChatEntryService = ServiceContainer[ChatEntryService::class.java]
 
     fun tpaRequest(sender: Player, dest: Player): Boolean {
+        return handleTeleportRequest(sender, dest, isTpaHere = false)
+    }
+
+    fun tpaHereRequest(sender: Player, dest: Player): Boolean {
+        return handleTeleportRequest(sender, dest, isTpaHere = true)
+    }
+
+    private fun handleTeleportRequest(
+        sender: Player,
+        dest: Player,
+        isTpaHere: Boolean
+    ): Boolean {
         if (dest.name.isEmpty()) {
             sender.sendMessage(ChatFormats.CHAT_ERROR + LanguageManager["creative.tpa_manager.no_player", sender])
             return false
         }
 
-        val lastTeleport = teleportCooldowns[sender.uniqueId]
-        if (lastTeleport != null && Duration.between(lastTeleport, Instant.now()).seconds < teleportCooldownDuration.seconds) {
-            val duration = teleportCooldownDuration.minus(Duration.between(lastTeleport, Instant.now()))
-            val durationFormatted = formatTime(duration)
-            sender.sendMessage(ChatFormats.CHAT_ERROR + LanguageManager["creative.tpa_manager.on_cooldown", mapOf("duration" to durationFormatted), sender])
-            return true
-        }
+        if (isOnCooldown(teleportCooldowns[sender.uniqueId], teleportCooldownDuration, sender)) return true
+        if (isOnCooldown(requestsCooldowns[sender.uniqueId]?.removeInstant, requestsCooldownsDuration, sender)) return true
 
-        val requestCooldownTask = requestsCooldowns[sender.uniqueId]
-        if (requestCooldownTask != null) {
-            val lastRequest = requestCooldownTask.removeInstant
-            if (lastRequest != null && Duration.between(lastRequest, Instant.now()) < requestsCooldownsDuration) {
-                val remainingTime = requestsCooldownsDuration.minus(Duration.between(lastRequest, Instant.now()))
-                val remainingTimeFormatted = formatTime(remainingTime)
-                sender.sendMessage(ChatFormats.CHAT_ERROR + LanguageManager["creative.tpa_manager.on_cooldown", mapOf("duration" to remainingTimeFormatted), sender])
-                return true
-            }
-        }
-
-        //if (player.uniqueId != dest.uniqueId) {
-        askTeleport(sender, dest)
-        //} else {
-        //    player.sendMessage(ChatFormats.CHAT_ERROR + "Joueur invalide.")
-        //}
+        askTeleport(sender, dest, isTpaHere)
         return true
     }
 
-    private fun askTeleport(sender: Player, dest: Player) {
-        sender.sendMessage(ChatFormats.CHAT + LanguageManager["creative.tpa_manager.send", sender])
-        dest.sendMessage(ChatFormats.CHAT + LanguageManager["creative.tpa_manager.ask", mapOf("player" to dest.displayName()), dest])
+    private fun isOnCooldown(
+        lastUse: Instant?,
+        duration: Duration,
+        sender: Player
+    ): Boolean {
+        if (lastUse != null && Duration.between(lastUse, Instant.now()) < duration) {
+            val remaining = duration.minus(Duration.between(lastUse, Instant.now()))
+            sender.sendMessage(
+                ChatFormats.CHAT_ERROR + LanguageManager["creative.tpa_manager.on_cooldown", mapOf("duration" to formatTime(remaining)), sender]
+            )
+            return true
+        }
+        return false
+    }
 
-        val acceptButton = LanguageManager["lib.chat.accept", dest]
-            .clickEvent(chatEntryService.clickCommand(dest) {
-                dest.sendMessage(ChatFormats.CHAT_SUCCESS + LanguageManager["creative.tpa_manager.dest_accept", dest])
-                sender.sendMessage(ChatFormats.CHAT_SUCCESS + LanguageManager["creative.tpa_manager.src_accept", sender])
 
-                Creatif.instance?.let {
-                    object : BukkitRunnable() {
-                        override fun run() {
-                            teleport(sender, dest)
+    private fun askTeleport(sender: Player, dest: Player, isTpaHere: Boolean) {
+        val sendKey = "creative.tpa_manager.send"
+        val askKey = if (isTpaHere) "creative.tpa_manager.ask_here" else "creative.tpa_manager.ask"
+        val destAcceptKey = if (isTpaHere) "creative.tpa_manager.dest_accept_here" else "creative.tpa_manager.dest_accept"
+        val srcAcceptKey = if (isTpaHere) "creative.tpa_manager.src_accept_here" else "creative.tpa_manager.src_accept"
+        val doneKey = if (isTpaHere) "creative.tpa_manager.done_here" else "creative.tpa_manager.done"
+
+        sender.sendMessage(ChatFormats.CHAT + LanguageManager[sendKey, sender])
+        dest.sendMessage(ChatFormats.CHAT + LanguageManager[askKey, mapOf("player" to sender.displayName()), dest])
+
+        val acceptButton = LanguageManager["lib.chat.accept", dest].clickEvent(chatEntryService.clickCommand(dest) {
+            dest.sendMessage(ChatFormats.CHAT_SUCCESS + LanguageManager[destAcceptKey, mapOf("player" to sender.displayName()), dest])
+            sender.sendMessage(ChatFormats.CHAT_SUCCESS + LanguageManager[srcAcceptKey, sender])
+
+            Creatif.instance?.let {
+                object : BukkitRunnable() {
+                    override fun run() {
+                        if (isTpaHere) {
+                            dest.teleport(sender.location)
+                        } else {
+                            sender.teleport(dest.location)
                         }
-                    }.runTaskLater(it, 60)
-                }
-            })
+                        requestsCooldowns.remove(sender.uniqueId)
+                        teleportCooldowns[sender.uniqueId] = Instant.now()
+                        sender.sendMessage(ChatFormats.CHAT_SUCCESS + LanguageManager[doneKey, dest])
+                    }
+                }.runTaskLater(it, 60)
+            }
+        })
 
-        val denyButton = LanguageManager["lib.chat.decline", dest]
-            .clickEvent(chatEntryService.clickCommand(dest) {
-                dest.sendMessage(ChatFormats.CHAT_ERROR + "Demande refusée.")
-                sender.sendMessage(ChatFormats.CHAT_ERROR + "Demande refusée.")
-                requestsCooldowns.remove(sender.uniqueId)
-            })
+        val denyButton = LanguageManager["lib.chat.decline", dest].clickEvent(chatEntryService.clickCommand(dest) {
+            dest.sendMessage(ChatFormats.CHAT_ERROR + "Demande refusée.")
+            sender.sendMessage(ChatFormats.CHAT_ERROR + "Demande refusée.")
+            requestsCooldowns.remove(sender.uniqueId)
+        })
 
-        val acceptDeny = acceptButton.append(Component.text(" ")).append(denyButton)
-        dest.sendMessage(acceptDeny)
+        dest.sendMessage(acceptButton.append(Component.text(" ")).append(denyButton))
 
         val resetTask = object : TimedBukkitTask() {
             override fun run() {
@@ -91,17 +109,11 @@ class TPAManager {
         requestsCooldowns[sender.uniqueId] = resetTask
     }
 
-    fun teleport(sender: Player, dest: Player) {
-        sender.teleport(dest.location)
-        requestsCooldowns.remove(sender.uniqueId)
-        teleportCooldowns[sender.uniqueId] = Instant.now()
-        sender.sendMessage(ChatFormats.CHAT_SUCCESS + LanguageManager["creative.tpa_manager.done", dest])
-    }
-
     private open class TimedBukkitTask : BukkitRunnable() {
         var removeInstant: Instant? = null
 
         override fun run() {
+            // Rien dedans (juste pour Sonar)
         }
     }
 }

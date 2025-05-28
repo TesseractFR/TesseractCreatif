@@ -69,6 +69,10 @@ commands:
     aliases: tpa
     usage: "/tpa"
     description: Se tp à un joueur
+  tpahere:
+    aliases: tpahere
+    usage: "/tpahere"
+    description: Téléporter un joueur à soi
   speed:
     aliases: speed
     usage: "/speed"

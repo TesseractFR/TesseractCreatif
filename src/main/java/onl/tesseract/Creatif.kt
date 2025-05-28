@@ -117,6 +117,7 @@ class Creatif : JavaPlugin(), Listener {
         this.getCommand("home")?.tabCompleter = homeCommand
         this.getCommand("scoreboard")?.setExecutor(ScoreBoardCommands())
         this.getCommand("tpa")?.setExecutor(TPACommand())
+        this.getCommand("tpahere")?.setExecutor(TPAHereCommand())
         this.getCommand("tp")
                 ?.setExecutor(TPCommand())
         this.getCommand("nick")?.setExecutor(NickCommand())

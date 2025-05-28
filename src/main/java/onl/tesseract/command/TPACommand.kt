@@ -9,15 +9,23 @@ import onl.tesseract.commandBuilder.annotation.Env
 import onl.tesseract.lib.command.argument.PlayerArg
 import org.bukkit.entity.Player
 
-@Command(
-    name = "tpa",
-    args = [Argument(value = "joueur", clazz = PlayerArg::class)]
-)
+@Command(name = "tpa", args = [Argument(value = "joueur", clazz = PlayerArg::class)])
 class TPACommand : CommandContext() {
     private val tpaManager = TPAManager()
 
     @CommandBody
-    fun onCommand(@Env(key = "joueur") dest: Player, sender: Player): Boolean {
-        return tpaManager.tpaRequest(sender, dest)
+    fun onCommand(@Env(key = "joueur") target: Player, sender: Player): Boolean {
+        return tpaManager.tpaRequest(sender, target)
     }
 }
+
+@Command(name = "tpahere", args = [Argument(value = "joueur", clazz = PlayerArg::class)])
+class TPAHereCommand : CommandContext() {
+    private val tpaManager = TPAManager()
+
+    @CommandBody
+    fun onCommand(@Env(key = "joueur") target: Player, sender: Player): Boolean {
+        return tpaManager.tpaHereRequest(sender, target)
+    }
+}
+
