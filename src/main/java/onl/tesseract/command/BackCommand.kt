@@ -3,8 +3,8 @@ package onl.tesseract.core.command
 import onl.tesseract.commandBuilder.CommandContext
 import onl.tesseract.commandBuilder.annotation.Command
 import onl.tesseract.commandBuilder.annotation.CommandBody
+import onl.tesseract.lib.translation.LanguageManager
 import org.bukkit.Location
-import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -23,8 +23,8 @@ class BackCommand : CommandContext(), Listener {
     fun onCommand(sender: Player) {
         lastLocations[sender.uniqueId]?.let {
             sender.teleport(it)
-            sender.sendMessage("§aTéléporté(e) à la dernière position !")
-        } ?: sender.sendMessage("§cAucune position précédente enregistrée.")
+            sender.sendMessage(LanguageManager["creative.command.back.success", sender.uniqueId])
+        } ?: sender.sendMessage(LanguageManager["creative.command.back.fail", sender.uniqueId])
     }
 
     @EventHandler
