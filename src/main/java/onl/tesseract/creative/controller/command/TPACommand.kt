@@ -27,8 +27,8 @@ class TPACommand(
 @Command(name = "tpahere", args = [Argument(value = "joueur", clazz = PlayerArg::class)])
 class TPAHereCommand(
     provider: CommandInstanceProvider,
-    private val tpaService: TpaService
-    ) : CommandContext() {
+    private val tpaService: TpaService,
+) : CommandContext(provider) {
     @CommandBody
     fun onCommand(@Env(key = "joueur") target: Player, sender: Player): Boolean {
         return tpaService.tpaHereRequest(sender, target)

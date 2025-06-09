@@ -13,7 +13,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter
 import org.springframework.scheduling.TaskScheduler
 import org.springframework.scheduling.annotation.EnableScheduling
-import java.util.Properties
+import java.util.*
 import javax.sql.DataSource
 
 @SpringBootApplication(scanBasePackages = ["onl.tesseract.creative"])
@@ -54,7 +54,7 @@ open class CreativeSpringApp {
         val jpaProperties = Properties()
         jpaProperties.setProperty("hibernate.hbm2ddl.auto", "update")
         jpaProperties.setProperty("spring.jpa.show-sql", "false")
-        jpaProperties.setProperty("hibernate.show_sql", "true")
+        jpaProperties.setProperty("hibernate.show_sql", "false")
         jpaProperties.setProperty("logging.level.org.hibernate.SQL", "DEBUG")
         jpaProperties.setProperty("logging.level.org.hibernate.type.descriptor.sql.BasicBinder", "TRACE")
         jpaProperties.setProperty(

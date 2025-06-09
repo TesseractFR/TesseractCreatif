@@ -29,7 +29,6 @@ class Creative : JavaPlugin(), Listener {
         registerListeners()
         registerTags()
 
-        registerDefaultServices()
         // Plugin startup logic
         if (!setupPermissions()) {
             System.err.println("Could not setup permissions")
@@ -57,12 +56,6 @@ class Creative : JavaPlugin(), Listener {
         this.springContext = app.run()
     }
 
-    private fun registerDefaultServices() {
-        //        val serviceContainer = ServiceContainer.getInstance();
-        //        val chatEntryService = ChatEntryService(TaskScheduler(this))
-        //        serviceContainer.registerService(ChatEntryService::class.java, chatEntryService)
-        //        server.pluginManager.registerEvents(chatEntryService, this)
-    }
 
     fun registerCommands() {
         val provider = springContext.getBean(CreativeCommandInstanceProvider::class.java)
@@ -92,6 +85,7 @@ class Creative : JavaPlugin(), Listener {
 
     private fun registerListeners() {
         springContext.getBeansOfType(Listener::class.java)
+                .filter { it.value::class.java.name.contains("onl.tesseract.creative") }
                 .forEach { (_, bean) -> this.server.pluginManager.registerEvents(bean, this) }
     }
 }

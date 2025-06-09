@@ -2,9 +2,8 @@ package onl.tesseract.creative.service.tpa
 
 import net.kyori.adventure.text.Component
 import onl.tesseract.creative.PLUGIN_INSTANCE
-import onl.tesseract.creative.util.DurationFormat
+import onl.tesseract.creative.util.DurationFormat.formatTime
 import onl.tesseract.lib.chat.ChatEntryService
-
 import onl.tesseract.lib.translation.LanguageManager
 import onl.tesseract.lib.util.ChatFormats
 import onl.tesseract.lib.util.plus
@@ -13,7 +12,7 @@ import org.bukkit.scheduler.BukkitRunnable
 import org.springframework.stereotype.Service
 import java.time.Duration
 import java.time.Instant
-import java.util.UUID
+import java.util.*
 
 @Service
 class TpaService(
@@ -73,7 +72,8 @@ class TpaService(
         val doneKey = if (isTpaHere) "creative.tpa_manager.done_here" else "creative.tpa_manager.done"
 
         sender.sendMessage(ChatFormats.CHAT + LanguageManager[sendKey, sender])
-        dest.sendMessage(ChatFormats.CHAT + LanguageManager[askKey, mapOf("player" to sender.displayName()), dest])val acceptButton = LanguageManager["lib.chat.accept", dest]
+        dest.sendMessage(ChatFormats.CHAT + LanguageManager[askKey, mapOf("player" to sender.displayName()), dest])
+        val acceptButton = LanguageManager["lib.chat.accept", dest]
                 .clickEvent(
                     chatEntryService.clickCommand(dest) {
                         dest.sendMessage(ChatFormats.CHAT_SUCCESS + LanguageManager[destAcceptKey, mapOf("player" to sender.displayName()), dest])
