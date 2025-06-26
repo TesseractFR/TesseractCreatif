@@ -53,6 +53,7 @@ open class CreativeSpringApp {
         build.jpaVendorAdapter = HibernateJpaVendorAdapter()
         val jpaProperties = Properties()
         jpaProperties.setProperty("hibernate.hbm2ddl.auto", "update")
+        jpaProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect")
         jpaProperties.setProperty("spring.jpa.show-sql", "false")
         jpaProperties.setProperty("hibernate.show_sql", "false")
         jpaProperties.setProperty("logging.level.org.hibernate.SQL", "DEBUG")
