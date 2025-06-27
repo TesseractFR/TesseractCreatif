@@ -4,14 +4,15 @@ import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.event.ClickEvent
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
-import onl.tesseract.creative.util.CommandsBookFactory
 import onl.tesseract.core.persistence.hibernate.boutique.TPlayerInfoService
 import onl.tesseract.creative.PLUGIN_INSTANCE
+import onl.tesseract.creative.controller.menu.boutique.BoutiqueMenu
 import onl.tesseract.creative.domain.plot.PlotWorld
 import onl.tesseract.creative.service.plot.PlayerPlotService
 import onl.tesseract.creative.service.rank.PlayerRankService
 import onl.tesseract.creative.service.timeplayed.PlayerTimePlayedService
 import onl.tesseract.creative.service.world.WorldService
+import onl.tesseract.creative.util.CommandsBookFactory
 import onl.tesseract.creative.util.DurationFormat
 import onl.tesseract.lib.menu.ItemBuilder
 import onl.tesseract.lib.menu.Menu
@@ -19,10 +20,10 @@ import onl.tesseract.lib.menu.MenuSize
 import onl.tesseract.lib.profile.PlayerProfileService
 import onl.tesseract.lib.util.ItemLoreBuilder
 import onl.tesseract.lib.util.append
-import onl.tesseract.creative.controller.menu.boutique.BoutiqueMenu
 import onl.tesseract.tesseractlib.menu.GenderMenu
 import org.bukkit.Material
 import org.bukkit.entity.Player
+import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.inventory.ItemStack
 import org.bukkit.scheduler.BukkitRunnable
 
@@ -190,12 +191,19 @@ class MenuMenu(
                 addButton(22, createPlayerInfoItemStack(player)) { }
             }
         }
-        infoUpdateTask?.runTaskTimer(PLUGIN_INSTANCE, 0L, 20L)
+        infoUpdateTask?.runTaskTimerAsynchronously(PLUGIN_INSTANCE, 0L, 20L)
+
+        object : BukkitRunnable() {
+            override fun run() {
+                infoUpdateTask?.cancel()
+            }
+        }.runTaskLaterAsynchronously(PLUGIN_INSTANCE, 30 * 20L)
     }
 
-    private fun onClose(viewer: Player) {
+    override fun onClose(event: InventoryCloseEvent) {
         infoUpdateTask?.cancel()
         infoUpdateTask = null
+        super.close()
     }
 
 
