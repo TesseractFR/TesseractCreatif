@@ -55,7 +55,7 @@ open class CreativeSpringApp {
         jpaProperties.setProperty("hibernate.hbm2ddl.auto", "update")
         jpaProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect")
         jpaProperties.setProperty("spring.jpa.show-sql", "false")
-        jpaProperties.setProperty("hibernate.show_sql", "false")
+        jpaProperties.setProperty("hibernate.show_sql", "true")
         jpaProperties.setProperty("logging.level.org.hibernate.SQL", "DEBUG")
         jpaProperties.setProperty("logging.level.org.hibernate.type.descriptor.sql.BasicBinder", "TRACE")
         jpaProperties.setProperty(

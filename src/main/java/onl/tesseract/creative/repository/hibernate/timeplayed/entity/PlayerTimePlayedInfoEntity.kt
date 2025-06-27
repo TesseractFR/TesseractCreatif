@@ -1,8 +1,9 @@
 package onl.tesseract.creative.repository.hibernate.timeplayed.entity
 
 import jakarta.persistence.*
-import onl.tesseract.creative.util.entityConverter.DurationConverter
 import onl.tesseract.creative.domain.timeplayed.PlayerTimePlayedInfo
+import onl.tesseract.creative.util.entityConverter.DurationConverter
+import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import org.hibernate.annotations.JdbcTypeCode
 import java.sql.Types
@@ -12,7 +13,7 @@ import java.util.*
 @Table(name = "t_player_time_played")
 @Entity
 @Cacheable
-@org.hibernate.annotations.Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 class PlayerTimePlayedInfoEntity(
     @Id
     @Column(updatable = false, nullable = false, columnDefinition = "VARCHAR(36)", unique = true)
