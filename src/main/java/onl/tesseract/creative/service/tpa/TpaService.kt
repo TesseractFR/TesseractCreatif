@@ -79,19 +79,19 @@ class TpaService(
                         dest.sendMessage(ChatFormats.CHAT_SUCCESS + LanguageManager[destAcceptKey, mapOf("player" to sender.displayName()), dest])
                         sender.sendMessage(ChatFormats.CHAT_SUCCESS + LanguageManager[srcAcceptKey, sender])
 
-                        PLUGIN_INSTANCE?.let {
+                        PLUGIN_INSTANCE.let {
                             object : BukkitRunnable() {
                                 override fun run() {
                                     if (isTpaHere) {
-                            dest.teleport(sender.location)
-                        } else {
-                            sender.teleport(dest.location)
-                        }
-                        requestsCooldowns.remove(sender.uniqueId)
-                        teleportCooldowns[sender.uniqueId] = Instant.now()
-                        sender.sendMessage(ChatFormats.CHAT_SUCCESS + LanguageManager[doneKey, dest])
+                                        dest.teleport(sender.location)
+                                    } else {
+                                        sender.teleport(dest.location)
+                                    }
+                                    requestsCooldowns.remove(sender.uniqueId)
+                                    teleportCooldowns[sender.uniqueId] = Instant.now()
+                                    sender.sendMessage(ChatFormats.CHAT_SUCCESS + LanguageManager[doneKey, dest])
                                 }
-                            }.runTaskLater(it, 60)
+                            }.runTaskLater(it, 5)
                         }
                     })
 
