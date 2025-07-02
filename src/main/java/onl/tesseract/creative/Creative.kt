@@ -2,7 +2,9 @@ package onl.tesseract.creative
 
 import net.milkbowl.vault.permission.Permission
 import onl.tesseract.commandBuilder.CommandContext
+import onl.tesseract.core.vote.VoteMenu
 import onl.tesseract.creative.controller.command.staff.StaffCommand
+import onl.tesseract.creative.controller.menu.CreativeVoteRewardMenu
 import onl.tesseract.lib.TesseractLib
 import onl.tesseract.lib.chat.tag.Tag
 import org.bukkit.event.Listener
@@ -35,6 +37,7 @@ class Creative : JavaPlugin(), Listener {
             server.pluginManager.disablePlugin(this)
             return
         }
+        VoteMenu.rewardMenuClass = CreativeVoteRewardMenu::class.java
     }
 
     private fun initSpring() {
