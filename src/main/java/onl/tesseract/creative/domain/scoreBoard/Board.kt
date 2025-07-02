@@ -27,9 +27,7 @@ open class Board(protected val player: Player) {
         initScoreBoard()
     }
 
-    open fun initScoreBoard() {
-        player.scoreboard = scoreboard
-    }
+    open fun initScoreBoard() {}
 
     fun addOrUpdateScore(entry: String, score: Int) {
         scoreboard.entries.forEach { existingEntry ->
