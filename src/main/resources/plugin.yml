@@ -93,6 +93,7 @@ commands:
     permission: tesseract.creatif.give
   gamemode:
     usage: "/gamemode"
+    aliases: gm
     permission: tesseract.creatif.gamemode
   hat:
     aliases: hat

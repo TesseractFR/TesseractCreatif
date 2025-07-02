@@ -16,6 +16,7 @@ import org.bukkit.entity.Player
 @Command(
     playerOnly = true,
     name = "gamemode",
+    alias = arrayOf("gm"),
     args = [Argument(value = "mode", clazz = GamemodeArg::class)]
 )
 @SpringComponent
