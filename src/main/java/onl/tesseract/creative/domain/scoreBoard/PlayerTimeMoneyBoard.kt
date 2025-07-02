@@ -29,8 +29,6 @@ class PlayerTimeMoneyBoard(
         addOrUpdateScore("  ", score++)
         score = displayTimePlayed(timePlayed, score)
         addOrUpdateScore("   ", score++)
-
-        player.scoreboard = scoreboard
     }
 
     private fun displayCurrentWorld(score: Int): Int {

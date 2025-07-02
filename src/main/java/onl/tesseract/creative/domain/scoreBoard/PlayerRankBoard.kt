@@ -1,8 +1,8 @@
 package onl.tesseract.creative.domain.scoreBoard
 
 import onl.tesseract.core.persistence.hibernate.boutique.TPlayerInfoService
-import onl.tesseract.creative.service.rank.PlayerRankService
 import onl.tesseract.creative.domain.rank.PlayerRank
+import onl.tesseract.creative.service.rank.PlayerRankService
 import onl.tesseract.creative.service.timeplayed.PlayerTimePlayedService
 import onl.tesseract.creative.util.DurationFormat
 import org.bukkit.ChatColor
@@ -33,8 +33,6 @@ class PlayerRankBoard(
         addOrUpdateScore("  ", score++)
         score = displayTimePlayed(timePlayed, score)
         addOrUpdateScore("   ", score++)
-
-        player.scoreboard = scoreboard
     }
 
     private fun displayTimeNextRank(
