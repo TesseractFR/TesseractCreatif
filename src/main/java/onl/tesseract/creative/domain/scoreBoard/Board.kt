@@ -4,39 +4,61 @@ import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextColor
 import net.kyori.adventure.text.format.TextDecoration
+import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
-import org.bukkit.scoreboard.Criteria
-import org.bukkit.scoreboard.DisplaySlot
-import org.bukkit.scoreboard.Objective
-import org.bukkit.scoreboard.Scoreboard
+import org.bukkit.scoreboard.*
 
-open class Board(protected val player: Player) {
-    lateinit var scoreboard: Scoreboard
-    private lateinit var objective: Objective
+abstract class Board(val player: Player) {
+    protected val scoreboard: Scoreboard = Bukkit.getScoreboardManager().newScoreboard
+    protected val objective: Objective =
+        scoreboard.registerNewObjective("sidebar", Criteria.DUMMY, getTitle())
+                .apply {
+                    displaySlot = DisplaySlot.SIDEBAR
+                }
 
-    fun update() {
-        this.scoreboard = player.scoreboard
-        this.objective = scoreboard.getObjective("main") ?: scoreboard.registerNewObjective(
-            "main",
-            Criteria.DUMMY,
-            Component.text("play.tesseract.onl", NamedTextColor.BLUE, TextDecoration.BOLD)
-        )
+    private val teams = mutableMapOf<Int, Team>()
 
-        objective.displaySlot = DisplaySlot.SIDEBAR
-        initScoreBoard()
+    init {
+        player.scoreboard = scoreboard
     }
 
-    open fun initScoreBoard() {}
+    /** Titre du scoreboard */
+    fun getTitle(): Component {
+        return Component.text("play.tesseract.onl", NamedTextColor.BLUE, TextDecoration.BOLD)
+    }
 
-    fun addOrUpdateScore(entry: String, score: Int) {
-        scoreboard.entries.forEach { existingEntry ->
-            if (objective.getScore(existingEntry).score == score) {
-                scoreboard.resetScores(existingEntry)
-            }
+    /** Initialisation des lignes du scoreboard */
+    abstract fun setup()
+
+    /** Mise à jour des lignes dynamiques */
+    abstract fun update()
+
+    /** Crée une ligne statique, qui ne change jamais */
+    protected fun createStaticLine(index: Int, content: String) {
+        val entry = content // Unique
+        objective.getScore(entry).score = index
+    }
+
+    /** Crée une ligne dynamique avec Team */
+    protected fun createDynamicLine(index: Int, prefix: Component, suffix: Component = Component.empty()) {
+        val entry = ChatColor.COLOR_CHAR.toString() + ('a' + index) // Unique invisible color code
+        val team = scoreboard.registerNewTeam("line$index")
+                .apply {
+                    addEntry(entry)
+                    prefix(prefix)
+                    suffix(suffix)
+                }
+        objective.getScore(entry).score = index
+        teams[index] = team
+    }
+
+    /** Met à jour une ligne dynamique */
+    protected fun updateLine(index: Int, prefix: Component? = null, suffix: Component? = null) {
+        teams[index]?.let { team ->
+            if (prefix != null) team.prefix(prefix)
+            if (suffix != null) team.suffix(suffix)
         }
-        val scoreEntry = objective.getScore(entry)
-        scoreEntry.score = score
     }
 
     fun TextColor.toChatColor(): ChatColor {
@@ -50,5 +72,4 @@ open class Board(protected val player: Player) {
             else -> ChatColor.WHITE
         }
     }
-
 }

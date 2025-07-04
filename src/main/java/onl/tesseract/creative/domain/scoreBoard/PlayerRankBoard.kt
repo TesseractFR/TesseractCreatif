@@ -1,5 +1,7 @@
 package onl.tesseract.creative.domain.scoreBoard
 
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.NamedTextColor
 import onl.tesseract.core.persistence.hibernate.boutique.TPlayerInfoService
 import onl.tesseract.creative.domain.rank.PlayerRank
 import onl.tesseract.creative.service.rank.PlayerRankService
@@ -7,7 +9,6 @@ import onl.tesseract.creative.service.timeplayed.PlayerTimePlayedService
 import onl.tesseract.creative.util.DurationFormat
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
-import java.time.Duration
 
 class PlayerRankBoard(
     player: Player,
@@ -16,61 +17,88 @@ class PlayerRankBoard(
     private val tplayerInfoService: TPlayerInfoService,
 ) : Board(player) {
 
-    override fun initScoreBoard() {
-        displayPlayerBoard()
-        super.initScoreBoard()
-    }
+    private fun createTimeNextRank() {
+        if (getActualRank().ordinal < PlayerRank.BATISSEUR.ordinal) {
 
-    private fun displayPlayerBoard() {
-        val rank = playerRankService.getPlayerRank(player.uniqueId)
-        val timePlayed = playerTimePlayedService.getPlayerTimePlayed(player.uniqueId)
-        var score = 0
-
-        score = displayCurrentWorld(score)
-        addOrUpdateScore(" ", score++)
-        score = displayTimeNextRank(rank, score)
-        score = displayActualRank(rank, score)
-        addOrUpdateScore("  ", score++)
-        score = displayTimePlayed(timePlayed, score)
-        addOrUpdateScore("   ", score++)
-    }
-
-    private fun displayTimeNextRank(
-        rank: PlayerRank,
-        score: Int,
-    ): Int {
-        var score1 = score
-        if (rank.ordinal < PlayerRank.BATISSEUR.ordinal) {
-            val nextRank = playerRankService.getNextPlayerRank(player.uniqueId)
-            val remainingTime = playerTimePlayedService.getTimeBeforeRankUp(player.uniqueId, nextRank)
-            val remainingTimeFormatted = DurationFormat.formatTime(remainingTime)
-            val nextRankGender = tplayerInfoService[player.uniqueId].genre
-
-            addOrUpdateScore("${ChatColor.YELLOW}${remainingTimeFormatted}", score1++)
-            addOrUpdateScore("${nextRank.color.toChatColor()}${nextRank.title.getDisplayName(nextRankGender).uppercase()}", score1++)
-            addOrUpdateScore("${ChatColor.GOLD}${ChatColor.ITALIC}${ChatColor.BOLD}- Grade suivant -", score1++)
-            addOrUpdateScore("    ", score1++)
+            createDynamicLine(
+                3, Component.empty(),
+                Component.text(getNextRankTime(), NamedTextColor.YELLOW))
+            createDynamicLine(
+                4, Component.empty(),
+                getNextRankName())
+            createStaticLine(5, "${ChatColor.GOLD}${ChatColor.ITALIC}${ChatColor.BOLD}- Grade suivant -")
         }
-        return score1
     }
 
-    private fun displayCurrentWorld(score: Int): Int {
-        addOrUpdateScore("${ChatColor.YELLOW}${player.world.name}", score)
-        addOrUpdateScore("${ChatColor.GOLD}${ChatColor.ITALIC}${ChatColor.BOLD}- Monde actuel -", score + 1)
-        return score + 2
+    private fun getNextRankName(): Component {
+        val nextRank = getNextRank()
+        val nextRankGender = tplayerInfoService[player.uniqueId].genre
+        return Component.text(
+            nextRank.title.getDisplayName(nextRankGender)
+                    .uppercase(), nextRank.color)
     }
 
-    private fun displayTimePlayed(timePlayed: Duration, score: Int): Int {
-        val timePlayedFormatted = DurationFormat.formatTime(timePlayed)
-        addOrUpdateScore("${ChatColor.YELLOW}$timePlayedFormatted", score)
-        addOrUpdateScore("${ChatColor.GOLD}${ChatColor.ITALIC}${ChatColor.BOLD}- Temps de jeu -", score + 1)
-        return score + 2
+    private fun getNextRankTime(): String {
+        val nextRank = getNextRank()
+        val remainingTime = playerTimePlayedService.getTimeBeforeRankUp(player.uniqueId, nextRank)
+        val remainingTimeFormatted = DurationFormat.formatTime(remainingTime)
+        return remainingTimeFormatted
     }
 
-    private fun displayActualRank(rank: PlayerRank, score: Int): Int {
+    private fun getNextRank(): PlayerRank {
+        return playerRankService.getNextPlayerRank(player.uniqueId)
+    }
+
+    private fun getActualRankName(): Component {
+        val rank = getActualRank()
         val currentGender = tplayerInfoService[player.uniqueId].genre
-        addOrUpdateScore("${rank.color.toChatColor()}${rank.title.getDisplayName(currentGender).uppercase()}", score)
-        addOrUpdateScore("${ChatColor.GOLD}${ChatColor.ITALIC}${ChatColor.BOLD}- Grade actuel -", score + 1)
-        return score + 2
+        return Component.text(
+            rank.title.getDisplayName(currentGender)
+                    .uppercase(), rank.color)
+    }
+
+    private fun createTimePlayed() {
+        createDynamicLine(10, Component.empty(), Component.text(getTimePlayedFormatted(), NamedTextColor.YELLOW))
+        createStaticLine(11, "${ChatColor.GOLD}${ChatColor.ITALIC}${ChatColor.BOLD}- Temps de jeu -")
+    }
+
+    private fun getTimePlayedFormatted(): String {
+        val timePlayed = playerTimePlayedService.getPlayerTimePlayed(player.uniqueId)
+        val timePlayedFormatted = DurationFormat.formatTime(timePlayed)
+        return timePlayedFormatted
+    }
+
+    private fun createActualRank() {
+        createDynamicLine(
+            7, Component.empty(),
+            getActualRankName())
+        createStaticLine(8, "${ChatColor.GOLD}${ChatColor.ITALIC}${ChatColor.BOLD}- Grade actuel -")
+    }
+
+    private fun createCurrentWorld() {
+        createDynamicLine(0, Component.empty(), Component.text(player.world.name, NamedTextColor.YELLOW))
+        createStaticLine(1, "${ChatColor.GOLD}${ChatColor.ITALIC}${ChatColor.BOLD}- Monde actuel -")
+    }
+
+    private fun getActualRank(): PlayerRank {
+        return playerRankService.getPlayerRank(player.uniqueId)
+    }
+
+    override fun setup() {
+        createCurrentWorld()
+        createStaticLine(2, " ")
+        createTimeNextRank()
+        createStaticLine(6, " ")
+        createActualRank()
+        createStaticLine(9, " ")
+        createTimePlayed()
+    }
+
+    override fun update() {
+        updateLine(0, suffix = Component.text(player.world.name, NamedTextColor.YELLOW))
+        updateLine(3, suffix = Component.text(getNextRankTime(), NamedTextColor.YELLOW))
+        updateLine(4, suffix = getNextRankName())
+        updateLine(7, suffix = getActualRankName())
+        updateLine(10, suffix = Component.text(getTimePlayedFormatted(), NamedTextColor.YELLOW))
     }
 }
