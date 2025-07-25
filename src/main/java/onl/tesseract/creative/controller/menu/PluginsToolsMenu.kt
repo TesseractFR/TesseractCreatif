@@ -19,6 +19,17 @@ private val tetePlayerParticles = ItemBuilder(Material.PLAYER_HEAD).customHead(
     " "
 )
 
+private val axiomLink: Component = Component.text("---------------\n", NamedTextColor.AQUA)
+    .append("Lien pour Axiom", NamedTextColor.AQUA, TextDecoration.BOLD)
+    .append("\n---------------", NamedTextColor.AQUA)
+    .clickEvent(ClickEvent.openUrl("https://modrinth.com/mod/axiom"))
+
+private val voiceChatLink: Component = Component.text("---------------\n", NamedTextColor.LIGHT_PURPLE)
+    .append("Lien Chat Vocal", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD)
+    .append("\n---------------", NamedTextColor.LIGHT_PURPLE)
+    .clickEvent(ClickEvent.openUrl("https://modrinth.com/plugin/simple-voice-chat"))
+
+
 class PluginsToolsMenu(previous: Menu? = null) :
 
         Menu(
@@ -43,12 +54,20 @@ class PluginsToolsMenu(previous: Menu? = null) :
         addButton(8, createGoPaintItem()) {}
         addButton(10, createFaweItem()) {}
         addButton(12, createEasyArmorStandsItem()) {}
+        addButton(13, createAxiomItem()) {
+            viewer.closeInventory()
+            viewer.sendMessage(axiomLink)
+        }
         addButton(14, createVoxelSniperItem()) {}
         addButton(16, createGoBrushItem()) {}
         addButton(20, createMetaBrushItem()) {
             RentPluginsMenu(viewer, this).open(viewer)
         }
-        // addButton(22, createAxiomItem()) {}
+        addButton(22, createSimpleVoiceChatItem()) {
+            viewer.closeInventory()
+            viewer.sendMessage(voiceChatLink)
+        }
+
         addButton(24, createEzEditsItem()) {
             RentPluginsMenu(viewer, this).open(viewer)
         }
@@ -199,10 +218,33 @@ class PluginsToolsMenu(previous: Menu? = null) :
     private fun createAxiomItem(): ItemStack {
         val ilb = ItemLoreBuilder()
             .newline()
-            .append("Axiom est un plugin d'interface facile à utiliser, conçu pour faciliter le processus de construction.", NamedTextColor.GRAY)
-            .append(" Il permet de réaliser des constructions rapidement et de manière intuitive.", NamedTextColor.GRAY)
+            .append("Nécessite le mod client Axiom via Fabric (GRATUIT) !", NamedTextColor.GOLD, TextDecoration.BOLD)
+            .newline()
+            .append("(Cliquez pour obtenir le lien d'installation)", NamedTextColor.YELLOW, TextDecoration.ITALIC)
+            .newline().newline()
+            .append("Axiom, nouveau plugin révolutionnaire de construction ! En maintenant la touche", NamedTextColor.GRAY)
+            .append(" Alt ", NamedTextColor.RED, TextDecoration.BOLD)
+            .append("de votre clavier, l'avenir du build est entre vos mains.", NamedTextColor.GRAY)
         return ItemBuilder(Material.ENDER_PEARL)
             .name("Axiom", NamedTextColor.BLUE, TextDecoration.BOLD)
+            .lore(ilb.get())
+            .build()
+    }
+
+    private fun createSimpleVoiceChatItem(): ItemStack {
+        val ilb = ItemLoreBuilder()
+            .newline()
+            .append("Nécessite le mod client Simple Voice Chat via Fabric/Forge (GRATUIT) !", NamedTextColor.GOLD, TextDecoration.BOLD)
+            .newline()
+            .append("(Cliquez pour obtenir le lien d'installation)", NamedTextColor.YELLOW, TextDecoration.ITALIC)
+            .newline().newline()
+            .append("Avec ce chat de proximité intégré, jouez avec les autres joueurs ou créez des groupes entre " +
+                    "amis pour plus de fun sur le serveur !", NamedTextColor.GRAY)
+            .append(" Pour ouvrir le menu, cliquer sur la touche", NamedTextColor.GRAY)
+            .append(" V ", NamedTextColor.RED, TextDecoration.BOLD)
+            .append("de votre clavier, rien de plus simple.", NamedTextColor.GRAY)
+        return ItemBuilder(Material.GOAT_HORN)
+            .name("Simple Voice Chat", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
     }
