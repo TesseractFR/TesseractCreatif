@@ -1,25 +1,27 @@
 package onl.tesseract.creative
 
+import jakarta.persistence.EntityManagerFactory
 import org.bukkit.Bukkit
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Primary
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import org.springframework.jdbc.datasource.DriverManagerDataSource
+import org.springframework.orm.jpa.JpaTransactionManager
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter
 import org.springframework.scheduling.TaskScheduler
 import org.springframework.scheduling.annotation.EnableScheduling
+import org.springframework.transaction.PlatformTransactionManager
 import java.util.*
 import javax.sql.DataSource
 
 @SpringBootApplication(scanBasePackages = ["onl.tesseract.creative"])
 @EnableJpaRepositories(
     "onl.tesseract.creative.repository.hibernate",
-    entityManagerFactoryRef = "creativeEntityManagerFactory")
+    entityManagerFactoryRef = "creativeEntityManagerFactory",
+    transactionManagerRef = "creativeTransactionManager")
 @EnableScheduling
 open class CreativeSpringApp {
 
@@ -39,17 +41,15 @@ open class CreativeSpringApp {
 
     @Bean(name = ["creativeEntityManagerFactory"])
     @Primary
-    @Autowired
     open fun creativeEntityManagerFactory(
-        entityManagerFactoryBuilder: EntityManagerFactoryBuilder,
         @Qualifier("creativeDataSource") ds: DataSource,
     ): LocalContainerEntityManagerFactoryBean {
-        val build = entityManagerFactoryBuilder
-                .dataSource(ds)
-                .packages("onl.tesseract.creative.repository.hibernate")
-                .persistenceUnit("default")
-                .build()
+        val build = LocalContainerEntityManagerFactoryBean()
+        build.setDataSource(ds)
+        build.setPackagesToScan("onl.tesseract.creative.repository.hibernate")
+        build.setPersistenceUnitName("default")
         build.entityManagerInterface = null
+        build.setEntityManagerFactoryInterface(EntityManagerFactory::class.java)
         build.jpaVendorAdapter = HibernateJpaVendorAdapter()
         val jpaProperties = Properties()
         jpaProperties.setProperty("hibernate.hbm2ddl.auto", "update")
@@ -66,6 +66,14 @@ open class CreativeSpringApp {
         jpaProperties.setProperty("hibernate.cache.use_query_cache", "true")
         build.setJpaProperties(jpaProperties)
         return build
+    }
+
+    @Bean(name = ["creativeTransactionManager"])
+    @Primary
+    open fun creativeTransactionManager(
+        @Qualifier("creativeEntityManagerFactory") entityManagerFactory: EntityManagerFactory,
+    ): PlatformTransactionManager {
+        return JpaTransactionManager(entityManagerFactory)
     }
 
     @Bean(name = ["bukkitScheduler"])

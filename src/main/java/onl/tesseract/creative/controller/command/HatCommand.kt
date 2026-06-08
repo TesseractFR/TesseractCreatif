@@ -38,7 +38,7 @@ class HatCommand(provider: CommandInstanceProvider) : CommandContext(provider) {
                     NamedTextColor.RED))
             return
         }
-        sender.inventory.helmet = itemInHand
+        sender.inventory.setHelmet(itemInHand)
         sender.inventory.setItemInMainHand(null)
         sender.sendMessage(Component.text("Bravo, vous avez un nouveau chapeau magnifique !", NamedTextColor.GREEN))
     }
