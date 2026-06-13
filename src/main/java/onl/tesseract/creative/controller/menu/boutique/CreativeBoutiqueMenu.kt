@@ -72,7 +72,7 @@ class CreativeBoutiqueMenu(
 
         addButton(
             16, ItemBuilder(Material.WOODEN_AXE)
-                    .name("Location de plugins et outils", NamedTextColor.DARK_GREEN, TextDecoration.BOLD)
+                    .name("Grade prestige", NamedTextColor.DARK_GREEN, TextDecoration.BOLD)
                     .lore()
                     .newline()
                     .append("Louer l'accès à des plugins sur-puissants !", GRAY, TextDecoration.ITALIC)
@@ -80,7 +80,7 @@ class CreativeBoutiqueMenu(
                     .flags(ItemFlag.HIDE_ATTRIBUTES)
                     .build()
         ) {
-            RentPluginsMenu(player, this).open(viewer)
+            PrestigeMenu(player, this).open(viewer)
         }
 
         addBackButton()
@@ -99,10 +99,11 @@ class CreativeBoutiqueMenu(
                         .buildLore()
                         .build()) {}
         } else {
+            val price = BoutiqueRank.VIRTUOSE.price
             addButton(
                 3, virtuoseItem
             ) {
-                confirmBuyLysDor(player, 2400, "Confirmer l'achat du grade Virtuose pour 2400 lys d'or")
+                confirmBuyLysDor(player, price, "Confirmer l'achat du grade Virtuose pour $price lys d'or")
                 {
                     playerRankService.setPlayerRank(player.uniqueId, PlayerRank.VIRTUOSE)
                     player.sendMessage(ChatFormats.SHOP_ADMIN.append("Vous venez d'acheter le grade Virtuose", GOLD))
@@ -113,6 +114,7 @@ class CreativeBoutiqueMenu(
         }
 
     }
+
 
     companion object {
         val teteAchatPlots = ItemBuilder(Material.PLAYER_HEAD).customHead(

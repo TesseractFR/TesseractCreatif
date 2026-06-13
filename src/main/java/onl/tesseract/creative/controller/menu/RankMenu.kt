@@ -3,10 +3,6 @@ package onl.tesseract.creative.controller.menu
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
-import onl.tesseract.lib.menu.ItemBuilder
-import onl.tesseract.lib.menu.Menu
-import onl.tesseract.lib.menu.MenuSize
-import onl.tesseract.lib.util.ItemLoreBuilder
 import onl.tesseract.creative.controller.menu.boutique.CreativeBoutiqueMenu
 import onl.tesseract.creative.util.HeadConstante.teteApprenti
 import onl.tesseract.creative.util.HeadConstante.teteBatisseur
@@ -14,6 +10,10 @@ import onl.tesseract.creative.util.HeadConstante.teteConcepteur
 import onl.tesseract.creative.util.HeadConstante.teteCreateur
 import onl.tesseract.creative.util.HeadConstante.teteIngenieur
 import onl.tesseract.creative.util.HeadConstante.teteVirtuose
+import onl.tesseract.lib.menu.ItemBuilder
+import onl.tesseract.lib.menu.Menu
+import onl.tesseract.lib.menu.MenuSize
+import onl.tesseract.lib.util.ItemLoreBuilder
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
@@ -156,6 +156,9 @@ class RankMenu(previous: Menu? = null) :
             .append("Avantages supplémentaires : ", NamedTextColor.GREEN, TextDecoration.BOLD)
             .newline()
             .append("- Obtention de ", NamedTextColor.GOLD).append("VoxelSniper", NamedTextColor.DARK_AQUA, TextDecoration.BOLD)
+                .newline()
+                .append("- Obtention de ", NamedTextColor.GOLD)
+                .append("Arceon", NamedTextColor.DARK_AQUA, TextDecoration.BOLD)
             .newline()
             .append("- Commande ", NamedTextColor.GOLD).append("/nick", NamedTextColor.WHITE, TextDecoration.BOLD)
             .newline()

@@ -50,7 +50,7 @@ class PlayerTimePlayedTask(
         nextDuration = nextDuration.minusSeconds(PERIOD)
         if (!nextDuration.isPositive) {
             nextDuration = Duration.ofMinutes(TIME_TEMPORAL_LYS);
-            playerTimePlayedService.addTemporalLys(player.uniqueId, 1)
+            playerTimePlayedService.incrementTemporalLys(player.uniqueId)
         }
         playerTimePlayedService.setNextMoneyDuration(player.uniqueId, nextDuration)
     }

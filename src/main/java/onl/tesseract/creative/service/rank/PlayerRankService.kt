@@ -1,13 +1,13 @@
 package onl.tesseract.creative.service.rank
 
-import onl.tesseract.creative.service.player.PermissionService
-
 import onl.tesseract.creative.domain.rank.PlayerRank
 import onl.tesseract.creative.domain.rank.PlayerRankInfo
 import onl.tesseract.creative.domain.rank.StaffRank
 import onl.tesseract.creative.repository.generic.rank.PlayerRankInfoRepository
+import onl.tesseract.creative.service.player.PermissionService
 import org.springframework.stereotype.Service
-import java.util.UUID
+import java.time.LocalDateTime
+import java.util.*
 
 /**
  * Service to interact with player's rank.
@@ -49,4 +49,24 @@ open class PlayerRankService(
         return repository.getById(player) ?: PlayerRankInfo(player);
     }
 
+    fun isPrestige(player: UUID): Boolean {
+        return getPrestige(player).isAfter(LocalDateTime.now())
+    }
+
+    fun getPrestige(player: UUID): LocalDateTime {
+        return getOrCreatePlayerRankInfo(player).prestigeRank ?: LocalDateTime.now()
+    }
+
+    fun resetPrestige(player: UUID) {
+        val pri = getOrCreatePlayerRankInfo(player)
+        pri.prestigeRank = null
+        repository.save(pri)
+    }
+
+    fun addPrestige(player: UUID, days: Long) {
+        val pri = getOrCreatePlayerRankInfo(player)
+        if (pri.prestigeRank == null) pri.prestigeRank = LocalDateTime.now()
+        pri.prestigeRank?.plusDays(days)
+        repository.save(pri)
+    }
 }
