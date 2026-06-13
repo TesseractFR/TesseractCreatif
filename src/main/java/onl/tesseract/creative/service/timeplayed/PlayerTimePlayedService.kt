@@ -3,7 +3,6 @@ package onl.tesseract.creative.service.timeplayed
 import onl.tesseract.creative.domain.rank.PlayerRank
 import onl.tesseract.creative.domain.timeplayed.PlayerTimePlayedInfo
 import onl.tesseract.creative.repository.generic.timeplayed.PlayerTimePlayedRepository
-import onl.tesseract.creative.service.rank.PlayerRankService
 import org.springframework.stereotype.Service
 import java.time.Duration
 import java.util.*
@@ -14,7 +13,6 @@ import java.util.*
 @Service
 open class PlayerTimePlayedService(
     private val repository: PlayerTimePlayedRepository,
-    private val playerRankService: PlayerRankService,
 ) {
 
     fun getPlayerTimePlayed(player: UUID): Duration {
@@ -40,6 +38,11 @@ open class PlayerTimePlayedService(
     fun addPlayerTimeBought(player: UUID, seconds : Long) {
         var playerTimePlayedInfo = getOrCreatePlayerTimePlayedInfo(player);
         playerTimePlayedInfo.timeBougth = playerTimePlayedInfo.timeBougth.plusSeconds(seconds);
+        repository.save(playerTimePlayedInfo)
+    }
+    fun setPlayerTimeBought(player: UUID, seconds: Long) {
+        var playerTimePlayedInfo = getOrCreatePlayerTimePlayedInfo(player);
+        playerTimePlayedInfo.timeBougth = Duration.ofSeconds(seconds);
         repository.save(playerTimePlayedInfo)
     }
 
@@ -74,8 +77,8 @@ open class PlayerTimePlayedService(
         repository.save(playerTimePlayedInfo)
     }
 
-    fun incrementTemporalLys(player: UUID) {
-        if (playerRankService.isPrestige(player)) {
+    fun incrementTemporalLys(player: UUID, prestige: Boolean) {
+        if (prestige) {
             addTemporalLys(player, 2)
             return
         }

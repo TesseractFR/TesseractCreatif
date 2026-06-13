@@ -5,9 +5,11 @@ import onl.tesseract.creative.domain.rank.PlayerRankInfo
 import onl.tesseract.creative.domain.rank.StaffRank
 import onl.tesseract.creative.repository.generic.rank.PlayerRankInfoRepository
 import onl.tesseract.creative.service.player.PermissionService
+import onl.tesseract.creative.service.timeplayed.PlayerTimePlayedService
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
 import java.util.*
+import kotlin.math.max
 
 /**
  * Service to interact with player's rank.
@@ -16,11 +18,15 @@ import java.util.*
 open class PlayerRankService(
     private val repository: PlayerRankInfoRepository,
     private val permissionService: PermissionService,
+    private val timePlayedService: PlayerTimePlayedService,
 ) {
 
     fun setPlayerRank(player: UUID, playerRank: PlayerRank) {
         val rankInfo = getOrCreatePlayerRankInfo(player)
         rankInfo.playerRank = playerRank
+        val playedTimeDiff = (playerRank.hoursRequired * 3600) - timePlayedService.getPlayerTimePlayed(player)
+                .toSeconds()
+        timePlayedService.setPlayerTimeBought(player, max(playedTimeDiff, 0))
         permissionService.updatePermission(player)
         repository.save(rankInfo);
         permissionService.updatePermission(player)
