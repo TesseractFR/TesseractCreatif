@@ -51,7 +51,7 @@ class PlotMenu(
     fun addPlotButton(index: Int, head: CustomHeadItemBuilder, plotType: PlotType) {
         addButton(
             index,
-            head.name("Plot ${plotType.price} ", NamedTextColor.LIGHT_PURPLE)
+            head.name("Plot ${plotType.plotWorld.world} ", NamedTextColor.LIGHT_PURPLE)
                     .lore()
                     .newline()
                     .newline()
