@@ -5,6 +5,7 @@ import net.kyori.adventure.text.event.ClickEvent
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
 import onl.tesseract.core.persistence.hibernate.boutique.TPlayerInfoService
+import onl.tesseract.core.vote.VoteMenu
 import onl.tesseract.creative.PLUGIN_INSTANCE
 import onl.tesseract.creative.controller.menu.boutique.BoutiqueMenu
 import onl.tesseract.creative.domain.plot.PlotWorld
@@ -152,6 +153,11 @@ class MenuMenu(
         addButton(29, createBoutiqueItemStack()) {
             BoutiqueMenu(player, this).open(viewer)
         }
+
+        addButton(31, createVoteItemStack()) {
+            VoteMenu(player.uniqueId, this).open(viewer)
+        }
+
         addButton(33, createSpecialBlocksItemStack()) {
             SpecialBlockMenu(player, this).open(viewer)
         }
@@ -188,7 +194,7 @@ class MenuMenu(
     private fun startUpdatingPlayerInfo(player: Player) {
         infoUpdateTask = object : BukkitRunnable() {
             override fun run() {
-                addButton(22, createPlayerInfoItemStack(player)) { }
+                addButton(13, createPlayerInfoItemStack(player)) { }
             }
         }
         infoUpdateTask?.runTaskTimerAsynchronously(PLUGIN_INSTANCE, 0L, 20L)
@@ -221,6 +227,18 @@ private fun createGradesItemStack(): ItemStack {
         .buildLore()
         .build()
 }
+
+    private fun createVoteItemStack(): ItemStack = ItemBuilder(Material.PAPER)
+        .name("Votes", NamedTextColor.DARK_GREEN, TextDecoration.BOLD)
+        .lore()
+        .newline()
+        .append("Votez pour le serveur et obtenez des récompenses, notamment des ", NamedTextColor.GRAY)
+        .append("lys temporels ", NamedTextColor.GOLD)
+        .append("pour acheter des ", NamedTextColor.GRAY)
+        .append("plots supplémentaires ", NamedTextColor.WHITE)
+        .append("!", NamedTextColor.GRAY)
+        .buildLore()
+        .build()
 
 private fun createPluginsToolsItemStack(): ItemStack {
     val ilb = ItemLoreBuilder()

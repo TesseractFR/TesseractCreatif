@@ -10,14 +10,16 @@ import onl.tesseract.creative.util.HeadConstante
 import onl.tesseract.creative.util.permissionService
 import onl.tesseract.creative.util.playerPlotService
 import onl.tesseract.lib.menu.CustomHeadItemBuilder
+import onl.tesseract.lib.menu.ItemBuilder
 import onl.tesseract.lib.menu.Menu
 import onl.tesseract.lib.menu.MenuSize
+import org.bukkit.Material
 import org.bukkit.entity.Player
 
 class PlotMenu(
     player: Player, previous: Menu? = null,
 ) : BoutiqueCoreMenu(
-    MenuSize.Two,
+    MenuSize.Three,
     Component.text("Achetez de nouveaux plots", NamedTextColor.BLUE, TextDecoration.BOLD),
     previous,
     player
@@ -37,11 +39,16 @@ class PlotMenu(
 
     override fun placeButtons(viewer: Player) {
         super.placeButtons(viewer)
-
-        addPlotButton(1, HeadConstante.tete100, PlotType.PLOT100)
-        addPlotButton(3, HeadConstante.tete250, PlotType.PLOT250)
-        addPlotButton(5, HeadConstante.tete500, PlotType.PLOT500)
-        addPlotButton(7, HeadConstante.tete1000, PlotType.PLOT1000)
+        for (slot in listOf(1, 4, 7, 9, 12, 14, 17, 20, 24)) {
+            addButton(
+                slot,
+                ItemBuilder(Material.BLUE_STAINED_GLASS_PANE).name(" ", NamedTextColor.WHITE)
+                    .build()) {}
+        }
+        addPlotButton(10, HeadConstante.tete100, PlotType.PLOT100)
+        addPlotButton(12, HeadConstante.tete250, PlotType.PLOT250)
+        addPlotButton(14, HeadConstante.tete500, PlotType.PLOT500)
+        addPlotButton(16, HeadConstante.tete1000, PlotType.PLOT1000)
 
         addBackButton()
         addCloseButton()
@@ -51,13 +58,14 @@ class PlotMenu(
     fun addPlotButton(index: Int, head: CustomHeadItemBuilder, plotType: PlotType) {
         addButton(
             index,
-            head.name("Plot ${plotType.plotWorld.world} ", NamedTextColor.LIGHT_PURPLE)
+            head.name("Plot ${plotType.plotWorld.world} ", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD)
                     .lore()
-                    .newline()
                     .newline()
                     .append("Prix : ", NamedTextColor.GRAY)
                     .newline()
-                    .append("${plotType.price}", NamedTextColor.GOLD)
+                    .append("${plotType.price} ", NamedTextColor.YELLOW,
+                        setOf(TextDecoration.BOLD, TextDecoration.ITALIC))
+                    .append("lys d'or/temporels", NamedTextColor.YELLOW,TextDecoration.ITALIC)
                     .newline()
                     .newline()
                     .append("--- Clic gauche ---", NamedTextColor.LIGHT_PURPLE)
@@ -66,7 +74,7 @@ class PlotMenu(
                     .newline()
                     .append("--- Clic droit ---", NamedTextColor.LIGHT_PURPLE)
                     .newline()
-                    .append("Acheter en lys temporel", NamedTextColor.AQUA)
+                    .append("Acheter en lys temporels", NamedTextColor.AQUA)
 
                     .buildLore()
                     .build()) { event ->
@@ -84,7 +92,7 @@ class PlotMenu(
         confirmBuyLysTemporel(
             player,
             plotType.price,
-            Component.text("Confirmer l'achat d'un plot ${plotType.price} pour ${plotType.price} lys temporel.")) {
+            Component.text("Confirmer l'achat d'un plot ${plotType.price} pour ${plotType.price} lys temporels.")) {
             playerPlotService.addPlot(
                 player,
                 plotType.plotWorld)

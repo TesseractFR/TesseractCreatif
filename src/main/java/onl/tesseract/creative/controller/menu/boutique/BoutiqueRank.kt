@@ -5,10 +5,10 @@ import onl.tesseract.creative.domain.rank.PlayerRank
 enum class BoutiqueRank(val price: Int, val hourPrice: Int, val playerRank: PlayerRank, val strName: String) {
     APPRENTI(0, 0, PlayerRank.APPRENTI, "Apprenti"),
     CONCEPTEUR(100, 25, PlayerRank.CONCEPTEUR, "Concepteur"),
-    CREATEUR(300, 19, PlayerRank.CREATEUR, "Createur"),
-    INGENIEUR(800, 17, PlayerRank.INGENIEUR, "Ingenieur"),
-    BATISSEUR(2000, 12, PlayerRank.BATISSEUR, "Batisseur"),
-    VIRTUOSE(2500, 12, PlayerRank.VIRTUOSE, "Virtuose"),
+    CREATEUR(300, 19, PlayerRank.CREATEUR, "Créateur"),
+    INGENIEUR(800, 17, PlayerRank.INGENIEUR, "Ingénieur"),
+    BATISSEUR(2000, 12, PlayerRank.BATISSEUR, "Bâtisseur"),
+    VIRTUOSE(3500, 12, PlayerRank.VIRTUOSE, "Virtuose"),
     ;
 
 
