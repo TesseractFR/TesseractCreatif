@@ -28,9 +28,9 @@ class PlotMenu(
 
     enum class PlotType(val price: Int, val plotWorld: PlotWorld) {
         PLOT100(100, PlotWorld.WORLD_100),
-        PLOT250(250, PlotWorld.WORLD_250),
-        PLOT500(500, PlotWorld.WORLD_500),
-        PLOT1000(1000, PlotWorld.WORLD_1000),
+        PLOT250(225, PlotWorld.WORLD_250),
+        PLOT500(450, PlotWorld.WORLD_500),
+        PLOT1000(900, PlotWorld.WORLD_1000),
         ;
     }
 
