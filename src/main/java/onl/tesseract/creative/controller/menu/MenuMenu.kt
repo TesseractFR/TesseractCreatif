@@ -3,6 +3,9 @@ package onl.tesseract.creative.controller.menu
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.event.ClickEvent
 import net.kyori.adventure.text.format.NamedTextColor
+import net.kyori.adventure.text.format.NamedTextColor.AQUA
+import net.kyori.adventure.text.format.NamedTextColor.GOLD
+import net.kyori.adventure.text.format.NamedTextColor.GREEN
 import net.kyori.adventure.text.format.TextDecoration
 import onl.tesseract.core.persistence.hibernate.boutique.TPlayerInfoService
 import onl.tesseract.core.vote.VoteMenu
@@ -27,6 +30,7 @@ import org.bukkit.entity.Player
 import org.bukkit.event.inventory.InventoryCloseEvent
 import org.bukkit.inventory.ItemStack
 import org.bukkit.scheduler.BukkitRunnable
+import java.time.format.DateTimeFormatter
 
 private val teteGrades = ItemBuilder(Material.PLAYER_HEAD).customHead(
     "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTdlNzgyYjQwOGY1NDU2Y2ZhZDBjNDNlOGM1MDFlZjllZmQwMTI4NjI5NzM2MGJlM2I4M2ZiMTZkYzljZDJhNSJ9fX0=",
@@ -83,9 +87,9 @@ private val messageInstagram: Component = Component.text("----------\n", NamedTe
     .append("Instagram", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD)
     .append("\n----------", NamedTextColor.LIGHT_PURPLE)
     .clickEvent(ClickEvent.openUrl("https://www.instagram.com/tesseractfr/"))
-private val messageTiktok: Component = Component.text("------\n", NamedTextColor.GOLD)
-    .append("TikTok", NamedTextColor.GOLD, TextDecoration.BOLD)
-    .append("\n------", NamedTextColor.GOLD)
+private val messageTiktok: Component = Component.text("------\n", GOLD)
+    .append("TikTok", GOLD, TextDecoration.BOLD)
+    .append("\n------", GOLD)
     .clickEvent(ClickEvent.openUrl("https://www.tiktok.com/@tesseractfr?lang=fr"))
 private val messageFacebook: Component = Component.text("---------\n", NamedTextColor.BLUE)
     .append("Facebook", NamedTextColor.BLUE, TextDecoration.BOLD)
@@ -99,9 +103,9 @@ private val messageYoutube: Component = Component.text("--------\n", NamedTextCo
     .append("YouTube", NamedTextColor.RED, TextDecoration.BOLD)
     .append("\n--------", NamedTextColor.RED)
     .clickEvent(ClickEvent.openUrl("https://www.youtube.com/@tesseract7852"))
-private val messageTwitter: Component = Component.text("-----------\n", NamedTextColor.AQUA)
-    .append("X (Twitter)", NamedTextColor.AQUA, TextDecoration.BOLD)
-    .append("\n-----------", NamedTextColor.AQUA)
+private val messageTwitter: Component = Component.text("-----------\n", AQUA)
+    .append("X (Twitter)", AQUA, TextDecoration.BOLD)
+    .append("\n-----------", AQUA)
     .clickEvent(ClickEvent.openUrl("https://x.com/TesseractFR"))
 private val messageWebsite: Component = Component.text("-------------\n", NamedTextColor.YELLOW)
     .append("Site Internet", NamedTextColor.YELLOW, TextDecoration.BOLD)
@@ -121,6 +125,7 @@ class MenuMenu(
     Menu(MenuSize.Six, Component.text("Menu du Créatif", NamedTextColor.RED, TextDecoration.BOLD)) {
 
     private var infoUpdateTask: BukkitRunnable? = null
+    private val dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
 
     override fun placeButtons(viewer: Player) {
         fill(
@@ -233,7 +238,7 @@ private fun createGradesItemStack(): ItemStack {
         .lore()
         .newline()
         .append("Votez pour le serveur et obtenez des récompenses, notamment des ", NamedTextColor.GRAY)
-        .append("lys temporels ", NamedTextColor.GOLD)
+        .append("lys temporels ", GOLD)
         .append("pour acheter des ", NamedTextColor.GRAY)
         .append("plots supplémentaires ", NamedTextColor.WHITE)
         .append("!", NamedTextColor.GRAY)
@@ -279,52 +284,63 @@ private fun createTPWorldMenuItemStack(): ItemStack {
         .build()
 }
 
- fun createPlayerInfoItemStack(player: Player): ItemStack {
-    val playerRank = playerRankService.getPlayerRank(player.uniqueId)
-     val totalPlotsWorld100 = playerPlotService.getPlayerTotalPlot(player.uniqueId, PlotWorld.WORLD_100)
-     val totalPlotsWorld250 = playerPlotService.getPlayerTotalPlot(player.uniqueId, PlotWorld.WORLD_250)
-     val totalPlotsWorld500 = playerPlotService.getPlayerTotalPlot(player.uniqueId, PlotWorld.WORLD_500)
-     val totalPlotsWorld1000 = playerPlotService.getPlayerTotalPlot(player.uniqueId, PlotWorld.WORLD_1000)
-     val timePlayed = playerTimePlayedService.getPlayerTimePlayed(player.uniqueId)
-     val gender = tPlayerInfoService[player.uniqueId].genre
+    fun createPlayerInfoItemStack(player: Player): ItemStack {
+        val playerRank = playerRankService.getPlayerRank(player.uniqueId)
+        val totalPlotsWorld100 = playerPlotService.getPlayerTotalPlot(player.uniqueId, PlotWorld.WORLD_100)
+        val totalPlotsWorld250 = playerPlotService.getPlayerTotalPlot(player.uniqueId, PlotWorld.WORLD_250)
+        val totalPlotsWorld500 = playerPlotService.getPlayerTotalPlot(player.uniqueId, PlotWorld.WORLD_500)
+        val totalPlotsWorld1000 = playerPlotService.getPlayerTotalPlot(player.uniqueId, PlotWorld.WORLD_1000)
+        val timePlayed = playerTimePlayedService.getPlayerTimePlayed(player.uniqueId)
+        val gender = tPlayerInfoService[player.uniqueId].genre
 
-    val ilb = ItemLoreBuilder()
-        .newline()
-        .append("Pseudo : ", NamedTextColor.GOLD).append(player.name, NamedTextColor.WHITE)
-        .newline()
-        .append("Genre : ", NamedTextColor.GOLD)
-        .append(
-            tPlayerInfoService[player.uniqueId].genre.getName(),
-            NamedTextColor.WHITE
-        )
-        .newline().newline()
-        .append("Grade : ", NamedTextColor.GOLD).append(playerRank.title.getDisplayName(gender).uppercase(), playerRank.color, TextDecoration.BOLD)
-        .newline()
-        .append("Temps de jeu global : ", NamedTextColor.GOLD)
-        .newline()
-        .append(DurationFormat.formatTime(timePlayed), NamedTextColor.WHITE)
-        .newline().newline()
-        .append("Nombre de plots Monde 100 : ", NamedTextColor.GOLD)
-        .append(totalPlotsWorld100.toString(), NamedTextColor.WHITE, TextDecoration.BOLD)
-        .newline()
-        .append("Nombre de plots Monde 250 : ", NamedTextColor.GOLD)
-        .append(totalPlotsWorld250.toString(), NamedTextColor.WHITE, TextDecoration.BOLD)
-        .newline()
-        .append("Nombre de plots Monde 500 : ", NamedTextColor.GOLD)
-        .append(totalPlotsWorld500.toString(), NamedTextColor.WHITE, TextDecoration.BOLD)
-        .newline()
-        .append("Nombre de plots Monde 1000 : ", NamedTextColor.GOLD)
-        .append(totalPlotsWorld1000.toString(), NamedTextColor.WHITE, TextDecoration.BOLD)
-     return ItemBuilder(playerProfileService.getPlayerHead(player.uniqueId))
-        .name("Informations du joueur", NamedTextColor.YELLOW, TextDecoration.BOLD)
-        .lore(ilb.get())
-        .build()
+        var ilb = ItemLoreBuilder()
+            .newline()
+            .append("Pseudo : ", GOLD).append(player.name, NamedTextColor.WHITE)
+            .newline()
+            .append("Genre : ", GOLD)
+            .append(
+                tPlayerInfoService[player.uniqueId].genre.getName(),
+                NamedTextColor.WHITE
+            )
+            .newline().newline()
+            .append("Grade : ", GOLD).append(playerRank.title.getDisplayName(gender).uppercase(), playerRank.color, TextDecoration.BOLD)
 
-}
+        if (playerRankService.isPrestige(player.uniqueId)) {
+            val expiration = playerRankService.getPrestige(player.uniqueId)
+            ilb = ilb.newline()
+                .append("✦ ", NamedTextColor.YELLOW)
+                .append("PRESTIGE", GOLD, TextDecoration.BOLD)
+                .append(" ✦ ", NamedTextColor.YELLOW)
+                .append("fin le ", NamedTextColor.WHITE)
+                .append(expiration.format(dateFormatter), GREEN)
+        }
+
+        ilb = ilb.newline()
+            .append("Temps de jeu global : ", GOLD)
+            .newline()
+            .append(DurationFormat.formatTime(timePlayed), NamedTextColor.WHITE)
+            .newline().newline()
+            .append("Nombre de plots Monde 100 : ", GOLD)
+            .append(totalPlotsWorld100.toString(), NamedTextColor.WHITE, TextDecoration.BOLD)
+            .newline()
+            .append("Nombre de plots Monde 250 : ", GOLD)
+            .append(totalPlotsWorld250.toString(), NamedTextColor.WHITE, TextDecoration.BOLD)
+            .newline()
+            .append("Nombre de plots Monde 500 : ", GOLD)
+            .append(totalPlotsWorld500.toString(), NamedTextColor.WHITE, TextDecoration.BOLD)
+            .newline()
+            .append("Nombre de plots Monde 1000 : ", GOLD)
+            .append(totalPlotsWorld1000.toString(), NamedTextColor.WHITE, TextDecoration.BOLD)
+
+        return ItemBuilder(playerProfileService.getPlayerHead(player.uniqueId))
+            .name("Informations du joueur", NamedTextColor.YELLOW, TextDecoration.BOLD)
+            .lore(ilb.get())
+            .build()
+    }
 
 private fun createPlotMenuItemStack(): ItemStack {
     return tetePlotMenu
-        .name("Menu des plots", NamedTextColor.AQUA, TextDecoration.BOLD)
+        .name("Menu des plots", AQUA, TextDecoration.BOLD)
         .lore()
         .newline()
         .append(
@@ -348,7 +364,7 @@ private fun createGenreSelectionItemStack(): ItemStack {
 
 private fun createBoutiqueItemStack(): ItemStack {
     return ItemBuilder(Material.EMERALD)
-        .name("Boutique de Tesseract", NamedTextColor.GOLD, TextDecoration.BOLD)
+        .name("Boutique de Tesseract", GOLD, TextDecoration.BOLD)
         .lore()
         .newline()
         .append("Cliquez pour afficher la boutique de Tesseract.", NamedTextColor.GRAY)
@@ -381,7 +397,7 @@ private fun createInstagramItemStack(): ItemStack {
 
 private fun createTiktokItemStack(): ItemStack {
     return teteTiktok
-        .name("TikTok", NamedTextColor.GOLD, TextDecoration.BOLD)
+        .name("TikTok", GOLD, TextDecoration.BOLD)
         .lore()
         .newline()
         .append("Cliquez pour obtenir le lien vers notre compte TikTok.", NamedTextColor.GRAY)
@@ -421,7 +437,7 @@ private fun createYoutubeItemStack(): ItemStack {
 
 private fun createTwitterItemStack(): ItemStack {
     return teteTwitter
-        .name("X (Twitter)", NamedTextColor.AQUA, TextDecoration.BOLD)
+        .name("X (Twitter)", AQUA, TextDecoration.BOLD)
         .lore()
         .newline()
         .append("Cliquez pour obtenir le lien vers notre page X (Twitter).", NamedTextColor.GRAY)

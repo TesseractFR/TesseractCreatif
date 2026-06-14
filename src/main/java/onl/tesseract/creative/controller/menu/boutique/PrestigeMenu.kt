@@ -1,7 +1,6 @@
 package onl.tesseract.creative.controller.menu.boutique
 
 import net.kyori.adventure.text.Component
-import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.NamedTextColor.*
 import net.kyori.adventure.text.format.TextDecoration
 import onl.tesseract.creative.util.playerRankService
@@ -13,9 +12,12 @@ import onl.tesseract.lib.util.ItemLoreBuilder
 import onl.tesseract.lib.util.append
 import org.bukkit.Material
 import org.bukkit.entity.Player
+import org.bukkit.inventory.ItemStack
 import java.time.Duration
 import java.time.Instant
+import java.time.LocalDateTime
 import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 private const val BUY_WITH_LYS_MESSAGE = "Acheter en lys d'or"
 private const val PRICE_MESSAGE = "Prix : "
@@ -30,15 +32,19 @@ class PrestigeMenu(
             previous, player
         ) {
 
+    private val dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+
     override fun placeButtons(viewer: Player) {
         fill(
             ItemBuilder(Material.GRAY_STAINED_GLASS_PANE).name(" ")
                     .build())
 
+        addButton(0, createPrestigeStatusItem(viewer)) {}
+
         for (slot in listOf(1, 4, 7, 9, 12, 14, 17, 20, 24)) {
             addButton(
                 slot,
-                ItemBuilder(Material.BLUE_STAINED_GLASS_PANE).name(" ", NamedTextColor.WHITE)
+                ItemBuilder(Material.BLUE_STAINED_GLASS_PANE).name(" ", WHITE)
                     .build()) {}
         }
 
@@ -116,16 +122,36 @@ class PrestigeMenu(
             .get()
     }
 
+    private fun createPrestigeStatusItem(viewer: Player): ItemStack {
+        val isPrestige = playerRankService().isPrestige(viewer.uniqueId)
+        val ilb = ItemLoreBuilder()
+            .newline()
+        if (isPrestige) {
+            ilb.append("Vous possédez le grade ", GRAY)
+                .append("PRESTIGE", GOLD, TextDecoration.BOLD)
+                .append(".", GRAY)
+            val expiration = playerRankService().getPrestige(viewer.uniqueId)
+            val timeLeft = Duration.between(LocalDateTime.now(), expiration)
+            addExpirationDate(timeLeft, ilb)
+        } else {
+            ilb.append("Vous ne possédez pas le grade ", GRAY)
+                .append("Prestige", GOLD, TextDecoration.BOLD)
+                .append(".", GRAY)
+        }
+        return ItemBuilder(playerProfileService.getPlayerHead(viewer.uniqueId))
+            .name(viewer.name, AQUA, TextDecoration.BOLD)
+            .lore(ilb.get())
+            .build()
+    }
+
     private fun addExpirationDate(timeLeft: Duration, ilb: ItemLoreBuilder) {
         if (timeLeft.isPositive) {
             val expirationDate = Instant.now()
                     .plus(timeLeft)
                     .atZone(ZoneId.systemDefault())
             ilb.newline()
-                    .append("Possédé jusqu'au ", LIGHT_PURPLE)
-                    .append(
-                        expirationDate.dayOfMonth.toString() + "/" + expirationDate.monthValue + "/" + expirationDate.year,
-                        AQUA)
+                    .append("Possédé jusqu'au ", GRAY)
+                    .append(expirationDate.format(dateFormatter), GREEN, TextDecoration.BOLD)
         }
     }
 

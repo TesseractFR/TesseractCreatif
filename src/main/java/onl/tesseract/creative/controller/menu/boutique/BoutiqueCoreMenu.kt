@@ -8,11 +8,13 @@ import onl.tesseract.core.boutique.BoutiqueService
 import onl.tesseract.creative.service.timeplayed.PlayerTimePlayedService
 import onl.tesseract.creative.util.boutiqueService
 import onl.tesseract.creative.util.menuService
+import onl.tesseract.creative.util.playerProfileService
 import onl.tesseract.creative.util.playerTimePlayedService
 import onl.tesseract.lib.menu.ItemBuilder
 import onl.tesseract.lib.menu.Menu
 import onl.tesseract.lib.menu.MenuService
 import onl.tesseract.lib.menu.MenuSize
+import onl.tesseract.lib.profile.PlayerProfileService
 import onl.tesseract.lib.util.ChatFormats
 import onl.tesseract.lib.util.append
 import org.bukkit.Material
@@ -27,6 +29,7 @@ abstract class BoutiqueCoreMenu(
     val player: Player,
 ) : Menu(size, name, previous) {
 
+    protected val playerProfileService: PlayerProfileService = playerProfileService()
     protected val boutiqueService: BoutiqueService = boutiqueService()
     protected val playerTimePlayedService: PlayerTimePlayedService = playerTimePlayedService()
     protected val menuService: MenuService = menuService()

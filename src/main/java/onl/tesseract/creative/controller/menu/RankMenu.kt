@@ -6,6 +6,8 @@ import net.kyori.adventure.text.format.NamedTextColor.BLUE
 import net.kyori.adventure.text.format.NamedTextColor.GOLD
 import net.kyori.adventure.text.format.TextDecoration
 import onl.tesseract.creative.controller.menu.boutique.CreativeBoutiqueMenu
+import onl.tesseract.creative.controller.menu.boutique.PrestigeMenu
+import onl.tesseract.creative.domain.rank.PlayerRank
 import onl.tesseract.creative.util.HeadConstante.teteApprenti
 import onl.tesseract.creative.util.HeadConstante.teteBatisseur
 import onl.tesseract.creative.util.HeadConstante.teteConcepteur
@@ -29,14 +31,22 @@ class RankMenu(previous: Menu? = null) :
         fill(
             ItemBuilder(Material.GRAY_STAINED_GLASS_PANE).name(" ")
                     .build())
-
+        for (slot in listOf(12, 14, 20, 22, 24)) {
+            addButton(
+                slot,
+                ItemBuilder(Material.MAGENTA_STAINED_GLASS_PANE).name(" ", NamedTextColor.WHITE)
+                    .build()) {}
+        }
         addButton(0, createApprentiItem()) {}
-        addButton(11, createConcepteurItem()) {}
+        addButton(2, createConcepteurItem()) {}
         addButton(4, createCreateurItem()) {}
-        addButton(15, createIngenieurItem()) {}
+        addButton(6, createIngenieurItem()) {}
         addButton(8, createBatisseurItem()) {}
-        addButton(22, createVirtuoseItem()) {
+        addButton(21, createVirtuoseItem()) {
             CreativeBoutiqueMenu(viewer, this).open(viewer)
+        }
+        addButton(23, createPrestigeItem()) {
+            PrestigeMenu(viewer, this).open(viewer)
         }
 
         addBackButton()
@@ -54,7 +64,7 @@ class RankMenu(previous: Menu? = null) :
             .newline()
             .append("Monde 250 : ", GOLD).append("1", NamedTextColor.WHITE, TextDecoration.BOLD)
         return teteApprenti
-            .name("Apprenti", NamedTextColor.GREEN, TextDecoration.BOLD)
+            .name(PlayerRank.APPRENTI.name, PlayerRank.APPRENTI.color, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
     }
@@ -71,7 +81,7 @@ class RankMenu(previous: Menu? = null) :
             .newline()
             .append("Monde 250 : ", GOLD).append("2", NamedTextColor.WHITE, TextDecoration.BOLD)
         return teteConcepteur
-            .name("Concepteur", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD)
+            .name(PlayerRank.CONCEPTEUR.name, PlayerRank.CONCEPTEUR.color, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
     }
@@ -90,7 +100,7 @@ class RankMenu(previous: Menu? = null) :
             .newline()
             .append("Monde 500 : ", GOLD).append("1", NamedTextColor.WHITE, TextDecoration.BOLD)
         return teteCreateur
-            .name("Créateur", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD)
+            .name(PlayerRank.CREATEUR.name, PlayerRank.CREATEUR.color, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
     }
@@ -109,7 +119,7 @@ class RankMenu(previous: Menu? = null) :
             .newline()
             .append("Monde 500 : ", GOLD).append("2", NamedTextColor.WHITE, TextDecoration.BOLD)
         return teteIngenieur
-            .name("Ingénieur", NamedTextColor.DARK_BLUE, TextDecoration.BOLD)
+            .name(PlayerRank.INGENIEUR.name, PlayerRank.INGENIEUR.color, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
     }
@@ -132,7 +142,7 @@ class RankMenu(previous: Menu? = null) :
             .newline().newline()
             .append("Obtention de ", NamedTextColor.GREEN, TextDecoration.BOLD).append("VoxelSniper", NamedTextColor.DARK_AQUA, TextDecoration.BOLD)
         return teteBatisseur
-            .name("Bâtisseur", BLUE, TextDecoration.BOLD)
+            .name(PlayerRank.BATISSEUR.name, PlayerRank.BATISSEUR.color, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
     }
@@ -168,7 +178,32 @@ class RankMenu(previous: Menu? = null) :
             .newline()
             .append("- Et bien plus encore...", GOLD, TextDecoration.ITALIC)
         return teteVirtuose
-            .name("Virtuose", NamedTextColor.AQUA, TextDecoration.BOLD)
+            .name(PlayerRank.VIRTUOSE.name, PlayerRank.VIRTUOSE.color, TextDecoration.BOLD)
+            .lore(ilb.get())
+            .build()
+    }
+
+    private fun createPrestigeItem(): ItemStack {
+        val ilb = ItemLoreBuilder()
+            .newline()
+            .append("Grade PAYANT (temporaire)", NamedTextColor.LIGHT_PURPLE, TextDecoration.BOLD)
+            .newline()
+            .append(" (Clique pour ouvrir la boutique)", NamedTextColor.DARK_PURPLE, TextDecoration.ITALIC)
+            .newline().newline()
+            .append("/!\\ ", NamedTextColor.DARK_GREEN, setOf(TextDecoration.ITALIC,TextDecoration.BOLD))
+            .append("Ce grade vous ajoute des plugins mais ne remplace pas votre grade actuel.", NamedTextColor.DARK_GREEN, TextDecoration.ITALIC)
+            .newline()
+            .append("Il est complémentaire et n'inclut pas les avantages des autres grades (contrairement à Virtuose).", NamedTextColor.GRAY, TextDecoration.ITALIC)
+            .newline().newline()
+            .append("Plugins supplémentaires : ", NamedTextColor.GREEN)
+            .newline()
+            .append("- ", NamedTextColor.GRAY)
+            .append("Metabrush", NamedTextColor.RED, TextDecoration.BOLD)
+            .newline()
+            .append("- ", NamedTextColor.GRAY)
+            .append("EzEdits", GOLD, TextDecoration.BOLD)
+        return ItemBuilder(Material.NETHER_STAR)
+            .name("PRESTIGE", GOLD, TextDecoration.BOLD)
             .lore(ilb.get())
             .build()
     }

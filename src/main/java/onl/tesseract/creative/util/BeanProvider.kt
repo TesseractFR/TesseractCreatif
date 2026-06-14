@@ -8,6 +8,7 @@ import onl.tesseract.creative.service.plot.PlayerPlotService
 import onl.tesseract.creative.service.rank.PlayerRankService
 import onl.tesseract.creative.service.timeplayed.PlayerTimePlayedService
 import onl.tesseract.lib.menu.MenuService
+import onl.tesseract.lib.profile.PlayerProfileService
 
 fun menuService(): MenuService =
     PLUGIN_INSTANCE.springContext.getBean(MenuService::class.java)
@@ -29,3 +30,6 @@ fun permissionService(): PermissionService =
 
 fun playerPlotService(): PlayerPlotService =
     PLUGIN_INSTANCE.springContext.getBean(PlayerPlotService::class.java)
+
+fun playerProfileService(): PlayerProfileService =
+    PLUGIN_INSTANCE.springContext.getBean(PlayerProfileService::class.java)

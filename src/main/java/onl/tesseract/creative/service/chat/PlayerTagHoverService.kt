@@ -26,7 +26,14 @@ class PlayerTagHoverService(
         val formattedTime = DurationFormat.formatTime(timePlayed)
 
         val hoverText = Component.text()
-            .append(Component.text("Pseudo : ", NamedTextColor.GOLD))
+        if (rankService.isPrestige(uuid)) {
+            hoverText.append(Component.text("✦ ", NamedTextColor.YELLOW))
+            hoverText.append(Component.text("PRESTIGE", NamedTextColor.GOLD, TextDecoration.BOLD))
+            hoverText.append(Component.text(" ✦", NamedTextColor.YELLOW))
+            hoverText.appendNewline()
+        }
+
+        hoverText.append(Component.text("Pseudo : ", NamedTextColor.GOLD))
             .append(Component.text(offlinePlayer.name ?: "Inconnu", NamedTextColor.WHITE)) // ✅ Pseudo en blanc
             .append(Component.newline())
 
@@ -34,12 +41,6 @@ class PlayerTagHoverService(
             hoverText.append(Component.text("Grade Staff : ", NamedTextColor.GOLD))
                 .append(Component.text(it.name, it.color))
                 .append(Component.newline())
-        }
-        if (rankService.isPrestige(uuid)) {
-            hoverText.append(Component.text("E", NamedTextColor.LIGHT_PURPLE, TextDecoration.OBFUSCATED))
-            hoverText.append(Component.text("Prestige", NamedTextColor.GOLD))
-            hoverText.append(Component.text("E", NamedTextColor.LIGHT_PURPLE, TextDecoration.OBFUSCATED))
-            hoverText.appendNewline()
         }
         hoverText.append(Component.text("Grade Joueur : ", NamedTextColor.GOLD))
             .append(Component.text(playerRank.name, playerRank.color))

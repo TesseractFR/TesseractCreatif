@@ -41,7 +41,7 @@ class ColoredChatListener(
         val prefix =
             if (prestigeRank) {
                 Component.text()
-                        .append(Component.text("[Prestige]", NamedTextColor.GOLD, TextDecoration.BOLD))
+                        .append(Component.text("[Prestige] ", NamedTextColor.GOLD, TextDecoration.BOLD))
                         .append(displayNameComponent)
                         .append(Component.text(" : ", NamedTextColor.WHITE))
                         .build()

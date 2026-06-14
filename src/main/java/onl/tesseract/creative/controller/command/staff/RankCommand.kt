@@ -3,7 +3,6 @@ package onl.tesseract.creative.controller.command.staff
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
-import onl.tesseract.commandBuilder.CommandContext
 import onl.tesseract.commandBuilder.annotation.Argument
 import onl.tesseract.commandBuilder.annotation.Command
 import onl.tesseract.creative.SpringComponent

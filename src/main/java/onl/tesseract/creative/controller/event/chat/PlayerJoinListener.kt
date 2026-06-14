@@ -2,6 +2,7 @@ package onl.tesseract.creative.controller.event.chat
 
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
+import net.kyori.adventure.text.format.TextDecoration
 import onl.tesseract.core.event.ColoredChat
 import onl.tesseract.creative.service.nickname.NicknameService
 import onl.tesseract.creative.service.player.PermissionService
@@ -52,13 +53,18 @@ class PlayerJoinListener(
 
     private fun getFormattedDisplayName(uuid: UUID, playerName: String): Component {
         val nickname = nicknameService.getNickname(uuid)
-        return if (nickname != null) {
-            ColoredChat.colorComponent(Component.text(nickname))
-        } else {
-            val color = rankService.getStaffRank(uuid)?.color
-                    ?: rankService.getPlayerRank(uuid).color
-            Component.text(playerName, color)
-        }
+        val staffRank = rankService.getStaffRank(uuid)
+        return when {
+            nickname != null -> {
+                val colored = ColoredChat.colorComponent(Component.text(nickname))
+                if (colored.color() == null) colored.color(NamedTextColor.WHITE) else colored
+            }
+            rankService.isPrestige(uuid) -> Component.text("✦ ", NamedTextColor.YELLOW)
+                .append(Component.text(playerName, NamedTextColor.GOLD, TextDecoration.BOLD))
+                .append(Component.text(" ✦", NamedTextColor.YELLOW))
+            staffRank != null -> Component.text(playerName, staffRank.color)
+            else -> Component.text(playerName, rankService.getPlayerRank(uuid).color)
+        } as Component
     }
 
 }
