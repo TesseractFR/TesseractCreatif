@@ -1,19 +1,14 @@
 package onl.tesseract.creative.repository.hibernate.rank.entity
 
-import jakarta.persistence.Cacheable
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.EnumType
-import jakarta.persistence.Enumerated
-import jakarta.persistence.Id
-import jakarta.persistence.Table
+import jakarta.persistence.*
 import onl.tesseract.creative.domain.rank.PlayerRank
 import onl.tesseract.creative.domain.rank.PlayerRankInfo
 import onl.tesseract.creative.domain.rank.StaffRank
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import org.hibernate.annotations.JdbcTypeCode
 import java.sql.Types
-import java.util.UUID
+import java.time.LocalDateTime
+import java.util.*
 
 @Entity
 @Table(name = "t_player_ranks")
@@ -33,12 +28,15 @@ data class PlayerRankInfoEntity(
     @Enumerated(EnumType.STRING)
     @Column(name = "staffRank", nullable = true)
     var staffRank: StaffRank? = null,
+
+    @Column(name = "prestigeExpiration", nullable = true)
+    var prestige: LocalDateTime? = null,
 ) {
     fun toDomain(): PlayerRankInfo {
-        return PlayerRankInfo(uuid, playerRank, staffRank)
+        return PlayerRankInfo(uuid, playerRank, staffRank, prestige)
     }
 }
 
 fun PlayerRankInfo.toEntity(): PlayerRankInfoEntity {
-    return PlayerRankInfoEntity(uuid, playerRank, staffRank)
+    return PlayerRankInfoEntity(uuid, playerRank, staffRank, prestigeRank)
 }

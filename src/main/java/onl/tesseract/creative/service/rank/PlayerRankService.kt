@@ -72,7 +72,7 @@ open class PlayerRankService(
     fun addPrestige(player: UUID, days: Long) {
         val pri = getOrCreatePlayerRankInfo(player)
         if (pri.prestigeRank == null) pri.prestigeRank = LocalDateTime.now()
-        pri.prestigeRank?.plusDays(days)
+        pri.prestigeRank = pri.prestigeRank?.plusDays(days)
         repository.save(pri)
     }
 }
