@@ -5,9 +5,9 @@ import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextColor
 import onl.tesseract.core.title.Title
 import onl.tesseract.core.title.TitleService
-import onl.tesseract.lib.menu.CustomHeadItemBuilder
-import onl.tesseract.creative.util.HeadConstante
 import onl.tesseract.creative.domain.plot.RankPlot
+import onl.tesseract.creative.util.HeadConstante
+import onl.tesseract.lib.menu.CustomHeadItemBuilder
 import onl.tesseract.lib.service.ServiceContainer
 
 
@@ -45,7 +45,7 @@ enum class PlayerRank(
     INGENIEUR(
         "ingenieur",
         serv.getById("INGENIEUR"),
-        NamedTextColor.DARK_BLUE,
+        TextColor.color(0x0064ab),
         HeadConstante.teteIngenieur,
         RankPlot.INGENIEUR_PLOT,
         48),

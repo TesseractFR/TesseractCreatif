@@ -11,7 +11,7 @@ import onl.tesseract.creative.service.timeplayed.PlayerTimePlayedService
 import onl.tesseract.creative.util.DurationFormat
 import org.bukkit.Bukkit
 import org.springframework.stereotype.Service
-import java.util.UUID
+import java.util.*
 
 @Service
 class PlayerTagHoverService(
@@ -35,7 +35,12 @@ class PlayerTagHoverService(
                 .append(Component.text(it.name, it.color))
                 .append(Component.newline())
         }
-
+        if (rankService.isPrestige(uuid)) {
+            hoverText.append(Component.text("E", NamedTextColor.LIGHT_PURPLE, TextDecoration.OBFUSCATED))
+            hoverText.append(Component.text("Prestige", NamedTextColor.GOLD))
+            hoverText.append(Component.text("E", NamedTextColor.LIGHT_PURPLE, TextDecoration.OBFUSCATED))
+            hoverText.appendNewline()
+        }
         hoverText.append(Component.text("Grade Joueur : ", NamedTextColor.GOLD))
             .append(Component.text(playerRank.name, playerRank.color))
             .append(Component.newline())
@@ -49,7 +54,8 @@ class PlayerTagHoverService(
 
     fun getOnClickComponent(uuid: UUID, displayComponent: Component? = null): TextComponent {
         val offlinePlayer = Bukkit.getOfflinePlayer(uuid)
-        val color = rankService.getStaffRank(uuid)?.color ?: rankService.getPlayerRank(uuid).color
+        val color = if (rankService.isPrestige(uuid)) NamedTextColor.GOLD else rankService.getStaffRank(uuid)?.color
+                ?: rankService.getPlayerRank(uuid).color
         val playerName = offlinePlayer.name ?: "Inconnu"
 
         val finalComponent = (displayComponent ?: Component.text(playerName, color)) as TextComponent

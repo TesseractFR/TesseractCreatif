@@ -17,7 +17,7 @@ import java.util.concurrent.TimeUnit
 import org.springframework.stereotype.Component as SpringComponent
 
 private const val PERIOD = 1L;
-private const val TIME_TEMPORAL_LYS = 10L;
+private const val TIME_TEMPORAL_LYS = 5L;
 
 /**
  * Task to update the player's time played, and auto-rank.
@@ -50,7 +50,7 @@ class PlayerTimePlayedTask(
         nextDuration = nextDuration.minusSeconds(PERIOD)
         if (!nextDuration.isPositive) {
             nextDuration = Duration.ofMinutes(TIME_TEMPORAL_LYS);
-            playerTimePlayedService.addTemporalLys(player.uniqueId, 1)
+            playerTimePlayedService.incrementTemporalLys(player.uniqueId, playerRankService.isPrestige(player.uniqueId))
         }
         playerTimePlayedService.setNextMoneyDuration(player.uniqueId, nextDuration)
     }

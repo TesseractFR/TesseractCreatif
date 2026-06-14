@@ -5,7 +5,6 @@ import onl.tesseract.creative.PLUGIN_INSTANCE
 import onl.tesseract.creative.domain.rank.PlayerRank
 import onl.tesseract.creative.domain.rank.Rank
 import onl.tesseract.creative.domain.rank.StaffRank
-import onl.tesseract.creative.service.permpack.PlayerPermPackService
 import onl.tesseract.creative.util.playerPlotService
 import onl.tesseract.creative.util.playerRankService
 import org.bukkit.Bukkit
@@ -16,7 +15,6 @@ import java.util.function.Consumer
 //TODO NE DEVRAIT PAS UTIISER LES AUTRES SERVICES
 @Service
 class PermissionService(
-    private val permPackService: PlayerPermPackService,
 ) {
     fun updatePermission(uuid: UUID) {
         val player = Bukkit.getOfflinePlayer(uuid)
@@ -34,6 +32,9 @@ class PermissionService(
         if (staffRank != null) {
             permissions.playerAddGroup(null, player, staffRank.permGroup)
         }
+        if (playerRankService().isPrestige(uuid)) {
+            permissions.playerAddGroup(null, player, "prestige")
+        }
         Arrays.stream(PlayerRank.entries.toTypedArray())
                 .filter { it: Rank -> it != playerRank }
                 .forEach(playerUnrankConsumer)
@@ -41,7 +42,5 @@ class PermissionService(
                 .filter { it: Rank -> it != staffRank }
                 .forEach(playerUnrankConsumer)
         playerPlotService().resetPermission(permissions, player)
-        if (player.isOnline)
-            permPackService.updatePermission(permissions, player.player!!)
     }
 }

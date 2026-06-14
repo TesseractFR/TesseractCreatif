@@ -11,7 +11,9 @@ import java.util.*
  * Service to interact with player's time played.
  */
 @Service
-open class PlayerTimePlayedService(private val repository: PlayerTimePlayedRepository) {
+open class PlayerTimePlayedService(
+    private val repository: PlayerTimePlayedRepository,
+) {
 
     fun getPlayerTimePlayed(player: UUID): Duration {
         return getOrCreatePlayerTimePlayedInfo(player).timePlayed;
@@ -36,6 +38,11 @@ open class PlayerTimePlayedService(private val repository: PlayerTimePlayedRepos
     fun addPlayerTimeBought(player: UUID, seconds : Long) {
         var playerTimePlayedInfo = getOrCreatePlayerTimePlayedInfo(player);
         playerTimePlayedInfo.timeBougth = playerTimePlayedInfo.timeBougth.plusSeconds(seconds);
+        repository.save(playerTimePlayedInfo)
+    }
+    fun setPlayerTimeBought(player: UUID, seconds: Long) {
+        var playerTimePlayedInfo = getOrCreatePlayerTimePlayedInfo(player);
+        playerTimePlayedInfo.timeBougth = Duration.ofSeconds(seconds);
         repository.save(playerTimePlayedInfo)
     }
 
@@ -68,6 +75,14 @@ open class PlayerTimePlayedService(private val repository: PlayerTimePlayedRepos
         val playerTimePlayedInfo = getOrCreatePlayerTimePlayedInfo(player);
         playerTimePlayedInfo.temporalLys += amount;
         repository.save(playerTimePlayedInfo)
+    }
+
+    fun incrementTemporalLys(player: UUID, prestige: Boolean) {
+        if (prestige) {
+            addTemporalLys(player, 2)
+            return
+        }
+        addTemporalLys(player, 1)
     }
 
     fun getTemporalLys(player: UUID): Int {

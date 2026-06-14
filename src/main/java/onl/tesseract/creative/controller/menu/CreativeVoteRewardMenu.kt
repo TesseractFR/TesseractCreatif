@@ -1,6 +1,7 @@
 package onl.tesseract.creative.controller.menu
 
 import net.kyori.adventure.text.format.NamedTextColor
+import net.kyori.adventure.text.format.TextDecoration
 import onl.tesseract.core.vote.AVoteRewardMenu
 import onl.tesseract.creative.service.timeplayed.PlayerTimePlayedService
 import onl.tesseract.creative.util.playerTimePlayedService
@@ -29,21 +30,23 @@ class CreativeVoteRewardMenu(uuid: UUID, menu: Menu) : AVoteRewardMenu(uuid, Men
     fun addConvertionRewardButton(index: Int, viewer: Player) {
         addButton(
             index, ItemBuilder(Material.CLOCK)
-                    .name("Lys temporel", NamedTextColor.GOLD)
+                    .name("Lys temporels", NamedTextColor.GOLD, TextDecoration.BOLD)
                     .lore()
                     .newline()
-                    .append("Échanger des points de vote contre des lys temporel", NamedTextColor.GRAY)
-                    .newline(2)
+                    .append("Échanger des points de vote contre des lys temporels, permettant notamment d'acheter des ", NamedTextColor.GRAY, TextDecoration.ITALIC)
+                .append("plots supplémentaires", NamedTextColor.WHITE, setOf(TextDecoration.BOLD, TextDecoration.ITALIC))
+                .append(".", NamedTextColor.GRAY, TextDecoration.ITALIC)
+                .newline(2)
                     .append("1 point", NamedTextColor.YELLOW)
                     .append(" = ", NamedTextColor.GRAY)
-                    .append(" 1 Lys temporel", NamedTextColor.YELLOW)
+                    .append("1 lys temporel", NamedTextColor.YELLOW)
                     .buildLore()
                     .build()
         ) {
             askAmount(viewer) { amount ->
                 playerTimePlayedService.addTemporalLys(playerID, amount)
                 Bukkit.getPlayer(playerID)
-                        ?.sendMessage(ChatFormats.VOTE + "Vous avez reçu $amount Lys temporel !")
+                        ?.sendMessage(ChatFormats.VOTE + "Vous avez reçu $amount lys temporels !")
             }
         }
 

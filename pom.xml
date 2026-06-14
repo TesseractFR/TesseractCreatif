@@ -14,8 +14,8 @@
     <properties>
         <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <kotlin.version>2.0.21</kotlin.version>
-        <springboot.version>3.3.0</springboot.version>
+        <kotlin.version>2.3.20</kotlin.version>
+        <springboot.version>4.1.0-RC1</springboot.version>
     </properties>
 
     <build>
@@ -32,6 +32,18 @@
                         <goals>
                             <goal>shade</goal>
                         </goals>
+                        <configuration>
+                            <transformers>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                                    <resource>
+                                        META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports
+                                    </resource>
+                                </transformer>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+                            </transformers>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -61,12 +73,22 @@
                         </goals>
                     </execution>
                 </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.jetbrains.kotlin</groupId>
+                        <artifactId>kotlin-maven-allopen</artifactId>
+                        <version>${kotlin.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.jetbrains.kotlin</groupId>
+                        <artifactId>kotlin-maven-noarg</artifactId>
+                        <version>${kotlin.version}</version>
+                    </dependency>
+                </dependencies>
                 <configuration>
-                    <jvmTarget>${java.version}</jvmTarget>
                     <compilerPlugins>
-                        <plugin>lombok</plugin>
+                        <plugin>spring</plugin>
                         <plugin>jpa</plugin>
-                        <plugin>all-open</plugin>
                     </compilerPlugins>
                     <pluginOptions>
                         <!-- Each annotation is placed on its own line -->
@@ -143,7 +165,7 @@
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>1.21.1-R0.1-SNAPSHOT</version>
+            <version>26.1.2.build.68-stable</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -185,6 +207,11 @@
                     <artifactId>spring-boot-starter-logging</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>3.2.0</version>
         </dependency>
 
         <dependency>

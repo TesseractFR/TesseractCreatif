@@ -88,9 +88,9 @@ class PlayerRankBoard(
         createCurrentWorld()
         createStaticLine(2, " ")
         createTimeNextRank()
-        createStaticLine(6, " ")
+        createStaticLine(6, "  ")
         createActualRank()
-        createStaticLine(9, " ")
+        createStaticLine(9, "   ")
         createTimePlayed()
     }
 
