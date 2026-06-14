@@ -3,6 +3,7 @@ package onl.tesseract.creative.controller.menu.boutique
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.event.ClickEvent
 import net.kyori.adventure.text.format.NamedTextColor.*
+import net.kyori.adventure.text.format.TextDecoration
 import onl.tesseract.core.boutique.BoutiqueService
 import onl.tesseract.creative.service.timeplayed.PlayerTimePlayedService
 import onl.tesseract.creative.util.boutiqueService
@@ -42,18 +43,29 @@ abstract class BoutiqueCoreMenu(
         val temporalLys = playerTimePlayedService.getTemporalLys(uuid)
         addButton(
             slot, ItemBuilder(Material.RAW_GOLD)
-                    .name("Monnaies", GOLD)
-                    .lore()
-                    .append("Vous avez ", GRAY)
-                    .append("$temporalLys", DARK_AQUA)
-                    .append(" Lys temporel.", GRAY)
-                    .newline()
-                    .append("Vous avez ", GRAY)
-                    .append(getMarketCurrency(uuid).toString(), DARK_AQUA)
-                    .append(" lys d'or.", GRAY)
-                    .newline()
-                    .buildLore()
-                    .build()
+                .name("Monnaies", GOLD, TextDecoration.BOLD)
+                .lore()
+                .newline()
+                .append("Vous avez ", GRAY)
+                .append(getMarketCurrency(uuid).toString(), DARK_AQUA, TextDecoration.BOLD)
+                .append(" lys d'or.", GRAY)
+                .newline()
+                .append("Vous avez ", GRAY)
+                .append("$temporalLys", DARK_AQUA, TextDecoration.BOLD)
+                .append(" lys temporel(s).", GRAY)
+                .newline()
+                .newline()
+                .append("Lys temporel : ", YELLOW, TextDecoration.ITALIC)
+                .append("Monnaie gagnée toutes les ", GRAY, TextDecoration.ITALIC)
+                .append("5min ", GRAY, setOf(TextDecoration.ITALIC, TextDecoration.BOLD))
+                .append("de jeu à partir du grade ", GRAY, TextDecoration.ITALIC)
+                .append("Bâtisseur", BLUE, setOf(TextDecoration.BOLD, TextDecoration.ITALIC))
+                .append(" ou en ", GRAY, TextDecoration.ITALIC)
+                .append("votant", GRAY, setOf(TextDecoration.BOLD, TextDecoration.ITALIC))
+                .append(".", GRAY, TextDecoration.ITALIC)
+                .newline()
+                .buildLore()
+                .build()
         ) {
             player.sendMessage(
                 Component.text("[", GOLD)

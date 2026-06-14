@@ -1,6 +1,7 @@
 package onl.tesseract.creative.controller.menu.boutique
 
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.NamedTextColor.*
 import net.kyori.adventure.text.format.TextDecoration
 import onl.tesseract.creative.util.playerRankService
@@ -16,11 +17,6 @@ import java.time.Duration
 import java.time.Instant
 import java.time.ZoneId
 
-private val tetePlayerParticles = ItemBuilder(Material.PLAYER_HEAD).customHead(
-    "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDQ2MWQ5ZDA2YzBiZjRhN2FmNGIxNmZkMTI4MzFlMmJlMGNmNDJlNmU1NWU5YzBkMzExYTJhODk2NWEyM2IzNCJ9fX0=",
-    "4461d9d06c0bf4a7af4b16fd12831e2be0cf42e6e55e9c0d311a2a8965a23b34"
-)
-
 private const val BUY_WITH_LYS_MESSAGE = "Acheter en lys d'or"
 private const val PRICE_MESSAGE = "Prix : "
 private const val LEFT_CLICK_MESSAGE = "--- Clic gauche ---"
@@ -30,7 +26,7 @@ class PrestigeMenu(
 ) :
         BoutiqueCoreMenu(
             MenuSize.Three,
-            Component.text("Acheter le grade Prestige", DARK_GREEN, TextDecoration.BOLD),
+            Component.text("Acheter le grade Prestige", BLUE, TextDecoration.BOLD),
             previous, player
         ) {
 
@@ -39,12 +35,19 @@ class PrestigeMenu(
             ItemBuilder(Material.GRAY_STAINED_GLASS_PANE).name(" ")
                     .build())
 
-        val item1 = tetePlayerParticles
-                .name("1 mois Prestige", GOLD)
-                .lore(lore("250 Lys d'or / mois"))
-                .build()
+        for (slot in listOf(1, 4, 7, 9, 12, 14, 17, 20, 24)) {
+            addButton(
+                slot,
+                ItemBuilder(Material.BLUE_STAINED_GLASS_PANE).name(" ", NamedTextColor.WHITE)
+                    .build()) {}
+        }
+
+        val item1 = ItemBuilder(Material.NETHER_STAR)
+            .name("1 mois Prestige", GOLD, TextDecoration.BOLD)
+            .lore(lore(250, 250))
+            .build()
         addButton(
-            4, item1
+            11, item1
         ) {
             confirmBuyLysDor(player, 250, "Confirmer l'achat d'un mois de Prestige pour 250 lys d'or")
             {
@@ -53,12 +56,12 @@ class PrestigeMenu(
                 this.close()
             }
         }
-        val item2 = tetePlayerParticles
-                .name("3 mois Prestige", GOLD)
-                .lore(lore("225 Lys d'or / mois"))
-                .build()
+        val item2 = ItemBuilder(Material.NETHER_STAR)
+            .name("3 mois Prestige", GOLD, TextDecoration.BOLD)
+            .lore(lore(675, 225))
+            .build()
         addButton(
-            6, item2
+            13, item2
         ) {
             confirmBuyLysDor(player, 225 * 3, "Confirmer l'achat de trois mois de Prestige pour ${225 * 3} lys d'or")
             {
@@ -67,12 +70,12 @@ class PrestigeMenu(
                 this.close()
             }
         }
-        val item3 = tetePlayerParticles
-                .name("6 mois Prestige", GOLD)
-                .lore(lore("200 Lys d'or / mois"))
-                .build()
+        val item3 = ItemBuilder(Material.NETHER_STAR)
+            .name("6 mois Prestige", GOLD, TextDecoration.BOLD)
+            .lore(lore(1200, 200, "⭐ Le plus rentable !"))
+            .build()
         addButton(
-            8, item3
+            15, item3
         ) {
             confirmBuyLysDor(player, 200 * 6, "Confirmer l'achat de six mois de Prestige pour ${200 * 6} lys d'or")
             {
@@ -86,17 +89,31 @@ class PrestigeMenu(
         addCloseButton()
     }
 
-    private fun lore(price: String): List<Component> {
-        val loreBuilder = ItemBuilder(Material.STONE).lore()
-                .newline()
-                .append(PRICE_MESSAGE, GRAY)
-                .append(price, GOLD, TextDecoration.ITALIC)
-                .newline()
-                .newline()
-                .append(LEFT_CLICK_MESSAGE, LIGHT_PURPLE)
-                .newline()
-                .append(BUY_WITH_LYS_MESSAGE, AQUA)
-        return loreBuilder.get()
+    private fun lore(totalPrice: Int, monthlyPrice: Int, bonus: String? = null): List<Component> {
+        return ItemBuilder(Material.STONE).lore()
+            .newline()
+            .append(PRICE_MESSAGE, GRAY)
+            .newline()
+            .append("$totalPrice ", YELLOW, setOf(TextDecoration.BOLD, TextDecoration.ITALIC))
+            .append("lys d'or", YELLOW, TextDecoration.ITALIC)
+            .newline()
+            .append("($monthlyPrice lys d'or/mois)", DARK_GRAY, TextDecoration.ITALIC)
+            .also { if (bonus != null) it.newline().append(bonus, GREEN, TextDecoration.BOLD) }
+            .newline()
+            .newline()
+            .append("Plugins inclus :", GRAY)
+            .newline()
+            .append("- ", GRAY)
+            .append("Metabrush", RED, TextDecoration.BOLD)
+            .newline()
+            .append("- ", GRAY)
+            .append("EzEdits", GOLD, TextDecoration.BOLD)
+            .newline()
+            .newline()
+            .append(LEFT_CLICK_MESSAGE, LIGHT_PURPLE)
+            .newline()
+            .append(BUY_WITH_LYS_MESSAGE, AQUA)
+            .get()
     }
 
     private fun addExpirationDate(timeLeft: Duration, ilb: ItemLoreBuilder) {

@@ -1,15 +1,16 @@
 package onl.tesseract.creative.controller.menu.boutique
 
 import net.kyori.adventure.text.format.NamedTextColor
+import net.kyori.adventure.text.format.NamedTextColor.BLUE
 import net.kyori.adventure.text.format.NamedTextColor.GOLD
 import net.kyori.adventure.text.format.NamedTextColor.GRAY
+import net.kyori.adventure.text.format.NamedTextColor.YELLOW
 import net.kyori.adventure.text.format.TextDecoration
 import onl.tesseract.creative.controller.menu.boutique.CreativeBoutiqueMenu.Companion.teteVirtuose
 
-val virtuoseItem = teteVirtuose
+fun virtuoseItem(price: Int) = teteVirtuose
         .name("Grade VIRTUOSE", NamedTextColor.AQUA, TextDecoration.BOLD)
         .lore()
-        .newline()
         .newline()
         .append("Nombre de plots maximum :", GRAY, TextDecoration.ITALIC)
         .newline()
@@ -28,23 +29,27 @@ val virtuoseItem = teteVirtuose
         .newline()
         .append("Avantages supplémentaires : ", NamedTextColor.GREEN, TextDecoration.BOLD)
         .newline()
-        .append("- Grade Bâtisseur", GOLD, TextDecoration.ITALIC)
+        .append("- Grade ", GOLD, TextDecoration.ITALIC)
+        .append("Bâtisseur", BLUE, setOf(TextDecoration.ITALIC, TextDecoration.BOLD))
         .newline()
         .append("- Obtention de ", GOLD, TextDecoration.ITALIC)
-        .append("VoxelSniper", NamedTextColor.DARK_AQUA, TextDecoration.ITALIC)
+        .append("Arceon", NamedTextColor.DARK_AQUA, setOf(TextDecoration.ITALIC, TextDecoration.BOLD))
         .newline()
         .append("- Commande ", GOLD)
-        .append("/nick", NamedTextColor.WHITE, TextDecoration.BOLD)
+        .append("/nick", NamedTextColor.WHITE, setOf(TextDecoration.ITALIC, TextDecoration.BOLD))
         .newline()
         .append("- Et bien plus encore...", GOLD, TextDecoration.ITALIC)
         .newline()
         .newline()
         .append("Prix : ", GRAY)
         .newline()
-        .append("2 500 lys d'or", GOLD, TextDecoration.ITALIC)
+        .append("$price ", YELLOW, setOf(TextDecoration.ITALIC, TextDecoration.BOLD))
+        .append("lys d'or", YELLOW, TextDecoration.ITALIC)
         .newline()
         .newline()
-        .append("Cliquez pour acheter ", GRAY)
+        .append("--- Clic gauche ---", NamedTextColor.LIGHT_PURPLE)
+        .newline()
+        .append("Acheter en lys d'or", NamedTextColor.AQUA)
         .newline()
         .buildLore()
         .build()

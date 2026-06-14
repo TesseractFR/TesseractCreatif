@@ -49,7 +49,7 @@ class CreativeBoutiqueMenu(
                     .name("Achat de plots", GOLD, TextDecoration.BOLD)
                     .lore()
                     .newline()
-                    .append("Acquérez des plots supplémentaires !", GRAY, TextDecoration.ITALIC)
+                    .append("Acquérez des plots supplémentaires avec des lys d'or ou lys temporels !", GRAY, TextDecoration.ITALIC)
                     .buildLore()
                     .build()
         ) {
@@ -59,11 +59,11 @@ class CreativeBoutiqueMenu(
 
 
         addButton(
-            5, teteRankUp
-                    .name("Monter en grade", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD)
+            12, teteRankUp
+                    .name("Améliorez votre grade", NamedTextColor.DARK_PURPLE, TextDecoration.BOLD)
                     .lore()
                     .newline()
-                    .append("Accélérez votre progression !", GRAY, TextDecoration.ITALIC)
+                    .append("Accélérez votre progression pour débloquer plus de plots et de fonctionnalités !", GRAY, TextDecoration.ITALIC)
                     .buildLore()
                     .build()
         ) {
@@ -71,11 +71,11 @@ class CreativeBoutiqueMenu(
         }
 
         addButton(
-            16, ItemBuilder(Material.WOODEN_AXE)
-                    .name("Grade prestige", NamedTextColor.DARK_GREEN, TextDecoration.BOLD)
+            16, ItemBuilder(Material.NETHER_STAR)
+                    .name("Grade PRESTIGE", GOLD, TextDecoration.BOLD)
                     .lore()
                     .newline()
-                    .append("Louer l'accès à des plugins sur-puissants !", GRAY, TextDecoration.ITALIC)
+                    .append("Un grade unique donnant accès à des plugins exclusifs pour repousser les limites de vos constructions.", GRAY, TextDecoration.ITALIC)
                     .buildLore()
                     .flags(ItemFlag.HIDE_ATTRIBUTES)
                     .build()
@@ -90,18 +90,18 @@ class CreativeBoutiqueMenu(
     private fun addVirtuose() {
         if (playerRankService.getPlayerRank(player.uniqueId) == PlayerRank.VIRTUOSE) {
             addButton(
-                3, teteVirtuose
-                        .name("Grade VIRTUOSE", NamedTextColor.AQUA, TextDecoration.BOLD)
-                        .lore()
-                        .newline()
-                        .newline()
-                        .append("Déjà possédé", GRAY)
-                        .buildLore()
-                        .build()) {}
+                14, teteVirtuose
+                    .name("Grade VIRTUOSE", NamedTextColor.AQUA, TextDecoration.BOLD)
+                    .lore()
+                    .newline()
+                    .append("Déjà possédé", GRAY)
+                    .buildLore()
+                    .build()) {}
         } else {
-            val price = BoutiqueRank.VIRTUOSE.price
+            val actualRank = BoutiqueRank.fromPlayerRank(playerRankService.getPlayerRank(player.uniqueId))
+            val price = getVirtuosePrice(actualRank)
             addButton(
-                3, virtuoseItem
+                14, virtuoseItem(price)
             ) {
                 confirmBuyLysDor(player, price, "Confirmer l'achat du grade Virtuose pour $price lys d'or")
                 {
@@ -115,6 +115,10 @@ class CreativeBoutiqueMenu(
 
     }
 
+    private fun getVirtuosePrice(actualRank: BoutiqueRank): Int {
+        val price = BoutiqueRank.VIRTUOSE.price - actualRank.price
+        return minOf(price, 2500)
+    }
 
     companion object {
         val teteAchatPlots = ItemBuilder(Material.PLAYER_HEAD).customHead(
